@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Metadata } from 'next'
+import { title } from 'process'
 
 const galleryImages = [
   { id: 1, title: 'Team Collaboration', category: 'Work', description: 'Our teams working together on innovative projects' },
@@ -10,7 +11,7 @@ const galleryImages = [
   { id: 4, title: 'Modern Office Space', category: 'Office', description: 'Our state-of-the-art office environment' },
   { id: 5, title: 'Team Lunch', category: 'Culture', description: 'Regular team lunches and bonding' },
   { id: 6, title: 'Award Ceremony', category: 'Events', description: 'Recognizing outstanding achievements' },
-  { id: 7, 'Break Room', category: 'Office', description: 'Relaxing break room with games and entertainment' },
+  { id: 7, title:'Break Room', category: 'Office', description: 'Relaxing break room with games and entertainment' },
   { id: 8, title: 'Training Session', category: 'Work', description: 'Continuous learning and development' },
   { id: 9, title: 'Celebration', category: 'Culture', description: 'Celebrating project success' },
 ]

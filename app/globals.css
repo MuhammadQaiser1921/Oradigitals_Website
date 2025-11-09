@@ -39,3 +39,15 @@
     @apply bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6;
   }
 }
+
+/* Hero background art (coding pencil) */
+@layer components {
+  .hero-bg {
+    position: relative;
+    background-color: #ffffff;
+  }
+
+  /* The art is placed with a low-opacity pseudo element so content stays readable.
+     Place your art at /public/hero-bg.svg (or .png). Adjust background-position/size as needed. */
+  /* removed ::before tiled background; hero art instances are rendered as elements so each can be varied */
+}
