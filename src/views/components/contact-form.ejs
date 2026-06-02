@@ -1,0 +1,31 @@
+<section class="section light" id="<%= props.id || '' %>">
+  <div class="container form-wrap">
+    <% if (props.title) { %>
+      <h2><%= props.title %></h2>
+    <% } %>
+    <% if (props.subtitle) { %>
+      <p class="section-subtitle"><%= props.subtitle %></p>
+    <% } %>
+
+    <form class="api-form" method="post" action="<%= props.type === 'career' ? '/api/apply' : '/api/contact' %>">
+      <% (props.fields || []).forEach((field) => { %>
+        <label>
+          <span><%= field.label %><%= field.required ? ' *' : '' %></span>
+          <% if (field.type === 'textarea') { %>
+            <textarea name="<%= field.name %>" rows="5" <%= field.required ? 'required' : '' %>></textarea>
+          <% } else if (field.type === 'select') { %>
+            <select name="<%= field.name %>" <%= field.required ? 'required' : '' %>>
+              <option value="">Select an option</option>
+              <% (field.options || []).forEach((opt) => { %>
+                <option value="<%= opt %>"><%= opt %></option>
+              <% }) %>
+            </select>
+          <% } else { %>
+            <input type="<%= field.type || 'text' %>" name="<%= field.name %>" <%= field.required ? 'required' : '' %> />
+          <% } %>
+        </label>
+      <% }) %>
+      <button class="btn btn-primary" type="submit"><%= props.submitLabel || 'Submit' %></button>
+    </form>
+  </div>
+</section>

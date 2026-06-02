@@ -1,0 +1,19 @@
+<section class="section light">
+  <div class="container split-grid">
+    <div>
+      <h2><%= props.title %></h2>
+      <p><%= props.text %></p>
+      <% if (props.list && props.list.length) { %>
+        <ul>
+          <% props.list.forEach((item) => { %>
+            <li><%= item %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </div>
+    <div class="card">
+      <h3><%= props.sideTitle %></h3>
+      <p><%= props.sideText %></p>
+    </div>
+  </div>
+</section>

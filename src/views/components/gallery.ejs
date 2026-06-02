@@ -1,0 +1,19 @@
+<section class="section">
+  <div class="container">
+    <% if (props.title) { %>
+      <h2><%= props.title %></h2>
+    <% } %>
+    <% if (props.subtitle) { %>
+      <p class="section-subtitle"><%= props.subtitle %></p>
+    <% } %>
+    <div class="cards-grid cols-3">
+      <% (props.items || []).forEach((item) => { %>
+        <article class="card gallery-card">
+          <p class="chip"><%= item.category %></p>
+          <h3><%= item.title %></h3>
+          <p><%= item.text %></p>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>

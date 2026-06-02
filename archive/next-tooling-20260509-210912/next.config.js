@@ -1,0 +1,12 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    unoptimized: true,
+  },
+  // Keep ESLint ignored during builds for now; fix lint issues later if needed.
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+}
+
+module.exports = nextConfig

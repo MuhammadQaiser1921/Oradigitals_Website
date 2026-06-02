@@ -1,0 +1,31 @@
+<section class="section">
+  <div class="container">
+    <% if (props.title) { %>
+      <h2><%= props.title %></h2>
+    <% } %>
+    <% if (props.subtitle) { %>
+      <p class="section-subtitle"><%= props.subtitle %></p>
+    <% } %>
+    <div class="cards-grid cols-<%= props.columns || 3 %>">
+      <% props.cards.forEach((card) => { %>
+        <article class="card">
+          <h3><%= card.title %></h3>
+          <% if (card.subtitle) { %>
+            <p class="card-subtitle"><%= card.subtitle %></p>
+          <% } %>
+          <p><%= card.text %></p>
+          <% if (Array.isArray(card.list) && card.list.length) { %>
+            <ul class="card-list">
+              <% card.list.forEach((item) => { %>
+                <li><%= item %></li>
+              <% }) %>
+            </ul>
+          <% } %>
+          <% if (card.link && card.link.href && card.link.label) { %>
+            <p><a class="card-link" href="<%= card.link.href %>" target="_blank" rel="noreferrer"><%= card.link.label %></a></p>
+          <% } %>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>

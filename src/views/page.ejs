@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= page.title %></title>
+  <meta name="description" content="<%= page.description %>" />
+  <link rel="stylesheet" href="/public/express.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-row">
+      <a class="brand" href="/">ORA<span>DIGITALS</span></a>
+      <nav class="nav-links">
+        <% site.nav.forEach((item) => { %>
+          <div class="nav-item-wrapper <%= item.submenu && item.submenu.length > 0 ? 'has-submenu' : '' %>">
+            <a href="<%= item.href %>" class="nav-link <%= currentPath === item.href ? 'active' : '' %>"><%= item.label %></a>
+            <% if (item.submenu && item.submenu.length > 0) { %>
+              <div class="submenu">
+                <% item.submenu.forEach((subitem) => { %>
+                  <a href="<%= subitem.href %>" class="submenu-link"><%= subitem.label %></a>
+                <% }) %>
+              </div>
+            <% } %>
+          </div>
+        <% }) %>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <% if (flash && flash.message) { %>
+      <section class="section">
+        <div class="container">
+          <div class="flash <%= flash.status === 'success' ? 'flash-success' : 'flash-info' %>">
+            <p><%= flash.message %></p>
+          </div>
+        </div>
+      </section>
+    <% } %>
+    <% page.sections.forEach((section) => { %>
+      <%- include('components/' + section.component, { props: section.props, site, currentPath, flash }) %>
+    <% }) %>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3><%= site.legalName %></h3>
+        <p>Practical digital solutions for real business operations.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href="mailto:<%= site.email %>"><%= site.email %></a></p>
+        <p><a href="tel:+923355546497"><%= site.phone %></a></p>
+        <p><%= site.address %></p>
+        <p><a href="/compliance">Compliance</a></p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

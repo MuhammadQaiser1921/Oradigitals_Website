@@ -1,0 +1,17 @@
+<section class="section">
+  <div class="container">
+    <% if (props.title) { %>
+      <h2><%= props.title %></h2>
+    <% } %>
+    <% if (props.subtitle) { %>
+      <p class="section-subtitle"><%= props.subtitle %></p>
+    <% } %>
+    <% if (Array.isArray(props.items) && props.items.length) { %>
+      <ul class="feature-list">
+        <% props.items.forEach((item) => { %>
+          <li><%= item %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
+</section>

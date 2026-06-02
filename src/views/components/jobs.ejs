@@ -1,0 +1,27 @@
+<section class="section light">
+  <div class="container">
+    <% if (props.title) { %>
+      <h2><%= props.title %></h2>
+    <% } %>
+    <% if (props.subtitle) { %>
+      <p class="section-subtitle"><%= props.subtitle %></p>
+    <% } %>
+    <div class="jobs-grid">
+      <% (props.items || []).forEach((job) => { %>
+        <article class="card job-card">
+          <h3><%= job.title %></h3>
+          <p class="card-subtitle"><%= job.department %> | <%= job.location %> | <%= job.type %></p>
+          <p><%= job.description %></p>
+          <% if (Array.isArray(job.requirements) && job.requirements.length) { %>
+            <h4>Requirements</h4>
+            <ul class="card-list">
+              <% job.requirements.forEach((req) => { %>
+                <li><%= req %></li>
+              <% }) %>
+            </ul>
+          <% } %>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>

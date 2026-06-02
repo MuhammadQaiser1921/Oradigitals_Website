@@ -1,0 +1,11 @@
+<section class="section cta">
+  <div class="container">
+    <h2><%= props.title %></h2>
+    <p><%= props.text %></p>
+    <div class="actions center">
+      <% props.actions.forEach((action) => { %>
+        <a class="btn <%= action.style === 'outline' ? 'btn-outline' : 'btn-primary' %>" href="<%= action.href %>"><%= action.label %></a>
+      <% }) %>
+    </div>
+  </div>
+</section>
