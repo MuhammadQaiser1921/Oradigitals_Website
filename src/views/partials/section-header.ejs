@@ -1,0 +1,27 @@
+<%# Landing-page section heading: eyebrow label, two-tone title, description.
+    Older badge / title / subtitle props map onto the same slots.
+    headingTag: 'h1' is set by page.ejs on the first section of pages without a hero. %>
+<%
+  const eyebrow = props.eyebrow || props.badge
+  const titleMain = props.titleMain || props.title
+  const description = props.description || props.subtitle
+  const headingTag = props.headingTag === 'h1' ? 'h1' : 'h2'
+%>
+<% if (eyebrow || titleMain || description) { %>
+  <div class="customer-header region-header">
+    <% if (eyebrow) { %>
+      <div class="customer-eyebrow"><%= eyebrow %></div>
+    <% } %>
+    <% if (titleMain) { %>
+      <<%= headingTag %> class="customer-heading">
+        <span class="customer-heading-main"><%= titleMain %></span>
+        <% if (props.titleSub) { %>
+          <span class="customer-heading-sub"><%= props.titleSub %></span>
+        <% } %>
+      </<%= headingTag %>>
+    <% } %>
+    <% if (description) { %>
+      <p class="customer-description"><%= description %></p>
+    <% } %>
+  </div>
+<% } %>

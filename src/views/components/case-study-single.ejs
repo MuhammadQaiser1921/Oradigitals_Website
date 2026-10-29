@@ -1,0 +1,150 @@
+<%
+  const cs = props.caseStudy || {};
+  const otherStudies = props.otherStudies || [];
+%>
+
+<section class="section case-study-single-section">
+  <div class="container">
+    <!-- Case Study Header -->
+    <header class="cs-single-hero">
+      <div class="cs-single-badge-row">
+        <div class="cs-single-client-badge">
+          <% if (cs.clientLogo) { %>
+            <img src="<%= cs.clientLogo %>" alt="<%= cs.client %>" class="cs-single-client-logo" />
+          <% } %>
+          <span class="cs-single-client-name"><%= cs.client %></span>
+        </div>
+        <span class="cs-category-tag"><%= cs.category %></span>
+      </div>
+
+      <h1 class="cs-single-title"><%= cs.title %></h1>
+      <% if (cs.subtitle) { %>
+        <p class="cs-single-subtitle"><%= cs.subtitle %></p>
+      <% } %>
+
+      <!-- Key Metadata Details Grid -->
+      <div class="cs-single-meta-grid">
+        <% if (cs.client) { %>
+          <div class="cs-meta-row">
+            <span class="cs-meta-label">Client:</span>
+            <span class="cs-meta-val"><%= cs.client %></span>
+          </div>
+        <% } %>
+        <% if (cs.solution) { %>
+          <div class="cs-meta-row">
+            <span class="cs-meta-label">Solution:</span>
+            <span class="cs-meta-val"><%= cs.solution %></span>
+          </div>
+        <% } %>
+        <% if (cs.industry) { %>
+          <div class="cs-meta-row">
+            <span class="cs-meta-label">Industry:</span>
+            <span class="cs-meta-val"><%= cs.industry %></span>
+          </div>
+        <% } %>
+        <% if (cs.technology) { %>
+          <div class="cs-meta-row">
+            <span class="cs-meta-label">Technology:</span>
+            <span class="cs-meta-val"><%= cs.technology %></span>
+          </div>
+        <% } %>
+        <% if (cs.service) { %>
+          <div class="cs-meta-row">
+            <span class="cs-meta-label">Service:</span>
+            <span class="cs-meta-val"><%= cs.service %></span>
+          </div>
+        <% } %>
+      </div>
+    </header>
+
+    <!-- Clean Editorial Article Content -->
+    <% if (cs.contentHtml) { %>
+      <article class="cs-article-body">
+        <%- cs.contentHtml %>
+      </article>
+    <% } else { %>
+      <article class="cs-article-body">
+        <% if (cs.challenge) { %>
+          <div class="cs-article-section">
+            <h2>The Challenge</h2>
+            <p><%= cs.challenge %></p>
+            <% if (Array.isArray(cs.challengePoints) && cs.challengePoints.length) { %>
+              <ul>
+                <% cs.challengePoints.forEach((point) => { %>
+                  <li><%= point %></li>
+                <% }) %>
+              </ul>
+            <% } %>
+          </div>
+        <% } %>
+
+        <% if (cs.solution) { %>
+          <div class="cs-article-section">
+            <h2>The Solution</h2>
+            <p><%= cs.solution %></p>
+            <% if (Array.isArray(cs.solutionPoints) && cs.solutionPoints.length) { %>
+              <ul>
+                <% cs.solutionPoints.forEach((point) => { %>
+                  <li><%= point %></li>
+                <% }) %>
+              </ul>
+            <% } %>
+          </div>
+        <% } %>
+
+        <% if (Array.isArray(cs.techStack) && cs.techStack.length) { %>
+          <div class="cs-article-section">
+            <h2>Technology & Integration Components</h2>
+            <div class="cs-single-tech-tags">
+              <% cs.techStack.forEach((t) => { %>
+                <span class="cs-single-tech-pill"><%= t %></span>
+              <% }) %>
+            </div>
+          </div>
+        <% } %>
+      </article>
+    <% } %>
+
+    <% if (Array.isArray(props.relatedServices) && props.relatedServices.length) { %>
+      <div class="cs-related-services">
+        <h2 class="cs-related-title">Services Used in This Project</h2>
+        <div class="cs-related-links">
+          <% props.relatedServices.forEach((service) => { %>
+            <a href="<%= service.href %>" class="cs-related-link"><%= service.label %> &rarr;</a>
+          <% }) %>
+        </div>
+      </div>
+    <% } %>
+
+    <!-- Explore More Case Studies -->
+    <% if (Array.isArray(otherStudies) && otherStudies.length) { %>
+      <div class="cs-single-other-section">
+        <div class="cs-other-header">
+          <h3>Explore More Enterprise Case Studies</h3>
+          <a href="/customers/case-studies" class="cs-other-link-all">
+            <span>View All Case Studies</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="cs-other-grid">
+          <% otherStudies.slice(0, 2).forEach((item) => { %>
+            <a href="/customers/case-studies/<%= item.slug %>" class="cs-other-card">
+              <div class="cs-other-top">
+                <span class="cs-other-client"><%= item.client %></span>
+                <span class="cs-other-cat"><%= item.category %></span>
+              </div>
+              <h4 class="cs-other-title"><%= item.title %></h4>
+              <p class="cs-other-summary"><%= item.summary || item.subtitle %></p>
+              <span class="cs-other-cta">
+                <span>Read Case Study</span> &rarr;
+              </span>
+            </a>
+          <% }) %>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</section>

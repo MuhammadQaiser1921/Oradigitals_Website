@@ -1,31 +1,46 @@
-<section class="section light" id="<%= props.id || '' %>">
+<%
+  const formId = props.id || 'send-message'
+  // Browser autofill for the fields every form shares
+  const autofill = { name: 'name', email: 'email', phone: 'tel' }
+  const status = flash && flash.message ? (flash.status === 'success' ? 'success' : 'error') : ''
+%>
+<section class="section <%= props.light ? 'light' : '' %>" id="<%= formId %>">
   <div class="container form-wrap">
-    <% if (props.title) { %>
-      <h2><%= props.title %></h2>
-    <% } %>
-    <% if (props.subtitle) { %>
-      <p class="section-subtitle"><%= props.subtitle %></p>
-    <% } %>
+    <%- include('../partials/section-header', { props }) %>
 
-    <form class="api-form" method="post" action="<%= props.type === 'career' ? '/api/apply' : '/api/contact' %>">
+    <form class="api-form" method="post" action="<%= props.type === 'career' ? '/api/apply' : '/api/contact' %>" data-api-form>
+      <input type="hidden" name="source" value="<%= currentPath %>" />
+      <%# Spam trap: hidden from people, but bots that fill in every field give themselves away %>
+      <div class="form-trap" aria-hidden="true">
+        <label>Leave this field empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+      </div>
+
+      <div class="form-status <%= status ? 'form-status-' + status : '' %>" role="status" aria-live="polite" data-form-status <%= status ? '' : 'hidden' %>><%= status ? flash.message : '' %></div>
+
       <% (props.fields || []).forEach((field) => { %>
-        <label>
+        <%
+          const fieldId = `${formId}-${field.name}`
+          const common = `id="${fieldId}" name="${field.name}" aria-describedby="${fieldId}-error"${field.required ? ' required' : ''}`
+          const autocomplete = field.autocomplete || autofill[field.name]
+        %>
+        <label for="<%= fieldId %>">
           <span><%= field.label %><%= field.required ? ' *' : '' %></span>
           <% if (field.type === 'textarea') { %>
-            <textarea name="<%= field.name %>" rows="5" <%= field.required ? 'required' : '' %>></textarea>
+            <textarea <%- common %> rows="5" maxlength="5000"></textarea>
           <% } else if (field.type === 'select') { %>
-            <select name="<%= field.name %>" <%= field.required ? 'required' : '' %>>
+            <select <%- common %>>
               <option value="">Select an option</option>
               <% (field.options || []).forEach((opt) => { %>
                 <option value="<%= opt %>"><%= opt %></option>
               <% }) %>
             </select>
           <% } else { %>
-            <input type="<%= field.type || 'text' %>" name="<%= field.name %>" <%= field.required ? 'required' : '' %> />
+            <input type="<%= field.type || 'text' %>" <%- common %> maxlength="200"<% if (autocomplete) { %> autocomplete="<%= autocomplete %>"<% } %><% if (field.inputmode) { %> inputmode="<%= field.inputmode %>"<% } %><% if (field.placeholder) { %> placeholder="<%= field.placeholder %>"<% } %> />
           <% } %>
+          <small class="field-error" id="<%= fieldId %>-error" hidden></small>
         </label>
       <% }) %>
-      <button class="btn btn-primary" type="submit"><%= props.submitLabel || 'Submit' %></button>
+      <button class="btn btn-primary" type="submit" data-label="<%= props.submitLabel || 'Submit' %>"><%= props.submitLabel || 'Submit' %></button>
     </form>
   </div>
 </section>

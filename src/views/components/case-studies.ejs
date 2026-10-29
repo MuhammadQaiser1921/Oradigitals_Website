@@ -1,0 +1,361 @@
+<%
+  const isCompact = Boolean(props.compact);
+%>
+
+<section class="section case-studies-section <%= props.light ? 'light' : '' %> <%= isCompact ? 'cs-section-compact' : 'cs-section-full' %>" id="<%= props.id || 'case-studies' %>">
+  <div class="container">
+    <%- include('../partials/section-header', { props }) %>
+
+    <% if (!isCompact && Array.isArray(props.categories) && props.categories.length > 1) { %>
+      <div class="case-studies-filter" role="group" aria-label="Filter case studies by category">
+        <% props.categories.forEach((cat, idx) => { %>
+          <button 
+            type="button" 
+            class="cs-filter-btn <%= idx === 0 ? 'active' : '' %>" 
+            data-category="<%= cat.key || cat %>"
+            aria-pressed="<%= idx === 0 ? 'true' : 'false' %>">
+            <%= cat.label || cat %>
+          </button>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <div class="case-studies-grid <%= isCompact ? 'cs-grid-compact' : 'cs-grid-full' %>">
+      <% (props.items || []).forEach((item, itemIdx) => { 
+        const itemSlug = item.slug || ('case-study-' + (itemIdx + 1));
+      %>
+        <article class="case-study-card <%= isCompact ? 'card-compact' : 'card-full' %>" 
+                 id="<%= itemSlug %>" 
+                 data-category="<%= item.categoryKey || item.category %>"
+                 data-slug="<%= itemSlug %>">
+          
+          <div class="cs-card-header">
+            <div class="cs-client-badge">
+              <% if (item.clientLogo) { %>
+                <img src="<%= item.clientLogo %>" alt="<%= item.client %>" class="cs-client-logo" loading="lazy" />
+              <% } %>
+              <span class="cs-client-name"><%= item.client %></span>
+            </div>
+            <% if (item.category) { %>
+              <span class="cs-category-tag"><%= item.category %></span>
+            <% } %>
+          </div>
+
+          <h3 class="cs-card-title">
+            <a href="/customers/case-studies/<%= itemSlug %>" class="cs-title-link"><%= item.title %></a>
+          </h3>
+
+          <% if (isCompact) { %>
+            <!-- Landing page horizontal stacked card -->
+            <% if (item.summary) { %>
+              <p class="cs-compact-summary"><%= item.summary %></p>
+            <% } %>
+
+            <% if (item.challenge || item.solution) { %>
+              <div class="cs-compact-narrative">
+                <% if (item.challenge) { %>
+                  <div class="cs-compact-point cs-compact-challenge">
+                    <span class="cs-compact-label challenge">Challenge</span>
+                    <p class="cs-compact-desc"><%= item.challenge %></p>
+                  </div>
+                <% } %>
+                <% if (item.solution) { %>
+                  <div class="cs-compact-point cs-compact-solution">
+                    <span class="cs-compact-label solution">Solution</span>
+                    <p class="cs-compact-desc"><%= item.solution %></p>
+                  </div>
+                <% } %>
+              </div>
+            <% } %>
+
+            <div class="cs-compact-card-footer">
+              <a href="/customers/case-studies/<%= itemSlug %>" class="cs-compact-read-link">
+                <span>Read the <%= item.client %> case study</span>
+                <svg class="cs-compact-arrow-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+
+          <% } else { %>
+            <!-- Full deep-dive mode for /customers/case-studies dedicated page -->
+            <% if (item.summary) { %>
+              <p class="cs-lead-summary"><%= item.summary %></p>
+            <% } %>
+
+            <div class="cs-narrative">
+              <div class="cs-point cs-challenge">
+                <span class="cs-point-label">
+                  <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                  </svg>
+                  Challenge:
+                </span>
+                <p><%= item.challenge %></p>
+              </div>
+
+              <div class="cs-point cs-solution">
+                <span class="cs-point-label">
+                  <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  Solution:
+                </span>
+                <p><%= item.solution %></p>
+              </div>
+            </div>
+
+            <% if (Array.isArray(item.metrics) && item.metrics.length) { %>
+              <div class="cs-metrics-grid">
+                <% item.metrics.forEach((metric) => { %>
+                  <div class="cs-metric-box">
+                    <div class="cs-metric-value"><%= metric.value %></div>
+                    <div class="cs-metric-label"><%= metric.label %></div>
+                  </div>
+                <% }) %>
+              </div>
+            <% } %>
+
+            <% if (Array.isArray(item.techStack) && item.techStack.length) { %>
+              <div class="cs-tags">
+                <% item.techStack.forEach((tech) => { %>
+                  <span class="cs-tag"><%= tech %></span>
+                <% }) %>
+              </div>
+            <% } %>
+
+            <div class="cs-card-footer cs-card-footer-full">
+              <a href="/customers/case-studies/<%= itemSlug %>" class="btn btn-primary cs-btn-read-page">
+                <svg viewBox="0 0 20 20" width="15" height="15" fill="currentColor">
+                  <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+                </svg>
+                <span>Read the <%= item.client %> case study</span>
+              </a>
+            </div>
+          <% } %>
+        </article>
+      <% }) %>
+    </div>
+
+    <% if (isCompact) { %>
+      <div class="customer-footer-link cs-footer-link">
+        <a href="/customers/case-studies" class="customer-cta-link cs-cta-link">
+          <span>Read All Case Studies</span>
+          <svg class="customer-arrow-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    <% } else if (props.footerCta) { %>
+      <div class="cs-footer-cta">
+        <div class="cs-cta-box">
+          <div class="cs-cta-text">
+            <h4><%= props.footerCta.title %></h4>
+            <p><%= props.footerCta.text %></p>
+          </div>
+          <a href="<%= props.footerCta.href || '/contact' %>" class="btn btn-primary cs-cta-action">
+            <%= props.footerCta.buttonLabel %>
+          </a>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <% if (isCompact) { %>
+    <!-- Interactive Modal for Complete Case Study Breakdown -->
+    <div id="cs-modal-overlay" class="cs-modal-overlay" aria-hidden="true">
+      <div class="cs-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cs-modal-title">
+        <button type="button" class="cs-modal-close" id="cs-modal-close" aria-label="Close Case Study">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="cs-modal-content" id="cs-modal-content">
+          <!-- Dynamically inserted by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Raw Data for Modal Instantiation -->
+    <script id="cs-raw-items" type="application/json">
+      <%- JSON.stringify(props.items || []) %>
+    </script>
+  <% } %>
+</section>
+
+<script>
+  (function() {
+    var section = document.getElementById('<%= props.id || "case-studies" %>');
+    if (!section) return;
+
+    // 1. Category Filtering
+    var filterBtns = section.querySelectorAll('.cs-filter-btn');
+    var cards = section.querySelectorAll('.case-study-card');
+
+    if (filterBtns.length && cards.length) {
+      filterBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          filterBtns.forEach(function(b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-pressed', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-pressed', 'true');
+
+          var targetCat = btn.getAttribute('data-category');
+          cards.forEach(function(card) {
+            var cardCat = card.getAttribute('data-category');
+            if (targetCat === 'all' || targetCat === cardCat) {
+              card.style.display = 'flex';
+              card.style.opacity = '1';
+            } else {
+              card.style.display = 'none';
+              card.style.opacity = '0';
+            }
+          });
+        });
+      });
+    }
+
+    // 2. Interactive Modal Handling for Compact Mode
+    var modalOverlay = document.getElementById('cs-modal-overlay');
+    var modalClose = document.getElementById('cs-modal-close');
+    var modalContent = document.getElementById('cs-modal-content');
+    var dataEl = document.getElementById('cs-raw-items');
+    var itemsData = [];
+
+    if (dataEl) {
+      try {
+        itemsData = JSON.parse(dataEl.textContent);
+      } catch (err) {
+        itemsData = [];
+      }
+    }
+
+    function openModal(slug) {
+      if (!modalOverlay || !modalContent) return;
+      var item = itemsData.find(function(it) {
+        return (it.slug === slug) || (it.categoryKey === slug);
+      });
+      if (!item) return;
+
+      var challengeLabel = 'Challenge:';
+      var solutionLabel = 'Solution:';
+      var fullPageLabel = 'Open in Dedicated Full Page';
+      var contactLabel = 'Schedule Solution Audit';
+
+      var metricsHtml = '';
+      if (Array.isArray(item.metrics) && item.metrics.length) {
+        metricsHtml = '<div class="cs-metrics-grid">' +
+          item.metrics.map(function(m) {
+            return '<div class="cs-metric-box"><div class="cs-metric-value">' + m.value + '</div><div class="cs-metric-label">' + m.label + '</div></div>';
+          }).join('') +
+        '</div>';
+      }
+
+      var tagsHtml = '';
+      if (Array.isArray(item.techStack) && item.techStack.length) {
+        tagsHtml = '<div class="cs-tags">' +
+          item.techStack.map(function(t) {
+            return '<span class="cs-tag">' + t + '</span>';
+          }).join('') +
+        '</div>';
+      }
+
+      var fullPageHref = '/customers/case-studies/' + (item.slug || '');
+      var contactHref = '/contact';
+
+      var html = [
+        '<div class="cs-modal-header">',
+          '<div class="cs-client-badge">',
+            (item.clientLogo ? '<img src="' + item.clientLogo + '" alt="' + item.client + '" class="cs-client-logo" />' : ''),
+            '<span class="cs-client-name">' + item.client + '</span>',
+          '</div>',
+          (item.category ? '<span class="cs-category-tag">' + item.category + '</span>' : ''),
+        '</div>',
+        '<h2 class="cs-modal-title" id="cs-modal-title">' + item.title + '</h2>',
+        '<div class="cs-narrative">',
+          '<div class="cs-point cs-challenge">',
+            '<span class="cs-point-label">',
+              '<svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>',
+              ' ' + challengeLabel,
+            '</span>',
+            '<p>' + (item.challenge || '') + '</p>',
+          '</div>',
+          '<div class="cs-point cs-solution">',
+            '<span class="cs-point-label">',
+              '<svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>',
+              ' ' + solutionLabel,
+            '</span>',
+            '<p>' + (item.solution || '') + '</p>',
+          '</div>',
+        '</div>',
+        metricsHtml,
+        tagsHtml,
+        '<div class="cs-modal-actions">',
+          '<a href="' + fullPageHref + '" class="btn btn-primary cs-modal-action-btn">',
+            '<span>' + fullPageLabel + '</span>',
+            '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>',
+          '</a>',
+          '<a href="' + contactHref + '" class="btn btn-outline cs-modal-action-btn">' + contactLabel + '</a>',
+        '</div>'
+      ].join('');
+
+      modalContent.innerHTML = html;
+      modalOverlay.classList.add('active');
+      modalOverlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      if (!modalOverlay) return;
+      modalOverlay.classList.remove('active');
+      modalOverlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    if (modalOverlay) {
+      section.addEventListener('click', function(e) {
+        var btn = e.target.closest('[data-open-modal]');
+        if (btn) {
+          e.preventDefault();
+          var slug = btn.getAttribute('data-open-modal');
+          openModal(slug);
+        }
+      });
+
+      if (modalClose) {
+        modalClose.addEventListener('click', closeModal);
+      }
+
+      modalOverlay.addEventListener('click', function(e) {
+        if (e.target === modalOverlay) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+          closeModal();
+        }
+      });
+    }
+
+    // 3. Anchor Hash Highlighting on Full Page
+    if (window.location.hash) {
+      var hashTarget = document.querySelector(window.location.hash);
+      if (hashTarget && hashTarget.classList.contains('case-study-card')) {
+        setTimeout(function() {
+          hashTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          hashTarget.classList.add('cs-card-highlighted');
+          setTimeout(function() {
+            hashTarget.classList.remove('cs-card-highlighted');
+          }, 3000);
+        }, 200);
+      }
+    }
+  })();
+</script>

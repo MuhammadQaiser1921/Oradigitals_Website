@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="145" height="50" viewBox="0 0 145 50">
+  <g id="Logo" transform="translate(0 -6)">
+    <rect id="Rectangle_216" data-name="Rectangle 216" width="40.956" height="4.965" transform="translate(0 48.977)" fill="#40a948"/>
+    <rect id="Rectangle_217" data-name="Rectangle 217" width="4.961" height="23.835" transform="translate(0 25.141)" fill="#40a948"/>
+    <rect id="Rectangle_218" data-name="Rectangle 218" width="31.513" height="4.961" transform="translate(0 20.143)" fill="#40a948"/>
+    <path id="Path_3312" data-name="Path 3312" d="M0,0H14.662V1.8H0Z" transform="translate(17.55 36.3)" fill="#ffda00"/>
+    <rect id="Rectangle_211" data-name="Rectangle 211" width="40.956" height="4.961" transform="translate(0 10.688)" fill="#111827"/>
+    <rect id="Rectangle_212" data-name="Rectangle 212" width="4.961" height="32.015" transform="translate(35.995 12.48)" fill="#111827"/>
+    <rect id="Rectangle_213" data-name="Rectangle 213" width="27.273" height="4.929" transform="translate(9.451 39.551)" fill="#111827"/>
+    <rect id="Rectangle_214" data-name="Rectangle 214" width="4.961" height="11.151" transform="translate(9.467 31.564)" fill="#111827"/>
+    <rect id="Rectangle_215" data-name="Rectangle 215" width="27.334" height="4.929" transform="translate(9.451 29.639)" fill="#111827"/>
+    <text id="Agile" transform="translate(51 32.5)" fill="#111827" font-size="28" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="700">Agile</text>
+    <text id="Central_Inc." data-name="Central Inc." transform="translate(51 51)" fill="#4B5563" font-size="15" font-family="'Lato', 'Inter', sans-serif" font-weight="600" letter-spacing="0.5">Central Inc.</text>
+  </g>
+</svg>

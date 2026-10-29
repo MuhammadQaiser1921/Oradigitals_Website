@@ -1,8 +1,6 @@
-<section class="section light">
+<section class="section <%= props.light ? 'light' : '' %>">
   <div class="container">
-    <% if (props.title) { %>
-      <h2><%= props.title %></h2>
-    <% } %>
+    <%- include('../partials/section-header', { props }) %>
     <div class="timeline">
       <% (props.items || []).forEach((item) => { %>
         <article class="timeline-item">

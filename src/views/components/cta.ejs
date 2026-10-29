@@ -1,10 +1,12 @@
-<section class="section cta">
+<section class="section cta <%= props.light ? 'light' : '' %>">
   <div class="container">
-    <h2><%= props.title %></h2>
+    <% const headingTag = props.headingTag === 'h1' ? 'h1' : 'h2' %>
+    <<%= headingTag %>><%= props.title %></<%= headingTag %>>
     <p><%= props.text %></p>
     <div class="actions center">
       <% props.actions.forEach((action) => { %>
-        <a class="btn <%= action.style === 'outline' ? 'btn-outline' : 'btn-primary' %>" href="<%= action.href %>"><%= action.label %></a>
+        <% const actionHref = action.href; %>
+        <a class="btn <%= action.style === 'outline' ? 'btn-outline' : 'btn-primary' %>" href="<%= actionHref %>"><%= action.label %></a>
       <% }) %>
     </div>
   </div>

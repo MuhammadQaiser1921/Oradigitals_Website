@@ -1,11 +1,6 @@
-<section class="section light">
+<section class="section <%= props.light ? 'light' : '' %>" id="<%= props.id || 'openings' %>">
   <div class="container">
-    <% if (props.title) { %>
-      <h2><%= props.title %></h2>
-    <% } %>
-    <% if (props.subtitle) { %>
-      <p class="section-subtitle"><%= props.subtitle %></p>
-    <% } %>
+    <%- include('../partials/section-header', { props }) %>
     <div class="jobs-grid">
       <% (props.items || []).forEach((job) => { %>
         <article class="card job-card">

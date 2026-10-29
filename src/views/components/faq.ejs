@@ -1,0 +1,19 @@
+<section class="section <%= props.light ? 'light' : '' %> faq-section" id="<%= props.id || 'faq' %>">
+  <div class="container">
+    <%- include('../partials/section-header', { props }) %>
+
+    <div class="faq-accordion">
+      <% (props.items || []).forEach((item, index) => { %>
+        <details class="faq-item" <%= index === 0 ? 'open' : '' %>>
+          <summary class="faq-question">
+            <span><%= item.question %></span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-answer">
+            <p><%= item.answer %></p>
+          </div>
+        </details>
+      <% }) %>
+    </div>
+  </div>
+</section>

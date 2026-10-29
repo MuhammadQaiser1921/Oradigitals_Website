@@ -1,0 +1,286 @@
+<section class="customers-section <%= props.light ? 'light' : '' %>" id="customers">
+  <div class="container customers-container">
+    <% if (props.eyebrow) { %>
+      <div class="customer-eyebrow"><%= props.eyebrow %></div>
+    <% } %>
+
+    <h2 class="customer-heading">
+      <span class="customer-heading-main"><%= props.titleMain || 'Trusted by most popular brands in town' %></span>
+      <% if (props.titleSub) { %>
+        <span class="customer-heading-sub"><%= props.titleSub %></span>
+      <% } %>
+    </h2>
+
+    <% if (props.description) { %>
+      <p class="customer-description"><%= props.description %></p>
+    <% } %>
+
+    <div class="customers-grid">
+      <!-- 1. TREET GROUP -->
+      <div class="customer-grid-item" title="Treet Corporation">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Treet Corporation">
+          <image href="/public/images/treet-logo.png" xlink:href="/public/images/treet-logo.png" x="6" y="2" width="148" height="46" preserveAspectRatio="xMidYMid meet"/>
+        </svg>
+      </div>
+
+      <!-- 2. PRIMMESHIPER -->
+      <div class="customer-grid-item" title="Primmeshiper">
+        <svg class="brand-svg" viewBox="0 0 170 50" width="145" height="42" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Primmeshiper">
+          <image href="/public/images/primmeshiper-logo.png" xlink:href="/public/images/primmeshiper-logo.png" x="5" y="6" width="160" height="38" preserveAspectRatio="xMidYMid meet"/>
+        </svg>
+      </div>
+
+      <!-- 3. AGILE CENTRAL -->
+      <div class="customer-grid-item" title="Agile Central Inc">
+        <svg class="brand-svg" viewBox="0 0 145 50" width="135" height="42" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Agile Central Inc">
+          <g id="AgileCentralLogo" transform="translate(0, -6)">
+            <rect width="40.956" height="4.965" transform="translate(0 48.977)" fill="#40a948"/>
+            <rect width="4.961" height="23.835" transform="translate(0 25.141)" fill="#40a948"/>
+            <rect width="31.513" height="4.961" transform="translate(0 20.143)" fill="#40a948"/>
+            <path d="M0,0H14.662V1.8H0Z" transform="translate(17.55 36.3)" fill="#ffda00"/>
+            <rect width="40.956" height="4.961" transform="translate(0 10.688)" fill="#111827"/>
+            <rect width="4.961" height="32.015" transform="translate(35.995 12.48)" fill="#111827"/>
+            <rect width="27.273" height="4.929" transform="translate(9.451 39.551)" fill="#111827"/>
+            <rect width="4.961" height="11.151" transform="translate(9.467 31.564)" fill="#111827"/>
+            <rect width="27.334" height="4.929" transform="translate(9.451 29.639)" fill="#111827"/>
+            <text x="51" y="32.5" fill="#111827" font-size="28" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="700">Agile</text>
+            <text x="51" y="51" fill="#4B5563" font-size="15" font-family="'Lato', 'Inter', sans-serif" font-weight="600" letter-spacing="0.5">Central Inc.</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- 4. INVESTMENTER -->
+      <div class="customer-grid-item" title="InvestMenter">
+        <svg class="brand-svg" viewBox="0 0 142 70" width="135" height="42" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="InvestMenter">
+          <!-- 5 Ascending Pillars -->
+          <!-- Pillar 1 / Letter 'I' with slanted head -->
+          <polygon points="2,25 11,22 11,50 2,50" fill="#111827"/>
+          <!-- Pillar 2 (Gold) -->
+          <polygon points="17,20 26,17 26,29 17,29" fill="#C4932F"/>
+          <!-- Pillar 3 -->
+          <polygon points="32,15 41,12 41,29 32,29" fill="#111827"/>
+          <!-- Pillar 4 -->
+          <polygon points="48,10 57,7 57,29 48,29" fill="#111827"/>
+          <!-- Pillar 5 -->
+          <polygon points="63,5 72,2 72,29 63,29" fill="#111827"/>
+
+          <!-- NVEST -->
+          <text x="14" y="50" fill="#111827" font-family="'Inter', 'Arial Black', -apple-system, sans-serif" font-weight="900" font-size="20.5" letter-spacing="1">NVEST</text>
+
+          <!-- MENTER -->
+          <text x="59" y="65" fill="#111827" font-family="'Inter', 'Arial Black', -apple-system, sans-serif" font-weight="900" font-size="13.5" letter-spacing="0.6">MENT<tspan fill="#C4932F">ER</tspan></text>
+        </svg>
+      </div>
+
+      <!-- 5. MAN -->
+      <div class="customer-grid-item" title="MAN Truck & Bus">
+        <svg class="brand-svg" viewBox="0 0 140 50" width="115" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="7" width="88" height="36" rx="18" stroke="#111827" stroke-width="2.5" fill="none"/>
+          <path d="M22 13c12-3 24-3 36 0" stroke="#111827" stroke-width="2.5" stroke-linecap="round"/>
+          <text x="24" y="33" font-family="'Inter', 'Arial Black', sans-serif" font-weight="900" font-size="18" fill="#111827" letter-spacing="1">MAN</text>
+        </svg>
+      </div>
+
+      <!-- 6. NESTO -->
+      <div class="customer-grid-item" title="Nesto Hypermarket">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 10c-3 5-2 14 3 19 4-2 6-8 4-13-1-3-4-5-7-6z" fill="#10843F"/>
+          <path d="M18 12c-1 6 1 12 5 16 3-3 4-8 2-12-1-3-4-4-7-4z" fill="#E31E24"/>
+          <text x="32" y="19" font-family="'Cairo', sans-serif" font-weight="800" font-size="12" fill="#E31E24">نستــــو</text>
+          <text x="32" y="34" font-family="'Inter', sans-serif" font-weight="900" font-size="17" fill="#E31E24" letter-spacing="0.5">NESTO</text>
+          <text x="32" y="43" font-family="'Inter', sans-serif" font-weight="500" font-size="7.5" fill="#4B5563">All that you need.</text>
+        </svg>
+      </div>
+
+      <!-- 7. EXXONMOBIL -->
+      <div class="customer-grid-item" title="ExxonMobil Corporation">
+        <svg class="brand-svg" viewBox="0 0 170 50" width="140" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="4" y="31" font-family="'Inter', 'Arial Black', sans-serif" font-weight="900" font-size="19" fill="#ED1C24" letter-spacing="0.5">
+            Exx<tspan fill="#ED1C24" font-weight="900">o</tspan>nMobil
+          </text>
+        </svg>
+      </div>
+
+      <!-- 8. BUREAU VERITAS -->
+      <div class="customer-grid-item" title="Bureau Veritas">
+        <svg class="brand-svg" viewBox="0 0 170 50" width="140" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="24" r="14" stroke="#8B6F47" stroke-width="1.5" fill="none"/>
+          <circle cx="20" cy="24" r="11" stroke="#8B6F47" stroke-width="0.8" fill="none"/>
+          <path d="M19 15v12l4 3" stroke="#8B6F47" stroke-width="1.2"/>
+          <rect x="42" y="16" width="76" height="9" fill="#C8102E"/>
+          <text x="44" y="23" font-family="'Inter', sans-serif" font-weight="700" font-size="6.5" fill="#ffffff" letter-spacing="0.5">BUREAU</text>
+          <rect x="42" y="26" width="76" height="9" fill="#C8102E"/>
+          <text x="44" y="33" font-family="'Inter', sans-serif" font-weight="700" font-size="6.5" fill="#ffffff" letter-spacing="0.5">VERITAS</text>
+          <text x="44" y="42" font-family="'Inter', sans-serif" font-weight="600" font-size="7" fill="#8B6F47">1828</text>
+        </svg>
+      </div>
+
+      <!-- 9. NAFFCO -->
+      <div class="customer-grid-item" title="NAFFCO">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 28c4-8 12-14 20-14-3 6-7 11-13 15-3 2-6 2-7-1z" fill="#C8102E"/>
+          <path d="M19 19c3-4 8-7 13-7-2 3-5 6-9 8-2 1-3 1-4-1z" fill="#E30613"/>
+          <text x="36" y="27" font-family="'Inter', sans-serif" font-weight="900" font-size="17" fill="#C8102E" letter-spacing="0.5">NAFFCO</text>
+          <text x="36" y="37" font-family="'Inter', sans-serif" font-weight="700" font-size="6.5" fill="#4B5563" letter-spacing="0.3">PASSION TO PROTECT</text>
+        </svg>
+      </div>
+
+      <!-- 10. AL DAHRA -->
+      <div class="customer-grid-item" title="Al Dahra Holding">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="10" y="30" font-family="'Georgia', serif" font-weight="700" font-size="20" fill="#2E3A23" letter-spacing="-0.5">aldahra</text>
+          <path d="M96 22l8 11h-8v-11z" fill="#758A3E"/>
+          <path d="M102 33l5-7v7h-5z" fill="#A4B85E"/>
+        </svg>
+      </div>
+
+      <!-- 11. SPAR -->
+      <div class="customer-grid-item" title="SPAR Supermarkets">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="11" width="94" height="26" rx="3" fill="#E30613"/>
+          <text x="14" y="30" font-family="'Inter', sans-serif" font-weight="900" font-size="18" fill="#ffffff" letter-spacing="1">SPAR</text>
+          <circle cx="82" cy="24" r="9" fill="#ffffff"/>
+          <circle cx="82" cy="24" r="8" fill="#00843D"/>
+          <path d="M82 18l3 5h-2l2 4h-6l2-4h-2l3-5z" fill="#ffffff"/>
+        </svg>
+      </div>
+
+      <!-- 12. GISCO -->
+      <div class="customer-grid-item" title="GISCO (Bin Hamoodah)">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 24l5-5 5 5-5 5-5-5z" fill="#D32F2F"/>
+          <path d="M22 24l4-4 4 4-4 4-4-4z" fill="#D32F2F"/>
+          <path d="M17 19l4-4 4 4-4 4-4-4z" fill="#D32F2F"/>
+          <path d="M17 29l4-4 4 4-4 4-4-4z" fill="#D32F2F"/>
+          <text x="36" y="29" font-family="'Inter', sans-serif" font-weight="800" font-size="18" fill="#0A2540" letter-spacing="0.5">GISCO</text>
+        </svg>
+      </div>
+
+      <!-- 13. DUBIZLE -->
+      <div class="customer-grid-item" title="dubizzle">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="8" y="32" font-family="'Inter', sans-serif" font-weight="800" font-size="22" fill="#212121">
+            dub<tspan fill="#D92228">i</tspan>zzle
+          </text>
+          <path d="M46 15c2-2 3-5 2-7-2 1-3 3-3 5 0 1 0 2 1 2z" fill="#D92228"/>
+        </svg>
+      </div>
+
+      <!-- 14. PREMIER INN -->
+      <div class="customer-grid-item" title="Premier Inn">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="106" cy="24" r="11" fill="#3D1152"/>
+          <path d="M106 17c2 2 3 5 1 8s-5 4-7 3c3 1 7 0 9-3s0-7-3-8z" fill="#F4B41A"/>
+          <text x="8" y="28" font-family="'Inter', sans-serif" font-weight="700" font-size="16" fill="#3D1152">Premier Inn</text>
+        </svg>
+      </div>
+
+      <!-- 15. TRANE -->
+      <div class="customer-grid-item" title="Trane Technologies">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="24" r="14" fill="#ED5829"/>
+          <path d="M8 20h24M8 24h24M8 28h24" stroke="#ffffff" stroke-width="1.8"/>
+          <text x="40" y="30" font-family="'Inter', sans-serif" font-weight="900" font-style="italic" font-size="18" fill="#ED1C24" letter-spacing="1">TRANE</text>
+        </svg>
+      </div>
+
+      <!-- 16. DEPA -->
+      <div class="customer-grid-item" title="Depa Interiors">
+        <svg class="brand-svg" viewBox="0 0 140 50" width="120" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="8" width="86" height="34" fill="#E30613"/>
+          <text x="14" y="33" font-family="'Inter', sans-serif" font-weight="800" font-size="24" fill="#ffffff" letter-spacing="-0.5">depa</text>
+        </svg>
+      </div>
+
+      <!-- 17. BOSCH -->
+      <div class="customer-grid-item" title="Bosch Global">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="24" r="13" stroke="#6B7280" stroke-width="2" fill="none"/>
+          <rect x="13" y="16" width="10" height="16" rx="2" stroke="#6B7280" stroke-width="1.8" fill="none"/>
+          <line x1="18" y1="11" x2="18" y2="16" stroke="#6B7280" stroke-width="2"/>
+          <line x1="18" y1="32" x2="18" y2="37" stroke="#6B7280" stroke-width="2"/>
+          <text x="36" y="31" font-family="'Inter', sans-serif" font-weight="900" font-size="20" fill="#E20015" letter-spacing="0.5">BOSCH</text>
+        </svg>
+      </div>
+
+      <!-- 18. IDEMITSU -->
+      <div class="customer-grid-item" title="Idemitsu Kosan">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="24" r="11" fill="#D62329"/>
+          <path d="M14 20c2-2 5-3 7-1 2 2 3 5 1 7-2 2-5 2-7 0 2 0 4-1 4-3s-2-3-4-3h-1z" fill="#ffffff"/>
+          <text x="35" y="30" font-family="'Inter', sans-serif" font-weight="700" font-size="16" fill="#1F2937">idemitsu</text>
+        </svg>
+      </div>
+
+      <!-- 19. VOLKSWAGEN -->
+      <div class="customer-grid-item" title="Volkswagen Group">
+        <svg class="brand-svg" viewBox="0 0 170 50" width="140" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="8" y="28" font-family="'Inter', sans-serif" font-weight="600" font-size="12" fill="#001E50" letter-spacing="0.5">Volkswagen</text>
+          <circle cx="98" cy="24" r="13" stroke="#001E50" stroke-width="2" fill="none"/>
+          <path d="M91 16l3 11 2-8 2 8 3-11" stroke="#001E50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M93 23l2 8 2-8" stroke="#001E50" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+
+      <!-- 20. GLICO -->
+      <div class="customer-grid-item" title="Ezaki Glico">
+        <svg class="brand-svg" viewBox="0 0 140 50" width="120" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="10" y="33" font-family="'Brush Script MT', 'Dancing Script', cursive, sans-serif" font-weight="700" font-size="30" fill="#E60012">Glico</text>
+        </svg>
+      </div>
+
+      <!-- 21. ORACLE -->
+      <div class="customer-grid-item" title="Oracle Corporation">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="16" width="24" height="17" rx="8.5" stroke="#F80000" stroke-width="3.5" fill="none"/>
+          <text x="36" y="30" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#F80000" letter-spacing="1">ORACLE</text>
+        </svg>
+      </div>
+
+      <!-- 22. KINAN -->
+      <div class="customer-grid-item" title="Kinan Real Estate">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="10" y="21" font-family="'Cairo', sans-serif" font-weight="900" font-size="15" fill="#111827">كـنـــان</text>
+          <text x="10" y="37" font-family="'Inter', sans-serif" font-weight="900" font-size="17" fill="#111827" letter-spacing="0.5">kinan</text>
+        </svg>
+      </div>
+
+      <!-- 23. AL JOMAIH -->
+      <div class="customer-grid-item" title="Al Jomaih Holding">
+        <svg class="brand-svg" viewBox="0 0 170 50" width="140" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="88" y="14" width="20" height="20" rx="3" fill="#0B5DA2"/>
+          <path d="M92 20h12v3H92zm0 5h8v3h-8z" fill="#ffffff"/>
+          <text x="10" y="24" font-family="'Cairo', sans-serif" font-weight="800" font-size="11" fill="#1F2937">الجميح القابضة</text>
+          <text x="10" y="34" font-family="'Inter', sans-serif" font-weight="600" font-size="8" fill="#4B5563">Al Jomaih Holding</text>
+        </svg>
+      </div>
+
+      <!-- 24. SEPCO -->
+      <div class="customer-grid-item" title="SEPCO Environment">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="10" y="21" font-family="'Inter', sans-serif" font-weight="800" font-size="15" fill="#4B5563" letter-spacing="1">sepco</text>
+          <text x="10" y="36" font-family="'Cairo', sans-serif" font-weight="900" font-size="18" fill="#2E7D32">سيبكو</text>
+        </svg>
+      </div>
+
+      <!-- 25. AL SHIYAKA -->
+      <div class="customer-grid-item" title="Alshiyaka">
+        <svg class="brand-svg" viewBox="0 0 160 50" width="130" height="42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 20l4-4 4 4-4 4-4-4zm8 8l4-4 4 4-4 4-4-4z" fill="#1F2937"/>
+          <text x="28" y="27" font-family="'Cairo', sans-serif" font-weight="900" font-size="15" fill="#1F2937">الشياكة</text>
+          <text x="28" y="36" font-family="'Inter', sans-serif" font-weight="600" font-size="7.5" fill="#6B7280" letter-spacing="0.5">alshiyaka</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="customer-footer-link">
+      <a href="/customers" class="customer-cta-link">
+        <span><%= props.ctaLabel || 'Meet our customers' %></span>
+        <svg class="customer-arrow-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+<svg class="brand-svg" viewBox="0 0 142 70" width="138" height="44" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="InvestMenter">
+  <!-- 5 Ascending Pillars -->
+  <!-- Pillar 1 / Letter 'I' with slanted head -->
+  <polygon points="2,25 11,22 11,50 2,50" fill="#111827"/>
+  <!-- Pillar 2 (Gold) -->
+  <polygon points="17,20 26,17 26,29 17,29" fill="#C4932F"/>
+  <!-- Pillar 3 -->
+  <polygon points="32,15 41,12 41,29 32,29" fill="#111827"/>
+  <!-- Pillar 4 -->
+  <polygon points="48,10 57,7 57,29 48,29" fill="#111827"/>
+  <!-- Pillar 5 -->
+  <polygon points="63,5 72,2 72,29 63,29" fill="#111827"/>
+
+  <!-- NVEST -->
+  <text x="14" y="50" fill="#111827" font-family="'Inter', 'Arial Black', -apple-system, sans-serif" font-weight="900" font-size="20.5" letter-spacing="1">NVEST</text>
+
+  <!-- MENTER -->
+  <text x="59" y="65" fill="#111827" font-family="'Inter', 'Arial Black', -apple-system, sans-serif" font-weight="900" font-size="13.5" letter-spacing="0.6">MENT<tspan fill="#C4932F">ER</tspan></text>
+</svg>

@@ -1,0 +1,59 @@
+<section class="section <%= props.light ? 'light' : '' %> map-section" id="<%= props.id || 'map' %>">
+  <div class="container">
+    <%- include('../partials/section-header', { props }) %>
+
+    <div class="map-grid map-unified-block">
+      <div class="map-frame-wrapper">
+        <iframe
+          src="<%= props.mapEmbed || site.mapEmbed %>"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="OraDigitals Office Location"
+        ></iframe>
+      </div>
+      <div class="map-card map-card-content">
+        <% 
+          const hasCustomTitle = Boolean(props.cardTitle);
+          const isCompanyTitle = hasCustomTitle && props.cardTitle.toLowerCase().includes('oradigitals');
+        %>
+        <h3><%= props.cardTitle || 'Headquarters & Delivery Hub' %></h3>
+        <% if (!isCompanyTitle) { %>
+          <p class="map-address-company"><strong><%= site.legalName %></strong></p>
+        <% } %>
+        <div class="map-location-info">
+          <p class="map-address-line"><%= site.address %></p>
+          <p class="map-address-city"><%= site.cityAddress %></p>
+        </div>
+        <div class="map-meta">
+          <p>
+            <span class="meta-label">Phone:</span>
+            <a href="tel:<%= site.phoneRaw %>"><%= site.phone %></a>
+            /
+            <a href="tel:<%= site.phone2Raw %>"><%= site.phone2 %></a>
+          </p>
+          <p>
+            <span class="meta-label">Email:</span>
+            <a href="mailto:<%= site.email %>"><%= site.email %></a>
+          </p>
+          <p>
+            <span class="meta-label">Hours:</span>
+            <span>Mon - Fri 9:00 AM - 6:00 PM (PKT / GST)</span>
+          </p>
+          <p>
+            <span class="meta-label">Coordinates:</span>
+            <span><%= site.coordinates %></span>
+          </p>
+        </div>
+        <div class="actions map-actions">
+          <a class="btn btn-primary" href="<%= site.mapLink %>" target="_blank" rel="noopener noreferrer">
+            Get Driving Directions &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

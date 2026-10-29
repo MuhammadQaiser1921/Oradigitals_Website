@@ -1,11 +1,6 @@
-<section class="section">
+<section class="section <%= props.light ? 'light' : '' %> testimonials-section" id="<%= props.id || 'testimonials' %>">
   <div class="container">
-    <% if (props.title) { %>
-      <h2><%= props.title %></h2>
-    <% } %>
-    <% if (props.subtitle) { %>
-      <p class="section-subtitle"><%= props.subtitle %></p>
-    <% } %>
+    <%- include('../partials/section-header', { props }) %>
     <div class="cards-grid cols-<%= props.columns || 2 %>">
       <% (props.items || []).forEach((item) => { %>
         <article class="card testimonial">

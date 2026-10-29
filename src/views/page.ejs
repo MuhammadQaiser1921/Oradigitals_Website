@@ -1,36 +1,180 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= page.title %></title>
   <meta name="description" content="<%= page.description %>" />
-  <link rel="stylesheet" href="/public/express.css" />
+  <%
+    const siteUrl = 'https://oradigitals.com'
+    // Share picture: the page's own (case studies, products) or the branded default, all 1200 x 630
+    const shareImage = siteUrl + (page.image || '/public/images/share/oradigitals.png')
+    // JSON for <script> blocks; "<" is escaped so text can never close the script tag
+    const jsonLd = (data) => JSON.stringify(data).replace(/</g, '\\u003c')
+    const organization = {
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      '@id': `${siteUrl}/#organization`,
+      name: site.legalName,
+      alternateName: site.name,
+      url: siteUrl,
+      logo: `${siteUrl}/public/icons/icon-512.png`,
+      image: `${siteUrl}/public/images/share/oradigitals.png`,
+      description: site.tagline,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: site.address,
+        addressLocality: 'Okara',
+        addressRegion: 'Punjab',
+        postalCode: '56300',
+        addressCountry: 'PK',
+      },
+      telephone: site.phone,
+      email: site.email,
+      contactPoint: [site.phone, site.phone2].map((telephone) => ({
+        '@type': 'ContactPoint',
+        telephone,
+        email: site.email,
+        contactType: 'customer service',
+      })),
+      taxID: site.fbrNumber,
+      sameAs: [site.mapLink, site.secpVerificationLink],
+    }
+  %>
+  <% if (page.noindex) { %>
+    <%# Error pages: keep them out of search results and don't claim a canonical address %>
+    <meta name="robots" content="noindex" />
+  <% } else { %>
+    <link rel="canonical" href="<%= siteUrl + currentPath %>" />
+  <% } %>
+
+  <!-- OpenGraph / Social Media -->
+  <meta property="og:type" content="<%= page.schema && page.schema['@type'] === 'Article' ? 'article' : 'website' %>" />
+  <meta property="og:title" content="<%= page.title %>" />
+  <meta property="og:description" content="<%= page.description %>" />
+  <% if (!page.noindex) { %>
+    <meta property="og:url" content="<%= siteUrl + currentPath %>" />
+  <% } %>
+  <meta property="og:site_name" content="OraDigitals" />
+  <meta property="og:image" content="<%= shareImage %>" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="<%= page.title %>" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="<%= page.title %>" />
+  <meta name="twitter:description" content="<%= page.description %>" />
+  <meta name="twitter:image" content="<%= shareImage %>" />
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json"><%- jsonLd(organization) %></script>
+  <% if (page.schema) { %>
+    <script type="application/ld+json"><%- jsonLd(page.schema) %></script>
+  <% } %>
+
+  <!-- Google Fonts: Inter in the weights the stylesheet uses -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Favicons, phone home-screen icon & Stylesheet -->
+  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+  <link rel="alternate icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/public/site.webmanifest" />
+  <meta name="theme-color" content="#284763" />
+  <link rel="stylesheet" href="/public/express.css?v=<%= cssVersion %>" />
 </head>
 <body>
   <header class="site-header">
     <div class="container nav-row">
-      <a class="brand" href="/">ORA<span>DIGITALS</span></a>
-      <nav class="nav-links">
-        <% site.nav.forEach((item) => { %>
-          <div class="nav-item-wrapper <%= item.submenu && item.submenu.length > 0 ? 'has-submenu' : '' %>">
-            <a href="<%= item.href %>" class="nav-link <%= currentPath === item.href ? 'active' : '' %>"><%= item.label %></a>
-            <% if (item.submenu && item.submenu.length > 0) { %>
-              <div class="submenu">
+      <a class="brand" href="/" aria-label="OraDigitals">
+        <span class="brand-ora">ORA</span><span class="brand-digitals">DIGITALS</span>
+      </a>
+
+      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Menu" aria-controls="navLinks" aria-expanded="false">
+        <svg class="hamburger-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <%# Shown instead of the ☰ icon while the menu is open (see .mobile-nav-toggle in the stylesheet) %>
+        <svg class="close-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true">
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+        </svg>
+      </button>
+
+      <nav class="nav-links" id="navLinks">
+        <% /* Highlight the menu section the page sits under (from the page's breadcrumb trail, which is not shown) */ %>
+        <% const activeSection = typeof breadcrumbs !== 'undefined' && breadcrumbs && breadcrumbs[1] ? breadcrumbs[1].href : '' %>
+        <% site.nav.forEach((item, navIdx) => { %>
+          <% if (item.isMega && item.groups) { %>
+            <div class="nav-item-wrapper has-submenu has-mega">
+              <a href="<%= item.href %>" class="nav-link <%= item.href === activeSection ? 'active' : '' %>"><%= item.label %></a>
+              <button type="button" class="submenu-toggle" aria-expanded="false" aria-controls="nav-menu-<%= navIdx %>" aria-label="<%= item.label %> menu">
+                <svg class="nav-arrow" viewBox="0 0 512 512" width="11" height="11" fill="currentColor" aria-hidden="true">
+                  <path d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"></path>
+                </svg>
+              </button>
+              <div class="mega-menu" id="nav-menu-<%= navIdx %>">
+                <div class="mega-grid">
+                  <% item.groups.forEach((grp) => { %>
+                    <div class="mega-col">
+                      <h5><%= grp.heading %></h5>
+                      <% grp.items.forEach((sub) => { %>
+                        <a href="<%= sub.href %>" class="mega-item">
+                          <span class="mega-item-title"><%= sub.label %></span>
+                          <span class="mega-item-desc"><%= sub.desc %></span>
+                        </a>
+                      <% }) %>
+                    </div>
+                  <% }) %>
+                </div>
+              </div>
+            </div>
+          <% } else if (item.submenu && item.submenu.length > 0) { %>
+            <div class="nav-item-wrapper has-submenu">
+              <a href="<%= item.href %>" class="nav-link <%= item.href === activeSection ? 'active' : '' %>"><%= item.label %></a>
+              <button type="button" class="submenu-toggle" aria-expanded="false" aria-controls="nav-menu-<%= navIdx %>" aria-label="<%= item.label %> menu">
+                <svg class="nav-arrow" viewBox="0 0 512 512" width="11" height="11" fill="currentColor" aria-hidden="true">
+                  <path d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"></path>
+                </svg>
+              </button>
+              <div class="submenu" id="nav-menu-<%= navIdx %>">
                 <% item.submenu.forEach((subitem) => { %>
-                  <a href="<%= subitem.href %>" class="submenu-link"><%= subitem.label %></a>
+                  <a href="<%= subitem.href %>" class="submenu-link">
+                    <span class="submenu-item-title"><%= subitem.label %></span>
+                    <% if (subitem.desc) { %>
+                      <span class="submenu-item-desc"><%= subitem.desc %></span>
+                    <% } %>
+                  </a>
                 <% }) %>
               </div>
-            <% } %>
-          </div>
+            </div>
+          <% } else { %>
+            <div class="nav-item-wrapper">
+              <a href="<%= item.href %>" class="nav-link <%= item.href === activeSection ? 'active' : '' %>"><%= item.label %></a>
+            </div>
+          <% } %>
         <% }) %>
+        <%# On phones the header buttons don't fit, so they sit at the bottom of the ☰ menu instead %>
+        <div class="nav-menu-actions">
+          <%- include('partials/header-buttons') %>
+        </div>
       </nav>
+
+      <div class="header-actions">
+        <%- include('partials/header-buttons') %>
+      </div>
     </div>
   </header>
 
   <main>
-    <% if (flash && flash.message) { %>
-      <section class="section">
+    <%# Form results appear inside the form itself; this is for other messages, e.g. on the error page %>
+    <% if (flash && flash.message && !page.sections.some((section) => section.component === 'contact-form')) { %>
+      <section class="section" style="padding-bottom: 0;">
         <div class="container">
           <div class="flash <%= flash.status === 'success' ? 'flash-success' : 'flash-info' %>">
             <p><%= flash.message %></p>
@@ -38,25 +182,310 @@
         </div>
       </section>
     <% } %>
+
+    <%
+      // Sections alternate white / grey like the landing page, starting with white; the case-study article is
+      // always grey, so the section after it is white.
+      let nextLight = true
+      // The landing hero and the case-study article carry their own H1; on every other page the first
+      // section's heading is promoted to the page's H1.
+      let hasH1 = page.sections.some((section) => ['hero', 'case-study-single'].includes(section.component))
+    %>
     <% page.sections.forEach((section) => { %>
-      <%- include('components/' + section.component, { props: section.props, site, currentPath, flash }) %>
+      <%
+        let props = section.props
+        if (section.component === 'hero' || section.component === 'case-study-single') {
+          nextLight = true
+        } else {
+          props = { ...section.props, light: nextLight }
+          nextLight = !nextLight
+          if (!hasH1) {
+            props.headingTag = 'h1'
+            hasH1 = true
+          }
+        }
+      %>
+      <%- include('components/' + section.component, { props, site, currentPath, flash }) %>
     <% }) %>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <h3><%= site.legalName %></h3>
-        <p>Practical digital solutions for real business operations.</p>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <span class="brand-text">
+              <span class="brand-ora" style="color: #f09b4a;">ORA</span><span class="brand-digitals" style="color: #ffffff;">DIGITALS</span>
+            </span>
+          </div>
+          <h3 style="margin-top: 0.85rem; font-size: 0.95rem; color: #ffffff;"><%= site.legalName %></h3>
+          <p><%= site.tagline %></p>
+          <p style="margin-top: 1rem; font-size: 0.85rem;">
+            SECP Reg: <strong><%= site.secpNumber %></strong> | PSEB Reg: <strong><%= site.psebNumber %></strong><br />
+            FBR NTN: <strong><%= site.fbrNumber %></strong> | PRA: <strong><%= site.praNumber %></strong>
+          </p>
+          <div class="footer-socials" aria-label="Social Media">
+            <!-- 1. LinkedIn -->
+            <a href="https://www.linkedin.com/company/oradigitals" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="LinkedIn" title="LinkedIn">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="#000000">
+                <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/>
+              </svg>
+            </a>
+            <!-- 2. YouTube -->
+            <a href="https://www.youtube.com/@oradigitals" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="YouTube" title="YouTube">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="#000000">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+            <!-- 3. Instagram -->
+            <a href="https://www.instagram.com/oradigitals" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Instagram" title="Instagram">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="#000000">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+            <!-- 4. Facebook -->
+            <a href="https://www.facebook.com/oradigitals" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="Facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="#000000">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+            <!-- 5. Mail -->
+            <a href="mailto:<%= site.email %>" class="social-icon-btn" aria-label="Mail" title="Mail">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="#000000">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+            </a>
+            <!-- 6. GitHub -->
+            <a href="https://github.com/oradigitals" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="GitHub" title="GitHub">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="#000000">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+            </a>
+            <!-- 7. WhatsApp -->
+            <a href="https://wa.me/923355546497" target="_blank" rel="noopener noreferrer" class="social-icon-btn" aria-label="WhatsApp" title="WhatsApp">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="#000000">
+                <path d="M12.031 0C5.396 0 .029 5.367.029 11.987c0 2.108.549 4.164 1.595 5.972L.001 24l6.233-1.635a11.96 11.96 0 0 0 5.797 1.49h.005c6.634 0 12.001-5.367 12.001-11.987A11.93 11.93 0 0 0 20.53 3.513 11.94 11.94 0 0 0 12.031 0zm0 21.848h-.004a9.88 9.88 0 0 1-5.035-1.378l-.361-.214-3.743.982.999-3.648-.235-.374a9.866 9.866 0 0 1-1.512-5.26c0-5.46 4.44-9.884 9.894-9.884 2.64 0 5.122 1.03 6.988 2.898a9.832 9.832 0 0 1 2.893 6.994c0 5.461-4.444 9.885-9.889 9.885zm5.419-7.466c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.414-.074-.124-.272-.198-.57-.347z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4>Services</h4>
+          <%# Same names and order as the Services menu %>
+          <% site.nav.find((item) => item.href === '/services').groups.flatMap((group) => group.items).forEach((service) => { %>
+            <p><a href="<%= service.href %>"><%= service.label %></a></p>
+          <% }) %>
+          <p><a href="/services" style="color: var(--brand-orange); font-weight: 700;">View All Services →</a></p>
+        </div>
+
+        <div>
+          <h4>Company & Culture</h4>
+          <p><a href="/about">About OraDigitals</a></p>
+          <p><a href="/team">Leadership & Team</a></p>
+          <p><a href="/life">Life at OraDigitals</a></p>
+          <p><a href="/career/internship">Internship Program</a></p>
+          <p><a href="/customers">Customers</a></p>
+          <p><a href="/customers/case-studies">Case Studies</a></p>
+          <p><a href="/compliance">SECP Legal & Compliance</a></p>
+          <p><a href="/sitemap">HTML Sitemap</a></p>
+        </div>
+
+        <div>
+          <h4>Contact & Locations</h4>
+          <p><%= site.address %></p>
+          <p><%= site.cityAddress %></p>
+          <p><a href="tel:<%= site.phoneRaw %>"><%= site.phone %></a></p>
+          <p><a href="tel:<%= site.phone2Raw %>"><%= site.phone2 %></a></p>
+          <p><a href="mailto:<%= site.email %>"><%= site.email %></a></p>
+          <p><a href="<%= site.mapLink %>" target="_blank" rel="noopener noreferrer" style="color: var(--brand-orange);">Open in Google Maps →</a></p>
+        </div>
       </div>
-      <div>
-        <h4>Contact</h4>
-        <p><a href="mailto:<%= site.email %>"><%= site.email %></a></p>
-        <p><a href="tel:+923355546497"><%= site.phone %></a></p>
-        <p><%= site.address %></p>
-        <p><a href="/compliance">Compliance</a></p>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; <%= new Date().getFullYear() %> <%= site.legalName %>. All rights reserved.
+        </div>
+        <div>
+          <a href="/sitemap.xml">XML Sitemap</a> &bull;
+          <a href="/sitemap">HTML Sitemap</a> &bull;
+          <a href="/compliance">Compliance</a>
+        </div>
       </div>
     </div>
   </footer>
+
+  <!-- Scripts: Mobile Navigation & Menu Interactions -->
+  <script>
+    (function() {
+      // 1. Mobile Menu Toggle (the stylesheet swaps the ☰ and × icons from aria-expanded)
+      var toggle = document.getElementById('mobileNavToggle');
+      var navLinks = document.getElementById('navLinks');
+      if (toggle && navLinks) {
+        toggle.addEventListener('click', function() {
+          var isOpen = navLinks.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+      }
+
+      // 2. Sub-menu toggles: the arrow button opens a menu on tap, click or keyboard (one open at a time)
+      var subWrappers = document.querySelectorAll('.nav-item-wrapper.has-submenu');
+      var hoverMenus = window.matchMedia('(hover: hover) and (min-width: 1101px)');
+      function closeSubmenus(except) {
+        subWrappers.forEach(function(wrapper) {
+          if (wrapper === except) return;
+          wrapper.classList.remove('open');
+          var button = wrapper.querySelector('.submenu-toggle');
+          if (button) button.setAttribute('aria-expanded', 'false');
+        });
+      }
+      subWrappers.forEach(function(wrapper) {
+        var button = wrapper.querySelector('.submenu-toggle');
+        if (!button) return;
+        button.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var isOpen = wrapper.classList.toggle('open');
+          button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          if (isOpen) {
+            closeSubmenus(wrapper);
+            // Closing a long menu above can push this one out of view in the mobile list
+            wrapper.scrollIntoView({ block: 'nearest' });
+          }
+        });
+        // Desktop only: hovering another item closes a menu opened by click. Phones fire a
+        // synthetic mouseenter on tap, and collapsing menus there would shift the tap target.
+        wrapper.addEventListener('mouseenter', function() {
+          if (hoverMenus.matches) closeSubmenus(wrapper);
+        });
+      });
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.nav-item-wrapper.has-submenu')) closeSubmenus(null);
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key !== 'Escape') return;
+        var openWrapper = document.querySelector('.nav-item-wrapper.has-submenu.open');
+        if (!openWrapper) return;
+        closeSubmenus(null);
+        openWrapper.querySelector('.submenu-toggle').focus();
+      });
+
+      // 3. Mega-Menu Smooth Hover (desktop pointer only; CSS ignores show-mega elsewhere)
+      var megaWrappers = document.querySelectorAll('.nav-item-wrapper.has-mega');
+      megaWrappers.forEach(function(item) {
+        var menu = item.querySelector('.mega-menu');
+        if (!menu) return;
+        var timeout = null;
+        item.addEventListener('mouseenter', function() {
+          if (timeout) clearTimeout(timeout);
+          menu.classList.add('show-mega');
+        });
+        item.addEventListener('mouseleave', function() {
+          timeout = setTimeout(function() {
+            menu.classList.remove('show-mega');
+          }, 150);
+        });
+        if (window.location.search.indexOf('test_mega=1') !== -1) {
+          menu.classList.add('show-mega');
+        }
+      });
+
+      // 4. Card carousels: arrows page through the cards, dim at either end, and hide when everything fits
+      document.querySelectorAll('[data-carousel]').forEach(function(carousel) {
+        var track = carousel.querySelector('[data-carousel-track]');
+        var prev = carousel.querySelector('[data-carousel-prev]');
+        var next = carousel.querySelector('[data-carousel-next]');
+        if (!track || !prev || !next) return;
+        function update() {
+          var overflow = track.scrollWidth - track.clientWidth;
+          prev.hidden = next.hidden = overflow <= 2;
+          prev.disabled = track.scrollLeft <= 2;
+          next.disabled = track.scrollLeft >= overflow - 2;
+        }
+        prev.addEventListener('click', function() {
+          track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' });
+        });
+        next.addEventListener('click', function() {
+          track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
+        });
+        track.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        update();
+      });
+
+      // 5. Forms: messages under each field, a "Sending…" state that blocks double submits, and the
+      // result shown in the form without leaving the page. Without JavaScript the form posts normally.
+      document.querySelectorAll('[data-api-form]').forEach(function(form) {
+        var status = form.querySelector('[data-form-status]');
+        var button = form.querySelector('button[type="submit"]');
+        form.noValidate = true;
+
+        function showStatus(kind, text) {
+          status.hidden = false;
+          status.className = 'form-status form-status-' + kind;
+          status.textContent = text;
+        }
+        function setFieldError(field, text) {
+          var error = document.getElementById(field.id + '-error');
+          if (text) field.setAttribute('aria-invalid', 'true');
+          else field.removeAttribute('aria-invalid');
+          if (error) {
+            error.textContent = text || '';
+            error.hidden = !text;
+          }
+        }
+
+        form.addEventListener('input', function(e) {
+          if (e.target.getAttribute('aria-invalid') === 'true' && e.target.checkValidity()) setFieldError(e.target, '');
+        });
+
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          if (form.getAttribute('data-sending')) return;
+
+          var invalid = [];
+          Array.prototype.forEach.call(form.elements, function(field) {
+            if (!field.id || !field.willValidate) return;
+            var valid = field.checkValidity();
+            setFieldError(field, valid ? '' : field.validationMessage);
+            if (!valid) invalid.push(field);
+          });
+          if (invalid.length) {
+            showStatus('error', 'Please correct the highlighted fields.');
+            invalid[0].focus();
+            return;
+          }
+
+          form.setAttribute('data-sending', 'true');
+          button.disabled = true;
+          button.textContent = 'Sending…';
+          fetch(form.action, {
+            method: 'POST',
+            headers: { Accept: 'application/json', 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(new FormData(form)),
+          })
+            .then(function(res) {
+              return res.json().then(function(data) { return { ok: res.ok, data: data }; });
+            })
+            .then(function(result) {
+              var errors = result.data.errors || {};
+              Object.keys(errors).forEach(function(name) {
+                if (form.elements[name]) setFieldError(form.elements[name], errors[name]);
+              });
+              showStatus(result.ok ? 'success' : 'error', result.data.message);
+              if (result.ok) form.reset();
+            })
+            .catch(function() {
+              showStatus('error', 'Your message could not be sent. Please check your connection and try again.');
+            })
+            .then(function() {
+              form.removeAttribute('data-sending');
+              button.disabled = false;
+              button.textContent = button.getAttribute('data-label');
+              status.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -33,3 +33,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# runtime data
+/data/submissions.json
+
+
+# old Next.js version and build cache, kept locally only
+/archive/
+
+# one-off scripts and downloaded pages
+/scratch/

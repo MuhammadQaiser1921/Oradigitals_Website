@@ -1,45 +1,30 @@
-# Pre-Deployment Checklist (Express)
+# Pre-Deployment Checklist
 
-## Content and Branding
+## Content
 
-- [ ] Confirm company information in `src/data/site-content.js`
-- [ ] Confirm all page titles/descriptions are correct
-- [ ] Confirm contact details, compliance numbers, and links
+- [ ] Open content questions in `TODO.md` answered (company facts, client figures, certifications)
+- [ ] Contact details, address and registration numbers checked in `src/data/site-content.js`
+- [ ] Real photos in place of the sample portraits and AI images
 
-## Functional Checks
+## Checks
 
-- [ ] `npm install` succeeds
-- [ ] `npm run dev` starts successfully
-- [ ] Homepage and all page routes load
-- [ ] `GET /health` returns 200
-- [ ] `GET /api/site` returns JSON
-- [ ] `GET /api/page?slug=services` returns JSON
-- [ ] Contact form submits (`POST /api/contact`)
-- [ ] Career apply form submits (`POST /api/apply`)
+- [ ] `npm install` and `npm test` pass
+- [ ] `npm run dev` starts; home page and inner pages load without console errors
+- [ ] Contact, career and internship forms send and show the success message
+- [ ] Phone, tablet and desktop layouts checked
+- [ ] `data/submissions.json` holds only real submissions (it starts as `[]`)
 
-## UI and Responsiveness
+## Production
 
-- [ ] Desktop layout verified
-- [ ] Tablet layout verified
-- [ ] Mobile layout verified
-- [ ] Navigation and CTA links verified
+- [ ] `NODE_ENV=production` set
+- [ ] `TRUST_PROXY=1` set if the app runs behind a proxy
+- [ ] SMTP settings, `MAIL_FROM` and `MAIL_TO` set; start-up log shows `Form emails: on`
+- [ ] HTTPS on; `http://` and `www.` redirect to `https://oradigitals.com`
+- [ ] Submissions file backed up regularly
 
-## Production Readiness
+## After going live
 
-- [ ] Node.js app configured in hosting panel
-- [ ] Startup file set to `server.js`
-- [ ] `NODE_ENV=production` configured
-- [ ] App restart procedure documented
-
-## Post-Deploy Validation
-
-- [ ] Public domain loads homepage
-- [ ] Key routes are reachable
-- [ ] API endpoints reachable in production
-- [ ] Forms submit successfully in production
-- [ ] No critical errors in host logs
-
-## Repository Hygiene
-
-- [ ] Confirm `archive/` contains legacy Next files/tooling
-- [ ] Confirm active runtime files are only Express/EJS stack
+- [ ] Test message received by email
+- [ ] `sitemap.xml` submitted in Google Search Console
+- [ ] Share picture appears when a link is pasted into WhatsApp / LinkedIn
+- [ ] No errors in the host logs

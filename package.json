@@ -6,10 +6,18 @@
     "dev": "node server.js",
     "build": "node -e \"console.log('No build step required for Express app')\"",
     "start": "node server.js",
-    "lint": "node -e \"console.log('Lint step can be configured for Express templates if needed')\""
+    "test": "node test/routes.test.js",
+    "lint": "node -e \"console.log('Lint step can be configured for Express templates if needed')\"",
+    "images": "node --experimental-websocket scripts/generate-images.js"
   },
   "dependencies": {
+    "compression": "^1.8.2",
     "ejs": "^3.1.10",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "helmet": "^8.3.0",
+    "nodemailer": "^10.3.0"
+  },
+  "overrides": {
+    "qs": "^6.16.0"
   }
 }

@@ -1,0 +1,10 @@
+<section class="section <%= props.light ? 'light' : '' %>" id="<%= props.id || '' %>">
+  <div class="container">
+    <%- include('../partials/section-header', { props }) %>
+    <div class="cards-grid cols-<%= props.columns || 3 %> people-grid <%= props.photoStyle === 'portrait' ? 'people-grid-portrait' : '' %>">
+      <% (props.members || []).forEach((member) => { %>
+        <%- include('../partials/person-card', { member }) %>
+      <% }) %>
+    </div>
+  </div>
+</section>

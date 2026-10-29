@@ -1,0 +1,29 @@
+<section class="section <%= props.light ? 'light' : '' %> leader-section" id="<%= props.id || 'leadership' %>">
+  <div class="container leader-grid">
+    <div class="leader-photo-wrap">
+      <img src="<%= props.image %>" alt="<%= props.name %>, <%= props.role %>" class="leader-photo" />
+    </div>
+    <div class="leader-content">
+      <% if (props.eyebrow) { %>
+        <div class="customer-eyebrow"><%= props.eyebrow %></div>
+      <% } %>
+      <% const headingTag = props.headingTag === 'h1' ? 'h1' : 'h2' %>
+      <<%= headingTag %> class="customer-heading">
+        <span class="customer-heading-main"><%= props.name %></span>
+        <span class="customer-heading-sub"><%= props.role %></span>
+      </<%= headingTag %>>
+      <% (props.intro || []).forEach((paragraph) => { %>
+        <p class="leader-intro"><%= paragraph %></p>
+      <% }) %>
+      <% if (props.email) { %>
+        <a class="leader-email" href="mailto:<%= props.email %>">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="m22 7-10 6L2 7"></path>
+          </svg>
+          <span><%= props.email %></span>
+        </a>
+      <% } %>
+    </div>
+  </div>
+</section>

@@ -1,19 +1,67 @@
-<section class="section light">
-  <div class="container split-grid">
-    <div>
-      <h2><%= props.title %></h2>
-      <p><%= props.text %></p>
+<section class="section <%= props.light ? 'light' : '' %> split-section" id="<%= props.id || '' %>">
+  <div class="container split-grid <%= props.reverse ? 'reverse' : '' %>">
+    <div class="split-content">
+      <% if (props.eyebrow || props.badge) { %>
+        <div class="customer-eyebrow"><%= props.eyebrow || props.badge %></div>
+      <% } %>
+      <% const headingTag = props.headingTag === 'h1' ? 'h1' : 'h2' %>
+      <<%= headingTag %> class="customer-heading">
+        <span class="customer-heading-main"><%= props.titleMain || props.title %></span>
+        <% if (props.titleSub) { %>
+          <span class="customer-heading-sub"><%= props.titleSub %></span>
+        <% } %>
+      </<%= headingTag %>>
+      <% if (props.subtitle) { %>
+        <p class="section-subtitle"><%= props.subtitle %></p>
+      <% } %>
+      <p class="split-text"><%= props.text %></p>
+      <%# actionsAfterText puts the buttons above the list instead of below it %>
+      <% if (props.actionsAfterText && props.actions && props.actions.length) { %>
+        <div class="actions">
+          <% props.actions.forEach((action) => { %>
+            <% const actionHref = action.href; %>
+            <a class="btn <%= action.style === 'outline' ? 'btn-outline' : 'btn-primary' %>" href="<%= actionHref %>"><%= action.label %></a>
+          <% }) %>
+        </div>
+      <% } %>
       <% if (props.list && props.list.length) { %>
-        <ul>
+        <ul class="feature-list">
           <% props.list.forEach((item) => { %>
             <li><%= item %></li>
           <% }) %>
         </ul>
       <% } %>
+      <% if (!props.actionsAfterText && props.actions && props.actions.length) { %>
+        <div class="actions">
+          <% props.actions.forEach((action) => { %>
+            <% const actionHref = action.href; %>
+            <a class="btn <%= action.style === 'outline' ? 'btn-outline' : 'btn-primary' %>" href="<%= actionHref %>"><%= action.label %></a>
+          <% }) %>
+        </div>
+      <% } %>
     </div>
-    <div class="card">
-      <h3><%= props.sideTitle %></h3>
-      <p><%= props.sideText %></p>
+    <div class="split-media">
+      <% if (props.image) { %>
+        <div class="split-image-wrap">
+          <img src="<%= props.image %>" alt="<%= props.imageAlt || props.title %>" loading="lazy" class="split-image" />
+        </div>
+      <% } else if (props.sideTitle || props.sideText) { %>
+        <div class="card split-card">
+          <% if (props.sideTitle) { %>
+            <h3><%= props.sideTitle %></h3>
+          <% } %>
+          <% if (props.sideText) { %>
+            <p><%= props.sideText %></p>
+          <% } %>
+          <% if (props.sideList && props.sideList.length) { %>
+            <ul class="card-list">
+              <% props.sideList.forEach((li) => { %>
+                <li><%= li %></li>
+              <% }) %>
+            </ul>
+          <% } %>
+        </div>
+      <% } %>
     </div>
   </div>
 </section>

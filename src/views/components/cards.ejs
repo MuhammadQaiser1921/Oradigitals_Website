@@ -1,31 +1,93 @@
-<section class="section">
+<section class="section <%= props.light ? 'light' : '' %>" id="<%= props.id || '' %>">
   <div class="container">
-    <% if (props.title) { %>
-      <h2><%= props.title %></h2>
-    <% } %>
-    <% if (props.subtitle) { %>
-      <p class="section-subtitle"><%= props.subtitle %></p>
-    <% } %>
+    <%- include('../partials/section-header', { props }) %>
     <div class="cards-grid cols-<%= props.columns || 3 %>">
       <% props.cards.forEach((card) => { %>
-        <article class="card">
+        <article class="card <%= card.highlight ? 'card-highlight' : '' %>"<% if (card.id) { %> id="<%= card.id %>"<% } %>>
+          <% if (card.icon) { %>
+            <div class="card-icon-wrap">
+              <%- include('../partials/svg-icon', { iconName: card.icon, iconClass: 'card-svg' }) %>
+            </div>
+          <% } %>
+          <% if (card.badge) { %>
+            <div class="card-eyebrow"><%= card.badge %></div>
+          <% } %>
           <h3><%= card.title %></h3>
           <% if (card.subtitle) { %>
             <p class="card-subtitle"><%= card.subtitle %></p>
           <% } %>
-          <p><%= card.text %></p>
+          <p class="card-text"><%= card.text %></p>
           <% if (Array.isArray(card.list) && card.list.length) { %>
-            <ul class="card-list">
+            <% const hasLinkItems = card.list.some(item => typeof item === 'object' || (typeof item === 'string' && (item.includes(': /') || item.startsWith('/')))); %>
+            <ul class="card-list <%= hasLinkItems ? 'has-links' : '' %>">
               <% card.list.forEach((item) => { %>
-                <li><%= item %></li>
+                <%
+                  let itemLabel = item;
+                  let itemHref = null;
+                  if (typeof item === 'object' && item !== null) {
+                    itemLabel = item.label || item.title || '';
+                    itemHref = item.href || item.url || null;
+                  } else if (typeof item === 'string') {
+                    const colonIdx = item.lastIndexOf(': /');
+                    if (colonIdx !== -1) {
+                      itemLabel = item.slice(0, colonIdx).trim();
+                      itemHref = item.slice(colonIdx + 2).trim();
+                    } else if (item.startsWith('/')) {
+                      itemLabel = item;
+                      itemHref = item;
+                    }
+                  }
+                %>
+                <% if (itemHref) { %>
+                  <li class="card-list-item-link">
+                    <a href="<%= itemHref %>" class="sitemap-link">
+                      <span><%= itemLabel %></span>
+                      <svg class="sitemap-link-arrow" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                      </svg>
+                    </a>
+                  </li>
+                <% } else { %>
+                  <li><%= item %></li>
+                <% } %>
               <% }) %>
             </ul>
           <% } %>
           <% if (card.link && card.link.href && card.link.label) { %>
-            <p><a class="card-link" href="<%= card.link.href %>" target="_blank" rel="noreferrer"><%= card.link.label %></a></p>
+            <% const finalCardHref = card.link.href; %>
+            <div class="card-action-wrap">
+              <a
+                class="card-btn"
+                href="<%= finalCardHref %>"
+                <%= card.link.href.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : '' %>
+              >
+                <span><%= card.link.label %></span>
+                <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
           <% } %>
         </article>
       <% }) %>
     </div>
+
+    <% 
+      const footerLinkObj = props.footerLink || (props.ctaHref ? { href: props.ctaHref, label: props.ctaLabel || 'Explore our services' } : null);
+    %>
+    <% if (footerLinkObj && footerLinkObj.href && footerLinkObj.label) { %>
+      <% const sectionFooterLink = footerLinkObj.href; %>
+      <div class="cards-footer-link">
+        <a href="<%= sectionFooterLink %>" class="cards-cta-link">
+          <span><%= footerLinkObj.label %></span>
+          <svg class="cards-arrow-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    <% } %>
   </div>
 </section>
