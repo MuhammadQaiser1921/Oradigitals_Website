@@ -57,7 +57,7 @@ const testCases = [
   { path: '/contact', method: 'GET', expected: 200 },
   { path: '/sitemap', method: 'GET', expected: 200 },
 
-  // All 12 Dedicated Service Pages
+  // Dedicated Service Pages
   { path: '/services/oracle-erp', method: 'GET', expected: 200 },
   { path: '/services/custom-erp', method: 'GET', expected: 200 },
   { path: '/services/fbr-integration', method: 'GET', expected: 200 },
@@ -70,6 +70,7 @@ const testCases = [
   { path: '/services/courier-integration', method: 'GET', expected: 200 },
   { path: '/services/oracle-apex', method: 'GET', expected: 200 },
   { path: '/services/data-analytics', method: 'GET', expected: 200 },
+  { path: '/services/system-upgrade-migration', method: 'GET', expected: 200 },
 
   // Dedicated Single Case Study Pages (children of Customers)
   { path: '/customers/case-studies/treet-corporation', method: 'GET', expected: 200 },

@@ -225,6 +225,7 @@ const site = {
           heading: 'Data & Architecture',
           items: [
             { label: 'System Integration Middleware', href: '/services/system-integration', desc: 'OIC, REST, SOAP & Webhooks' },
+            { label: 'System Upgrade & Migration', href: '/services/system-upgrade-migration', desc: 'EBS, database & legacy system moves' },
             { label: 'Data Analytics & BI', href: '/services/data-analytics', desc: 'Dashboards, pipelines & forecasting' },
           ],
         },
@@ -539,7 +540,7 @@ const pages = {
     ],
   },
 
-  // 12 DEDICATED SERVICE PAGES
+  // DEDICATED SERVICE PAGES
   'services/oracle-erp': {
     title: 'Oracle ERP Implementation & Cloud Consulting - OraDigitals',
     description:
@@ -790,6 +791,80 @@ const pages = {
     ],
   },
 
+  'services/system-upgrade-migration': {
+    title: 'System Upgrade & Migration Services - OraDigitals',
+    description:
+      'Oracle EBS and database upgrades, patching, EBS to Fusion Cloud moves, and migration of legacy systems and data, rehearsed and reconciled before go-live.',
+    sections: [
+      {
+        component: 'cards',
+        props: {
+          eyebrow: 'Upgrades & Migration',
+          titleMain: 'System Upgrade & Migration',
+          titleSub: 'from ageing systems to supported, current platforms',
+          description: 'We upgrade the systems you run today and move your applications and data to new versions, servers or platforms, planned and tested so daily operations carry on.',
+          columns: 3,
+          cards: [
+            { icon: 'oracle', title: 'Oracle EBS Upgrades', text: 'Upgrades from older Oracle E-Business Suite releases to 12.2, with every customisation, report and integration reviewed and updated for the new version.' },
+            { icon: 'database', title: 'Database Upgrades', text: 'Oracle Database upgrades from older releases such as 11g and 12c to supported versions such as 19c, with performance checked before and after.' },
+            { icon: 'shield', title: 'Patching & Release Updates', text: 'Oracle patches and release updates applied on a regular schedule, tested on a copy of your system before they reach production.' },
+            { icon: 'speed', title: 'EBS to Fusion Cloud Migration', text: 'Moving from Oracle EBS to Oracle Fusion Cloud ERP: data mapping, conversion, and reconciliation of balances and open transactions.' },
+            { icon: 'refresh', title: 'Legacy System & Data Migration', text: 'Moving data from older applications, spreadsheets and databases into Oracle or a custom ERP, cleaned and validated on the way.' },
+            { icon: 'layers', title: 'Server & Cloud Moves', text: 'Moving applications and databases to new servers, a private cloud or Oracle Cloud Infrastructure in a planned cut-over window.' },
+          ],
+        },
+      },
+      {
+        component: 'split',
+        props: {
+          eyebrow: 'Our Approach',
+          titleMain: 'How an Upgrade or Migration Runs',
+          titleSub: 'the same tested steps every time',
+          text: 'Your team knows what changes, when it changes, and how it is checked.',
+          list: [
+            'Assessment: current versions, customisations, integrations and data volumes',
+            'Plan: target platform, cut-over window and rollback plan agreed with your team',
+            'Trial runs: the upgrade or migration rehearsed on a copy of your system',
+            'Reconciliation: record counts and balances compared between the old and new systems',
+            'Go-live and support: cut-over in the agreed window, then a period of close support',
+          ],
+          sideTitle: 'Data Migration with Pimidrome',
+          sideText: 'For data held in flat files and older databases, our Pimidrome migration engine handles column mapping, validation, XML, CSV and JSON conversion, and error recovery.',
+          actions: [{ label: 'About Pimidrome', href: '/products/pimidrome', style: 'outline' }],
+        },
+      },
+      {
+        component: 'faq',
+        props: {
+          eyebrow: 'Frequently Asked Questions',
+          titleMain: 'Upgrade & Migration FAQs',
+          items: [
+            {
+              question: 'Will our system be unavailable during the upgrade?',
+              answer: 'Only during the agreed cut-over window. The upgrade is rehearsed on a copy of your system first, so the time it needs is known in advance and can be scheduled outside business hours.',
+            },
+            {
+              question: 'Will our customisations and integrations still work?',
+              answer: 'Each customisation, report and integration is listed during the assessment, then tested and, where needed, updated for the new version before go-live.',
+            },
+            {
+              question: 'What happens if something goes wrong at go-live?',
+              answer: 'Every go-live has a rollback plan agreed in advance, so the previous system can be restored if the checks after cut-over do not pass.',
+            },
+          ],
+        },
+      },
+      {
+        component: 'cta',
+        props: {
+          title: 'Planning an Upgrade or Migration?',
+          text: 'Tell us what you run today and where you want to move, and we will assess it and propose a plan.',
+          actions: [{ label: 'Discuss Your Upgrade', href: '/contact', style: 'primary' }],
+        },
+      },
+    ],
+  },
+
   'services/shopify-solutions': {
     title: 'Shopify Plus Solutions & Custom Apps - OraDigitals',
     description:
@@ -986,7 +1061,7 @@ const pages = {
   services: {
     title: 'Enterprise IT & Compliance Services - OraDigitals',
     description:
-      'Explore our full catalog of 12 enterprise services: Oracle ERP, Custom ERP, FBR & ZATCA e-invoicing, Dubai FTA tax, Bank APIs, and Analytics.',
+      'Our enterprise services: Oracle ERP, Custom ERP, FBR & ZATCA e-invoicing, Dubai FTA tax, system upgrades & migration, Bank APIs, and Analytics.',
     sections: [
       {
         component: 'cards',
@@ -1001,6 +1076,7 @@ const pages = {
             { icon: 'shield', title: 'ZATCA Integration (KSA)', subtitle: 'Fatoora Phase 1 & 2', text: 'Saudi e-invoicing clearance engine, UBL 2.1 XML, and cryptographic stamping.', link: { href: '/services/zatca-integration', label: 'Explore ZATCA Integration' } },
             { icon: 'building', title: 'Dubai FTA Tax Integration', subtitle: 'VAT & Corporate Tax', text: 'UAE Federal Tax Authority compliance, VAT return filing, and corporate tax models.', link: { href: '/services/dubai-fta-integration', label: 'Explore Dubai FTA' } },
             { icon: 'api', title: 'System Integration & Middleware', subtitle: 'APIs & Event Queues', text: 'Connect ERPs, CRMs, and third-party services with high-throughput middleware.', link: { href: '/services/system-integration', label: 'Explore System Integration' } },
+            { icon: 'refresh', title: 'System Upgrade & Migration', subtitle: 'Upgrades & Data Migration', text: 'Oracle EBS and database upgrades, patching, and moving legacy systems and data to new platforms.', link: { href: '/services/system-upgrade-migration', label: 'Explore Upgrade & Migration' } },
             { icon: 'shopping', title: 'Shopify Plus Solutions', subtitle: 'Apps & ERP Sync', text: 'Custom private Shopify apps, bi-directional inventory sync, and custom checkout apps.', link: { href: '/services/shopify-solutions', label: 'Explore Shopify Solutions' } },
             { icon: 'shopping', title: 'E-Commerce Platforms', subtitle: 'Headless & Omnichannel', text: 'High-converting digital storefronts built on WooCommerce and headless APIs.', link: { href: '/services/ecommerce-solutions', label: 'Explore E-Commerce' } },
             { icon: 'bank', title: 'Bank API Integrations', subtitle: 'H2H & Reconciliations', text: 'Host-to-host banking, MT940 parsing, Raast, and automated ERP payment settlements.', link: { href: '/services/bank-integration', label: 'Explore Bank APIs' } },
@@ -1078,7 +1154,7 @@ const pages = {
             { year: '2021', title: 'Company Inception', text: 'Started with specialized Oracle Database consulting and custom desktop utilities.' },
             { year: '2023', title: 'SECP Incorporation', text: 'Incorporated as ORADIGITALS (PRIVATE) LIMITED, formalizing regional compliance practices.' },
             { year: '2024', title: 'FBR & ZATCA Engines', text: 'Launched certified digital invoicing connectors for Pakistani and Saudi tax authorities.' },
-            { year: '2026', title: 'UAE Expansion & 12 Core Services', text: 'Established Dubai FTA practice and comprehensive 12-service enterprise catalog.' },
+            { year: '2026', title: 'UAE Expansion & Full Service Catalog', text: 'Established Dubai FTA practice and a comprehensive enterprise service catalog.' },
           ],
         },
       },
@@ -1588,6 +1664,7 @@ const pages = {
                 'Shopify Plus Solutions',
                 'E-Commerce Solutions',
                 'Oracle APEX Applications',
+                'System Upgrade & Migration',
                 'Data Analytics & BI',
                 'General Consulting Inquiry',
               ],

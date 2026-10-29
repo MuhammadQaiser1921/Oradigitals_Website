@@ -54,7 +54,7 @@ For content questions, write the answer under the item (*"Keep"*, *"Remove"*, *"
 - [ ] **[You] Life page perks** — sit-stand desks, certification allowances, catered lunches, Tech Innovation Hub, annual retreats, Friday Tech Talks — which exist?
 
 ### Services
-- [ ] **[You] Official name for each of the 12 services** — currently 2–4 variants each (e.g. "Courier Logistics Integration" / "Courier & Logistics APIs" / "Courier Integrations"). The menu names are now also used in the footer, HTML sitemap and case-study links, so changing a menu name updates those too.
+- [ ] **[You] Official name for each of the 13 services** — currently 2–4 variants each (e.g. "Courier Logistics Integration" / "Courier & Logistics APIs" / "Courier Integrations"). The menu names are now also used in the footer, HTML sitemap and case-study links, so changing a menu name updates those too.
 - [ ] **[You] Oracle ERP** — delivered HCM / payroll or EBS-to-Fusion migration projects?
 - [ ] **[You] FBR** — "QR codes in under 150 ms", ready connectors for Oracle EBS / Fusion / SAP / Odoo, "compliance in days, not months"?
 - [ ] **[You] ZATCA** — "tested against thousands of transactions" vs "50,000+ daily" in the case study — which is true?
@@ -64,6 +64,7 @@ For content questions, write the answer under the item (*"Keep"*, *"Remove"*, *"
 - [ ] **[You] Bank integration** — live integrations with Emirates NBD, FAB, Al Rajhi?
 - [ ] **[You] Courier** — FedEx and Aramex built? (other pages list only TCS, DHL, Leopard, Trax)
 - [ ] **[You] Oracle APEX** — "20x faster" — compared to what?
+- [ ] **[You] System Upgrade & Migration (new, 29 Oct)** — review the new page (`/services/system-upgrade-migration`): is the scope right (Oracle EBS upgrades to 12.2, database upgrades e.g. 11g/12c → 19c, patching, EBS → Fusion Cloud, legacy data migration, server / cloud moves)? Is the 5-step approach and the FAQ answers (rehearsal on a copy, rollback plan, cut-over window) how you actually work? Can Pimidrome be mentioned as your migration tool? Named "Upgrade" rather than "Updation" for Gulf clients — say if you prefer another name.
 - [ ] **[You] Contact form** — the service dropdown leaves out System Integration & Middleware. Intentional?
 - [ ] **[You] Services page has an office map** ("Visit Us — Consult Our Engineering Team") in the middle of the service catalogue. Remove it? The map is already on About, Contact and Compliance.
 
@@ -105,7 +106,7 @@ Phones, tablets and desktops (320–1920 px) all work without sideways scrolling
 | Breadcrumb markup | — (removed with the visible breadcrumb) |
 | Viewport, language, favicon, phone home-screen icon | ✓ |
 | Robots | ✓ `robots.txt`; error pages marked "noindex" |
-| `sitemap.xml` | ✓ 31 pages, with real last-changed dates |
+| `sitemap.xml` | ✓ 32 pages, with real last-changed dates |
 | Content SEO | — thin pages, near-duplicate pages, no location words, address mismatch with Google |
 
 ### Technical
