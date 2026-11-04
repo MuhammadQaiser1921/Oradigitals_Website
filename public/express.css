@@ -1720,8 +1720,32 @@ body {
 .site-footer {
   background: #000000;
   color: #cbd5e1;
-  padding: 4rem 0 2.5rem;
+  padding: 4rem 0 0;
   border-top: 1px solid #171717;
+}
+
+/* Giant faded brand name closing the footer; the letters run off the bottom edge */
+.footer-wordmark {
+  margin-top: 2.5rem;
+  overflow: hidden;
+  user-select: none;
+}
+
+.footer-wordmark span {
+  display: block;
+  padding-top: clamp(1.5rem, 4vw, 4.5rem);
+  margin-bottom: -0.1em;
+  font-family: 'Rubik', 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 12.5vw;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-align: center;
+  white-space: nowrap;
+  color: transparent;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.06) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
 .footer-grid {
