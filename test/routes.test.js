@@ -41,7 +41,16 @@ const server = app.server;
 
 const testCases = [
   // Core pages
-  { path: '/', method: 'GET', expected: 200 },
+  {
+    path: '/',
+    method: 'GET',
+    expected: 200,
+    check: (res, body) => {
+      // Only confirmed customers may appear in the logo grid
+      assert.strictEqual(body.split('class="customer-grid-item"').length - 1, 7, 'Home should show the 7 confirmed customer logos');
+      assert.ok(!body.includes('ExxonMobil'), 'Unconfirmed customer logos should not be shown');
+    },
+  },
   { path: '/about', method: 'GET', expected: 200 },
   { path: '/services', method: 'GET', expected: 200 },
   { path: '/products', method: 'GET', expected: 200 },
@@ -51,7 +60,15 @@ const testCases = [
   { path: '/career', method: 'GET', expected: 200 },
   { path: '/career/internship', method: 'GET', expected: 200 },
   { path: '/life', method: 'GET', expected: 200 },
-  { path: '/customers', method: 'GET', expected: 200 },
+  {
+    path: '/customers',
+    method: 'GET',
+    expected: 200,
+    check: (res, body) => {
+      assert.ok(/<h1 class="customer-heading">\s*<span class="customer-heading-main">Our Customers</.test(body), 'Customers page should open with the customer grid as its H1');
+      assert.ok(!body.includes('customer-cta-link'), 'Customers page should not link to itself');
+    },
+  },
   { path: '/customers/case-studies', method: 'GET', expected: 200 },
   { path: '/compliance', method: 'GET', expected: 200 },
   { path: '/contact', method: 'GET', expected: 200 },

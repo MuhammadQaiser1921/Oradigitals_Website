@@ -11,15 +11,13 @@ For content questions, write the answer under the item (*"Keep"*, *"Remove"*, *"
 
 ### Website functions
 - [ ] **[You] Form emails — ready to switch on.** Contact, job and internship submissions are saved on the server and the email sending is built, but it stays off until it has a mail account to send from. Send: (1) which address(es) should receive submissions (e.g. info@oradigitals.com), and (2) the mail account to send from — SMTP server, port, username and password (from your email provider or hosting). These go in the server settings, not in the code (see `DEPLOYMENT.md`).
-- [ ] **[You] Save the work.** Nothing has been committed to git for 5 months; about 60 files are changed or new (case studies, new pages, images, today's fixes). Approve a commit so this work can't be lost. The 218 MB `archive/` folder is now left out of git (it stays on your disk).
+- [ ] **[You] Back up to GitHub.** All work is committed (branch `website-update-oct-2026`), but the last 3 commits, including the whole Express conversion, exist only on this computer. Approve pushing them to GitHub.
 - [ ] **[You] Social media links** in the footer go to linkedin.com/company/oradigitals, facebook.com/oradigitals, instagram.com/oradigitals, youtube.com/@oradigitals and github.com/oradigitals. Do all five accounts exist? Remove any that don't. (Confirmed ones will also be added to the company details Google reads.)
-- [ ] **[You] Second phone number** — the WhatsApp button and the Contact page's "Call Our Team Now" button use only +92 335 5546497. Keep, or switch either to +92 309 1235777?
 
 ### Content that could cause trouble if not true
 - [ ] **[You] Testimonials** — built from the Primmeshiper and InvestMenter case-study quotes (Home, Customers, Case Studies). Have both clients approved their quotes? Send a Treet quote to add Treet.
 - [ ] **[You] "Certified" claims** — Oracle-certified architects / implementation (7 places, including the call-to-action on every case study page), "certified" FBR and ZATCA connectors, "certified Shopify Plus developers", PCI-DSS, SOC 2, GDPR. Which certifications or official listings does the company or its staff hold?
 - [ ] **[You] Gulf Logistics & Supply (KSA) case study** — no logo; its figures (99.99% clearance, 50,000+ invoices/day, < 450 ms) are reused on other pages, including the Home ZATCA card and the ZATCA and Oracle ERP service pages (as a related case study). Real client that agreed to be named?
-- [ ] **[You] Big-brand logos on the Home customer grid** — ExxonMobil, Volkswagen, Bosch, Bureau Veritas, MAN, Premier Inn and others. Are all of these actual customers?
 - [ ] **[You] Client figures** — InvestMenter "AED 120M+ quarterly volume", "100% FTA compliance / zero audit inquiries"; Primmeshiper "35,000+ orders/day", "99.98% sync". Approved by the clients?
 - [ ] **[You] Absolute guarantees** — "100% compliant", "zero downtime", "Ensure 100% UAE Tax Compliance", "24/7 support" (the site also lists Mon–Fri 9–6). Guaranteed in contracts?
 - [ ] **[You] Photos** — the About, Team ("Collaborative Delivery"), Life and Internship photos are AI-generated but captioned as the real office and team. Send real photos, or approve removing the captions' "our office" wording.
@@ -45,7 +43,6 @@ For content questions, write the answer under the item (*"Keep"*, *"Remove"*, *"
 
 ### Customers
 - [ ] **[You] AgileCentral** — in the Customers menu under *Featured Clients* but has no case study; it links to `/customers` as a placeholder. Remove it, or supply a case study? (Its logo file is kept until you decide.)
-- [ ] **[You] Customers page has no client directory** — the menu promises "Client Overview — Enterprise client directory", but the page only shows case studies. Add the logo grid from Home once the logos are confirmed? This would also fix the near-duplicate page issue in section 4.
 - [ ] **[You] Case study filter** — the "Oracle ERP & SCM" filter holds only Treet, whose category is "System Integration & ERP". Which label should be used?
 
 ### Careers
@@ -114,7 +111,7 @@ Phones, tablets and desktops (320–1920 px) all work without sideways scrolling
 
 ### Content (the biggest ranking factor)
 - [ ] **[You → Dev] Thin pages** — 22 of 31 pages had under 300 words (the 12 service pages 157–290, product pages about 130), and removing the inner-page heroes took away each page's intro paragraph. Expand each service page: a short intro, who it's for, how a project runs, what is delivered, and FAQs. Needs your real process and details. (Related case studies are now shown on the 10 service pages that have one.)
-- [ ] **[Dev] Near-duplicate pages** — `/customers` and `/customers/case-studies` share most of their text (same case-study cards and testimonials); each product page overlaps 81 % with `/products`. Give `/customers` its own content (client logos, industries, testimonials) once the logos are confirmed (section 2, *Customers*).
+- [ ] **[Dev] Near-duplicate pages** — `/customers` and `/customers/case-studies` still share most of their text (same case-study cards and testimonials), although `/customers` now opens with the customer logos; each product page overlaps 81 % with `/products`. Give `/customers` more of its own content (industries, what was delivered for each customer) as the case studies come in (section 5).
 - [ ] **[You] Headings and titles don't say what you do or where.** Each inner page's H1 is now its first section heading (e.g. "Built on Deep Technical Discipline" on About, "Open Positions" on Career, "Our Product Suite" on Products), and most don't say what the company does or where; rewording those first headings (e.g. "Oracle ERP Consultancy in Okara, Pakistan") would help search. The home page title and description never mention Pakistan or Okara, so local searches like "Oracle EBS consultant Pakistan" don't match. The home page is marked final — your call.
 - [ ] **[You] Short case studies** — Primmeshiper, InvestMenter and Gulf Logistics have about 365 words each against Treet's 1,450. Full write-ups would rank much better.
 
@@ -166,6 +163,9 @@ Phones, tablets and desktops (320–1920 px) all work without sideways scrolling
 - [x] Team page: CEO & Founder section (Muhammad Faisal, with email) and a carousel of the 10 team members.
 - [x] Compliance page: SECP directors (with email and phone) and the registered principal line of business.
 - [x] Second office number (+92 309 1235777) added to the footer, location cards and Contact page.
+- [x] WhatsApp button stays on +92 335 5546497 (your decision, 4 Nov); the Contact page's "Call Our Team Now" button also uses this number.
+- [x] All work committed to git (29 Oct).
+- [x] **Real customers only** (your answer, 4 Nov): the Home logo grid now shows just Treet, Primmeshiper, AgileCentral and InvestMenter, plus Neo Furniture (Dubai office furniture, logo from neofurniture.ae) and Asgard Real Estate (Dubai, JVC; asgardre.com is down for maintenance, so the logo came from the site's January 2026 copy on the Internet Archive and its white lettering was turned navy for the white grid — ask Asgard for their official dark-lettered logo), both added 4 Nov; and Flick Network (tax & e-invoicing software, logo from flick.network), added 4 Nov; the 21 unconfirmed logos (ExxonMobil, Volkswagen, Bosch, MAN and others) were removed. The Customers page now opens with the same logos, as the menu's "Client Overview" promises.
 - [x] `robots.txt` added: allows all pages, keeps crawlers out of `/api/` and `/health`, and points to `sitemap.xml`.
 - [x] Hero only on the landing page; breadcrumb trail and page-name title removed: every other page goes straight from the header into its content. Each page's first section heading is its H1 (one per page). The 404 / 500 pages show a short message with buttons instead.
 - [x] White / grey section alternation like the landing page on every page (25 of 31 pages had neighbouring sections in the same colour). It is now automatic: the first section is white, then they alternate, so new pages follow the pattern by themselves.

@@ -1868,10 +1868,12 @@ body {
   margin: 0 0 3.25rem 0;
 }
 
-/* 5-Column Grid with Precise Subtle Dividers */
+/* Logo grid with subtle dividers, sized for the 7 logos: one row of 7 on desktop; 4 + 3 on tablets
+   (the last logo spans two cells); 2 per row on phones (an odd last logo spans the row).
+   Revisit the column counts and the last-logo rules when customers are added or removed. */
 .customers-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   border-top: 1px solid #e2e8f0;
   border-left: 1px solid #e2e8f0;
   background: #ffffff;
@@ -1904,6 +1906,11 @@ body {
   max-height: 40px;
   display: block;
   transition: transform 0.2s ease;
+}
+
+/* Stacked (nearly square) logos get more height so their lettering stays readable */
+.customer-grid-item .brand-svg-stacked {
+  max-height: 60px;
 }
 
 .customer-grid-item:hover .brand-svg {
@@ -2369,11 +2376,20 @@ body {
   .customers-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  .customer-grid-item:last-child {
+    grid-column: span 2;
+  }
 }
 
 @media (max-width: 820px) {
   .customers-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* An odd last logo takes the full row instead of leaving an empty cell */
+  .customer-grid-item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
   .customer-grid-item {

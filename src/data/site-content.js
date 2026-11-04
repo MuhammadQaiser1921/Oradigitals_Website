@@ -252,7 +252,7 @@ const site = {
         {
           heading: 'Client Ecosystem',
           items: [
-            { label: 'Client Overview', href: '/customers', desc: 'Enterprise client directory & global reach' },
+            { label: 'Client Overview', href: '/customers', desc: 'Our customers and the work we did' },
             { label: 'Industry Verticals', href: '/customers#case-studies', desc: 'Manufacturing, logistics, retail & fintech' },
             { label: 'Client Testimonials', href: '/customers#testimonials', desc: 'Executive feedback & verified satisfaction' },
           ],
@@ -1412,6 +1412,16 @@ const pages = {
     description: 'Trusted by retail, manufacturing, logistics, and corporate enterprises across Pakistan, Saudi Arabia, and the UAE.',
     sections: [
       {
+        component: 'customers',
+        props: {
+          eyebrow: 'Customers',
+          titleMain: 'Our Customers',
+          titleSub: 'the companies whose systems we build and integrate',
+          description: 'Manufacturing, e-commerce fulfilment, office furniture, real estate, software and investment firms. Several of these projects are written up as case studies below.',
+          ctaLabel: false,
+        },
+      },
+      {
         component: 'case-studies',
         props: {
           badge: 'Featured Success Stories',
@@ -1711,7 +1721,7 @@ Object.keys(pages)
 
 const componentCatalog = {
   hero: { description: 'Top page banner with headline, orbit graphics, and actions.' },
-  customers: { description: 'Enterprise customer trust grid with premier regional and global brands.' },
+  customers: { description: 'Customer logo grid (the confirmed customers only).' },
   'case-studies': { description: 'Enterprise case studies showcase with client badges, challenges, solutions, ROI metrics, and tech stacks.' },
   'case-study-single': { description: 'Dedicated single case study breakdown with metrics, challenges, solutions, and testimonial.' },
   'leader-profile': { description: 'Founder / leader spotlight with portrait, name, title, and short intro.' },
