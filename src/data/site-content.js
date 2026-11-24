@@ -49,8 +49,20 @@ function caseStudyShowcase() {
 // with a published project. Add a client's slug here once its quote is approved for display.
 const testimonialClients = ['primmeshiper', 'investmenter-dubai']
 
+// Reviews from clients without a case study, quoted word for word. `rating` is only set when the client
+// actually gave a star rating with the review.
+const clientReviews = [
+  {
+    author: 'D-Translation Ltd',
+    role: 'Herwig Rogaar, Director',
+    quote: 'Thank you for doing a great job. For sure I will contact you again.',
+    rating: 5,
+    logo: '/public/images/dtranslation-logo.png',
+  },
+]
+
 function clientTestimonials() {
-  return testimonialClients
+  const caseStudyQuotes = testimonialClients
     .map((slug) => caseStudiesData.find((cs) => cs.slug === slug))
     .map((cs) => ({
       author: cs.client,
@@ -59,6 +71,7 @@ function clientTestimonials() {
       // No star rating: the clients gave quotes, not scores
       logo: cs.clientLogo,
     }))
+  return [...caseStudyQuotes, ...clientReviews]
 }
 
 // Leadership & Team page. Names, roles and the directors' photos are confirmed.
@@ -1667,7 +1680,7 @@ const pages = {
           eyebrow: 'Customers',
           titleMain: 'Our Customers',
           titleSub: 'the companies whose systems we build and integrate',
-          description: 'Manufacturing, e-commerce fulfilment, office furniture, real estate, software and investment firms. Several of these projects are written up as case studies below.',
+          description: 'Manufacturing, e-commerce fulfilment, office furniture, real estate, software, translation and investment firms. Several of these projects are written up as case studies below.',
           ctaLabel: false,
         },
       },

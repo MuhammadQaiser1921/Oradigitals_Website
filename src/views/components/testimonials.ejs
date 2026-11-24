@@ -1,11 +1,12 @@
-<section class="section <%= props.light ? 'light' : '' %> testimonials-section" id="<%= props.id || 'testimonials' %>">
+<section class="section testimonials-section" id="<%= props.id || 'testimonials' %>">
   <div class="container">
     <%- include('../partials/section-header', { props }) %>
-    <div class="cards-grid cols-<%= props.columns || 2 %>">
+    <%# One row of up to three reviews %>
+    <div class="cards-grid cols-<%= props.columns || Math.min(Math.max((props.items || []).length, 2), 3) %>">
       <% (props.items || []).forEach((item) => { %>
         <article class="card testimonial">
           <% if (item.rating) { %>
-            <p class="rating"><%= '★'.repeat(item.rating) %></p>
+            <p class="rating" role="img" aria-label="Rated <%= item.rating %> out of 5"><%= '★'.repeat(item.rating) %></p>
           <% } %>
           <p class="quote">"<%= item.quote %>"</p>
           <h3><%= item.author %></h3>

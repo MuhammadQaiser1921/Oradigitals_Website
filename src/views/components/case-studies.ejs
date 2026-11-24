@@ -2,7 +2,7 @@
   const isCompact = Boolean(props.compact);
 %>
 
-<section class="section case-studies-section <%= props.light ? 'light' : '' %> <%= isCompact ? 'cs-section-compact' : 'cs-section-full' %>" id="<%= props.id || 'case-studies' %>">
+<section class="section case-studies-section <%= isCompact ? 'cs-section-compact' : 'cs-section-full' %>" id="<%= props.id || 'case-studies' %>">
   <div class="container">
     <%- include('../partials/section-header', { props }) %>
 

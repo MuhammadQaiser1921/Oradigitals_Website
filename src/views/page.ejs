@@ -191,9 +191,7 @@
     <% } %>
 
     <%
-      // Sections alternate white / grey like the landing page, starting with white; the case-study article is
-      // always grey, so the section after it is white.
-      let nextLight = true
+      // Every section sits on the same light grey background (cards, logos and forms are white on it).
       // Heroes carry the page's H1 (the case-study article does too when it has no hero above it); on any other
       // page the first section's heading is promoted to the page's H1.
       const ownH1 = ['hero', 'page-hero', 'case-study-single']
@@ -202,15 +200,9 @@
     <% page.sections.forEach((section) => { %>
       <%
         let props = section.props
-        if (ownH1.includes(section.component)) {
-          nextLight = true
-        } else {
-          props = { ...section.props, light: nextLight }
-          nextLight = !nextLight
-          if (!hasH1) {
-            props.headingTag = 'h1'
-            hasH1 = true
-          }
+        if (!ownH1.includes(section.component) && !hasH1) {
+          props = { ...section.props, headingTag: 'h1' }
+          hasH1 = true
         }
       %>
       <%- include('components/' + section.component, { props, site, currentPath, flash }) %>

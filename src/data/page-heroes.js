@@ -561,7 +561,7 @@ function pageHeroes({ site, pages, products, caseStudies }) {
       text: 'From Oracle EBS and order management for Treet to UAE tax automation for InvestMenter, these are the companies we work with.',
       actions: [{ label: 'Read the case studies', href: '/customers/case-studies', style: 'primary' }, { label: 'Become a client', href: '/contact', style: 'outline' }],
       facts: [
-        { value: '7', label: 'customers' },
+        { value: '8', label: 'customers' },
         { value: `${caseStudies.length}`, label: 'case studies' },
         { value: 'PK · UAE', label: 'and beyond' },
       ],
@@ -574,8 +574,9 @@ function pageHeroes({ site, pages, products, caseStudies }) {
           { src: '/public/images/investmenter-logo.svg', alt: 'InvestMenter' },
           { src: '/public/images/neofurniture-logo.png', alt: 'Neo Furniture' },
           { src: '/public/images/asgard-logo.png', alt: 'Asgard Real Estate' },
+          { src: '/public/images/flick-logo.svg', alt: 'Flick Network' },
+          { src: '/public/images/dtranslation-logo.png', alt: 'D-Translation' },
         ],
-        caption: 'Also Flick Network',
       },
     },
 
@@ -731,8 +732,6 @@ function caseStudyHero(cs) {
       { label: 'All case studies', href: '/customers/case-studies', style: 'outline' },
     ],
     facts: (cs.metrics || cs.highlights || []).slice(0, 3).map(({ value, label }) => ({ value, label })),
-    // The case study article below sits on the grey page background
-    waveFill: '#f3f6f5',
     visual: {
       type: 'panels',
       items: [

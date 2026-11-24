@@ -4,7 +4,7 @@
   const autofill = { name: 'name', email: 'email', phone: 'tel' }
   const status = flash && flash.message ? (flash.status === 'success' ? 'success' : 'error') : ''
 %>
-<section class="section <%= props.light ? 'light' : '' %>" id="<%= formId %>">
+<section class="section" id="<%= formId %>">
   <div class="container form-wrap">
     <%- include('../partials/section-header', { props }) %>
 

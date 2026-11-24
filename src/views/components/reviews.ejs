@@ -5,7 +5,7 @@
   const scrolling = others.length >= 3
   const sideCards = (copy) => others.map((item) => ({ item, copy }))
 %>
-<section class="section reviews-section <%= props.light ? 'light' : '' %>" id="<%= props.id || 'testimonials' %>">
+<section class="section reviews-section" id="<%= props.id || 'testimonials' %>">
   <div class="container">
     <%- include('../partials/section-header', { props }) %>
 
@@ -40,6 +40,9 @@
           <% } %>
           <% [...sideCards(false), ...(scrolling ? sideCards(true) : [])].forEach(({ item, copy }) => { %>
             <figure class="review-card"<% if (copy) { %> aria-hidden="true"<% } %>>
+              <% if (item.rating) { %>
+                <span class="review-stars" role="img" aria-label="Rated <%= item.rating %> out of 5"><%= '★'.repeat(item.rating) %></span>
+              <% } %>
               <blockquote>&ldquo;<%= item.quote %>&rdquo;</blockquote>
               <figcaption class="review-author">
                 <span>
