@@ -6,7 +6,8 @@
 <section class="section case-study-single-section">
   <div class="container">
     <!-- Case Study Header -->
-    <header class="cs-single-hero">
+    <header class="cs-single-hero <%= props.hasHero ? 'cs-single-hero-details' : '' %>">
+      <% if (!props.hasHero) { %>
       <div class="cs-single-badge-row">
         <div class="cs-single-client-badge">
           <% if (cs.clientLogo) { %>
@@ -20,6 +21,7 @@
       <h1 class="cs-single-title"><%= cs.title %></h1>
       <% if (cs.subtitle) { %>
         <p class="cs-single-subtitle"><%= cs.subtitle %></p>
+      <% } %>
       <% } %>
 
       <!-- Key Metadata Details Grid -->
@@ -110,7 +112,7 @@
         <h2 class="cs-related-title">Services Used in This Project</h2>
         <div class="cs-related-links">
           <% props.relatedServices.forEach((service) => { %>
-            <a href="<%= service.href %>" class="cs-related-link"><%= service.label %> &rarr;</a>
+            <a href="<%= service.href %>" class="cs-related-link"><%= service.label %> <%- include('../partials/svg-icon', { iconName: 'arrow-right', iconClass: 'link-arrow' }) %></a>
           <% }) %>
         </div>
       </div>
@@ -139,7 +141,7 @@
               <h4 class="cs-other-title"><%= item.title %></h4>
               <p class="cs-other-summary"><%= item.summary || item.subtitle %></p>
               <span class="cs-other-cta">
-                <span>Read Case Study</span> &rarr;
+                <span>Read Case Study</span> <%- include('../partials/svg-icon', { iconName: 'arrow-right', iconClass: 'link-arrow' }) %>
               </span>
             </a>
           <% }) %>

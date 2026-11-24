@@ -5,6 +5,7 @@
  */
 
 const { shareImage } = require('./share-images');
+const { caseStudyHero } = require('./page-heroes');
 
 const SITE_URL = 'https://oradigitals.com';
 
@@ -22,8 +23,13 @@ const caseStudiesData = [
     title: 'Integrating E-Commerce and Enterprise Operations Through a Custom Order Management System',
     seoTitle: 'Treet Corporation OMS & Oracle EBS Case Study',
     metaDescription: 'How OraDigitals built a custom order management system linking Treet\'s WooCommerce store with Oracle EBS, couriers, banks, WhatsApp and FBR.',
-    services: ['oracle-erp', 'custom-erp', 'system-integration', 'ecommerce-solutions', 'courier-integration', 'bank-integration', 'fbr-integration'],
+    services: ['oracle-erp', 'custom-erp', 'system-integration', 'ecommerce-solutions/wordpress-woocommerce', 'ecommerce-solutions/ecommerce-integration', 'system-integration/courier-integration', 'system-integration/bank-integration', 'tax-e-invoicing/fbr-integration'],
     subtitle: 'Connecting WooCommerce digital storefront with Oracle E-Business Suite, banking APIs, courier logistics, WhatsApp, and FBR e-invoicing through a centralized custom OMS middleware.',
+    highlights: [
+      { value: 'Oracle EBS', label: 'orders & finance in sync' },
+      { value: 'Couriers', label: 'bookings & tracking' },
+      { value: 'FBR', label: 'digital invoicing' },
+    ],
     summary: 'OraDigitals designed and developed a custom Order Management System (OMS) to serve as the integration layer between WooCommerce, Oracle E-Business Suite (EBS), courier partners, banking services, and other business systems.',
     challenge: 'As Treet\'s e-commerce operations relied on multiple systems, coordinating information across the online store, ERP, payment channels, and delivery partners presented several integration challenges.',
     solutionSummary: 'OraDigitals developed and deployed a custom OMS middleware application, hosted on a Virtual Private Server (VPS), using the Oracle EBS database environment as its operational backend.',
@@ -209,7 +215,7 @@ const caseStudiesData = [
     timeline: '3 Months High-Throughput Rollout',
     title: 'Shopify Plus Bi-Directional ERP Sync & Multi-Courier Logistics Gateway',
     seoTitle: 'Primmeshiper Shopify Plus & Courier Case Study',
-    services: ['shopify-solutions', 'courier-integration', 'system-integration', 'ecommerce-solutions'],
+    services: ['ecommerce-solutions/shopify-solutions', 'ecommerce-solutions/ecommerce-integration', 'system-integration/courier-integration', 'system-integration'],
     subtitle: 'High-speed automated order routing, sub-second inventory synchronization, and multi-courier airway bill booking engine.',
     summary: 'Built sub-second bi-directional inventory synchronization and automated multi-courier airway bill booking for high-throughput Shopify Plus fulfillment.',
     challenge: 'Severe stock desynchronization during high-traffic flash sales and manual consignment booking across four courier carriers causing massive dispatch backlogs and customer cancellations. At peak sales volume, order batches exceeded 30,000 orders/day, crashing existing spreadsheets and causing delayed dispatches.',
@@ -237,44 +243,6 @@ const caseStudiesData = [
     publishedDate: '2025',
   },
   {
-    slug: 'gulf-logistics-zatca',
-    categoryKey: 'tax',
-    category: 'Fiscal & e-Invoicing',
-    client: 'Gulf Logistics & Supply (KSA)',
-    clientLogo: '',
-    industry: 'Logistics, Warehousing & Distribution',
-    location: 'Kingdom of Saudi Arabia (Riyadh, Jeddah, Dammam)',
-    timeline: '4 Months Compliance Sprint',
-    title: 'Zero-Failure ZATCA Phase 2 Cryptographic E-Invoicing Engine',
-    seoTitle: 'Gulf Logistics ZATCA Phase 2 Case Study',
-    services: ['zatca-integration', 'oracle-erp'],
-    subtitle: 'High-throughput cryptographic clearance gateway with 99.99% first-pass clearance for Saudi ZATCA Phase 2 compliance.',
-    summary: 'Delivered an automated cryptographic clearance middleware with 99.99% first-pass clearance for 50,000+ daily B2B and B2C ZATCA Phase 2 transactions.',
-    challenge: 'Mandatory cryptographic clearance deadlines under Saudi ZATCA Fatoora Phase 2 with strict cryptographic validation checks, XML formatting requirements, and heavy statutory penalties for non-clearance. The client needed to issue tens of thousands of invoices daily without interrupting 24/7 warehouse operations.',
-    challengePoints: [
-      'Strict ZATCA Phase 2 deadlines requiring cryptographic ECDSA signatures on all invoices',
-      'Heavy regulatory penalties for XML formatting errors or invoice rejection',
-      'Sub-second requirement: invoices must clear without slowing down truck departure at gates',
-      'Complex UBL 2.1 schemas requiring real-time transformation from Oracle ERP financials'
-    ],
-    solution: 'Engineered a hardened cryptographic clearance gateway generating UBL 2.1 XML invoices with ECDSA digital stamps, cryptographic UUIDs, and automated clearance submission to ZATCA API with offline queue failover and automated cryptographic key renewal.',
-    solutionPoints: [
-      'Automated Oracle Financials adapter extracting invoice data into validated UBL 2.1 XML',
-      'Hardware-accelerated cryptographic signing utilizing ECDSA secp256k1 keys and SHA-256 hashing',
-      'Direct API integration with ZATCA clearance endpoints with automatic retry and dead-letter queues',
-      'Real-time cryptographic QR code rendering embedded in both electronic and printed invoices'
-    ],
-    metrics: [
-      { value: '99.99%', label: 'ZATCA Clearance Rate', desc: 'First-pass acceptance rate across B2B and B2C tiers' },
-      { value: '50,000+', label: 'Daily Invoices Processed', desc: 'Continuous 24/7 high-concurrency throughput' },
-      { value: '< 450ms', label: 'Mean Clearance Time', desc: 'Instantaneous validation with zero dispatch friction' },
-    ],
-    techStack: ['ZATCA Phase 2', 'UBL 2.1 XML', 'ECDSA Stamps', 'Oracle Fusion Financials', 'Cryptographic HSM', 'REST API Gateway'],
-    quote: 'Achieving full Phase 2 compliance across all regional fulfillment centers without a single minute of dispatch downtime was remarkable. OraDigitals made a daunting government mandate completely painless.',
-    author: 'Director of IT & Enterprise Systems, Gulf Logistics & Supply (KSA)',
-    publishedDate: '2025',
-  },
-  {
     slug: 'investmenter-dubai',
     categoryKey: 'fintech',
     category: 'FinTech & Corporate Tax',
@@ -285,7 +253,7 @@ const caseStudiesData = [
     timeline: '5 Months Enterprise Integration',
     title: 'Automated UAE FTA Corporate Tax, VAT 201 Engine & H2H Bank Feeds',
     seoTitle: 'InvestMenter UAE Tax & Bank Feeds Case Study',
-    services: ['dubai-fta-integration', 'bank-integration'],
+    services: ['tax-e-invoicing/dubai-fta-integration', 'system-integration/bank-integration'],
     subtitle: 'Unified FTA Corporate Tax provisioning, UAE VAT 201 filing, and automated multi-currency host-to-host bank reconciliation.',
     summary: 'Automated UAE FTA Corporate Tax computation, VAT 201 filing, and corporate host-to-host bank feed reconciliation for multi-currency transactions.',
     challenge: 'Managing high-volume property transactions, multi-currency escrow accounts, and complying with UAE Federal Tax Authority (FTA) Corporate Tax regulations and VAT 201 audits without manual spreadsheet reconciliations across UAE and European holding entities.',
@@ -320,7 +288,6 @@ const caseStudiesData = [
 function resolveSlug(rawSlug) {
   if (!rawSlug) return '';
   const s = String(rawSlug).toLowerCase().trim().replace(/^\/+|\/+$/g, '');
-  if (s === 'zatca-integration') return 'gulf-logistics-zatca';
   if (s === 'dubai-fta-tax' || s === 'dubai-fta-integration') return 'investmenter-dubai';
   return s;
 }
@@ -376,10 +343,16 @@ function generateCaseStudyPage(rawSlug) {
     },
     sections: [
       {
+        component: 'page-hero',
+        props: caseStudyHero(cs),
+      },
+      {
         component: 'case-study-single',
         props: {
           caseStudy: cs,
           otherStudies,
+          // The hero above shows the client, category, title and subtitle
+          hasHero: true,
         },
       },
       {

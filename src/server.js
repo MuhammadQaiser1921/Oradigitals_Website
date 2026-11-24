@@ -273,6 +273,25 @@ app.post('/api/apply', handleSubmission('career'))
 // Alias URLs redirect permanently so every page has a single canonical URL
 app.get('/clients', (req, res) => res.redirect(301, '/customers'))
 app.get('/case-studies', (req, res) => res.redirect(301, '/customers/case-studies'))
+
+// Removed case studies (Gulf Logistics was not a client) and their old aliases go to the case studies hub
+// FBR, ZATCA and UAE FTA moved under Tax & E-Invoicing; bank and courier integration under System Integration;
+// Shopify under E-Commerce Solutions
+const MOVED_SERVICES = {
+  'shopify-solutions': 'ecommerce-solutions/shopify-solutions',
+  'fbr-integration': 'tax-e-invoicing/fbr-integration',
+  'zatca-integration': 'tax-e-invoicing/zatca-integration',
+  'dubai-fta-integration': 'tax-e-invoicing/dubai-fta-integration',
+  'bank-integration': 'system-integration/bank-integration',
+  'courier-integration': 'system-integration/courier-integration',
+}
+Object.entries(MOVED_SERVICES).forEach(([from, to]) => {
+  app.get(`/services/${from}`, (req, res) => res.redirect(301, `/services/${to}`))
+})
+
+const REMOVED_CASE_STUDIES = ['gulf-logistics-zatca', 'zatca-integration']
+app.get(REMOVED_CASE_STUDIES.flatMap((slug) => [`/case-studies/${slug}`, `/customers/case-studies/${slug}`]), (req, res) =>
+  res.redirect(301, '/customers/case-studies'))
 app.get('/case-studies/:slug', (req, res) => res.redirect(301, `/customers/case-studies/${resolveSlug(req.params.slug)}`))
 
 app.get('/customers/case-studies/:slug', (req, res, next) => {

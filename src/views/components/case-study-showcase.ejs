@@ -1,0 +1,55 @@
+<%# Case study showcase (Home): dark section of wide cards that move to the next one on their own every few
+    seconds (page script 6). The page scrolls normally; visitors can also swipe the cards or use the arrows. %>
+<% const pad = (n) => String(n).padStart(2, '0') %>
+<% const items = props.items || [] %>
+<section class="section cs-showcase" id="<%= props.id || 'case-studies' %>" data-showcase>
+  <div class="container">
+    <div class="cs-showcase-head">
+      <%- include('../partials/section-header', { props }) %>
+      <div class="cs-showcase-nav">
+        <span class="cs-showcase-count" aria-live="polite"><strong data-showcase-current>01</strong> / <%= pad(items.length) %></span>
+        <span class="cs-showcase-progress" aria-hidden="true"><span data-showcase-bar style="width: <%= 100 / Math.max(items.length, 1) %>%"></span></span>
+        <button type="button" class="cs-showcase-arrow" data-showcase-prev aria-label="Previous case study">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button type="button" class="cs-showcase-arrow" data-showcase-next aria-label="Next case study">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+        <% if (props.allLink) { %>
+          <a class="cs-showcase-all" href="<%= props.allLink.href %>"><%= props.allLink.label %> <%- include('../partials/svg-icon', { iconName: 'arrow-right', iconClass: 'link-arrow' }) %></a>
+        <% } %>
+      </div>
+    </div>
+
+    <ul class="cs-showcase-track" data-showcase-track tabindex="0" aria-label="Case studies">
+      <% items.forEach((item, i) => { %>
+        <li class="cs-showcase-card" aria-label="<%= i + 1 %> of <%= items.length %>: <%= item.client %>">
+          <div class="cs-showcase-info">
+            <ul class="cs-showcase-tags">
+              <% item.tags.forEach((tag) => { %><li><%= tag %></li><% }) %>
+            </ul>
+            <h3><%= item.client %></h3>
+            <p class="cs-showcase-text"><%= item.text %></p>
+            <ul class="cs-showcase-figures">
+              <% item.figures.forEach((figure) => { %>
+                <li><strong><%= figure.value %></strong><span><%= figure.label %></span></li>
+              <% }) %>
+            </ul>
+            <div class="cs-showcase-links">
+              <a href="<%= item.href %>">Read the <%= item.client %> case study <%- include('../partials/svg-icon', { iconName: 'arrow-right', iconClass: 'link-arrow' }) %></a>
+              <a class="cs-showcase-link-secondary" href="/contact">Discuss a similar project <%- include('../partials/svg-icon', { iconName: 'arrow-right', iconClass: 'link-arrow' }) %></a>
+            </div>
+          </div>
+          <div class="cs-showcase-visual" aria-hidden="true">
+            <% if (item.logo) { %>
+              <div class="cs-showcase-logo"><img src="<%= item.logo %>" alt="" loading="lazy" /></div>
+            <% } %>
+            <ul class="cs-showcase-tech">
+              <% item.tech.forEach((tech) => { %><li><%= tech %></li><% }) %>
+            </ul>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</section>

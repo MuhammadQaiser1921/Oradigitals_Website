@@ -1,0 +1,57 @@
+<%# Reviews (Home): one large featured quote beside a column of smaller review cards. With three or more cards
+    the column scrolls on its own (CSS, paused on hover, off when the visitor prefers reduced motion). %>
+<%
+  const [featured, ...others] = props.items || []
+  const scrolling = others.length >= 3
+  const sideCards = (copy) => others.map((item) => ({ item, copy }))
+%>
+<section class="section reviews-section <%= props.light ? 'light' : '' %>" id="<%= props.id || 'testimonials' %>">
+  <div class="container">
+    <%- include('../partials/section-header', { props }) %>
+
+    <div class="reviews-grid">
+      <% if (featured) { %>
+        <figure class="review-featured">
+          <svg class="review-quote-mark" viewBox="0 0 48 48" width="64" height="64" fill="currentColor" aria-hidden="true">
+            <path d="M20 10C11 13 6 20 6 29v9h14V24h-7c0-5 3-9 9-11l-2-3Zm22 0c-9 3-14 10-14 19v9h14V24h-7c0-5 3-9 9-11l-2-3Z" />
+          </svg>
+          <blockquote>&ldquo;<%= featured.quote %>&rdquo;</blockquote>
+          <figcaption class="review-author">
+            <% if (featured.logo) { %><span class="review-logo"><img src="<%= featured.logo %>" alt="" loading="lazy" /></span><% } %>
+            <span>
+              <strong><%= featured.author %></strong>
+              <span><%= featured.role %></span>
+            </span>
+          </figcaption>
+        </figure>
+      <% } %>
+
+      <div class="reviews-side <%= scrolling ? 'is-scrolling' : '' %>">
+        <div class="reviews-list">
+          <% if (props.google) { %>
+            <a class="review-card review-google" href="<%= site.mapLink %>" target="_blank" rel="noopener noreferrer">
+              <span class="review-google-score"><%= props.google.rating %></span>
+              <span>
+                <span class="review-stars" aria-label="<%= props.google.rating %> out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                <strong>Rated <%= props.google.rating %> on Google</strong>
+                <span class="review-google-link">Read our Google reviews <%- include('../partials/svg-icon', { iconName: 'arrow-right', iconClass: 'link-arrow' }) %></span>
+              </span>
+            </a>
+          <% } %>
+          <% [...sideCards(false), ...(scrolling ? sideCards(true) : [])].forEach(({ item, copy }) => { %>
+            <figure class="review-card"<% if (copy) { %> aria-hidden="true"<% } %>>
+              <blockquote>&ldquo;<%= item.quote %>&rdquo;</blockquote>
+              <figcaption class="review-author">
+                <span>
+                  <strong><%= item.author %></strong>
+                  <span><%= item.role %></span>
+                </span>
+                <% if (item.logo) { %><span class="review-logo"><img src="<%= item.logo %>" alt="" loading="lazy" /></span><% } %>
+              </figcaption>
+            </figure>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -65,7 +65,8 @@ const testCases = [
     method: 'GET',
     expected: 200,
     check: (res, body) => {
-      assert.ok(/<h1 class="customer-heading">\s*<span class="customer-heading-main">Our Customers</.test(body), 'Customers page should open with the customer grid as its H1');
+      assert.ok(/<h1 class="page-hero-title">\s*<span class="page-hero-title-main">Customers</.test(body), 'Customers page hero should carry the H1');
+      assert.ok(/<h2 class="customer-heading">\s*<span class="customer-heading-main">Our Customers</.test(body), 'Customer grid heading should follow the hero as an H2');
       assert.ok(!body.includes('customer-cta-link'), 'Customers page should not link to itself');
     },
   },
@@ -77,14 +78,52 @@ const testCases = [
   // Dedicated Service Pages
   { path: '/services/oracle-erp', method: 'GET', expected: 200 },
   { path: '/services/custom-erp', method: 'GET', expected: 200 },
-  { path: '/services/fbr-integration', method: 'GET', expected: 200 },
-  { path: '/services/zatca-integration', method: 'GET', expected: 200 },
-  { path: '/services/dubai-fta-integration', method: 'GET', expected: 200 },
-  { path: '/services/system-integration', method: 'GET', expected: 200 },
-  { path: '/services/shopify-solutions', method: 'GET', expected: 200 },
-  { path: '/services/ecommerce-solutions', method: 'GET', expected: 200 },
-  { path: '/services/bank-integration', method: 'GET', expected: 200 },
-  { path: '/services/courier-integration', method: 'GET', expected: 200 },
+  { path: '/services/app-development', method: 'GET', expected: 200 },
+  {
+    path: '/services/tax-e-invoicing',
+    method: 'GET',
+    expected: 200,
+    check: (res, body) => {
+      ['fbr-integration', 'zatca-integration', 'dubai-fta-integration'].forEach((slug) => {
+        assert.ok(body.includes(`href="/services/tax-e-invoicing/${slug}"`), `Tax overview should link to ${slug}`);
+      });
+      assert.ok(body.includes('href="/customers/case-studies/treet-corporation"'), 'Tax overview should show the case studies of its sub-services');
+    },
+  },
+  { path: '/services/tax-e-invoicing/fbr-integration', method: 'GET', expected: 200 },
+  { path: '/services/tax-e-invoicing/zatca-integration', method: 'GET', expected: 200 },
+  { path: '/services/tax-e-invoicing/dubai-fta-integration', method: 'GET', expected: 200 },
+  {
+    path: '/services/system-integration',
+    method: 'GET',
+    expected: 200,
+    check: (res, body) => {
+      assert.ok(body.includes('href="/services/system-integration/bank-integration"'), 'System Integration should link to Bank API Integration');
+      assert.ok(body.includes('href="/services/system-integration/courier-integration"'), 'System Integration should link to Courier Integration');
+    },
+  },
+  {
+    path: '/services/ecommerce-solutions',
+    method: 'GET',
+    expected: 200,
+    check: (res, body) => {
+      ['shopify-solutions', 'wordpress-woocommerce', 'ecommerce-integration'].forEach((slug) => {
+        assert.ok(body.includes(`href="/services/ecommerce-solutions/${slug}"`), `E-Commerce overview should link to ${slug}`);
+      });
+    },
+  },
+  { path: '/services/ecommerce-solutions/shopify-solutions', method: 'GET', expected: 200 },
+  { path: '/services/ecommerce-solutions/wordpress-woocommerce', method: 'GET', expected: 200 },
+  { path: '/services/ecommerce-solutions/ecommerce-integration', method: 'GET', expected: 200 },
+  { path: '/services/shopify-solutions', method: 'GET', expected: 301, check: (res) => assert.strictEqual(res.headers.location, '/services/ecommerce-solutions/shopify-solutions') },
+  { path: '/services/system-integration/bank-integration', method: 'GET', expected: 200 },
+  { path: '/services/system-integration/courier-integration', method: 'GET', expected: 200 },
+  // Moved service pages redirect to their new place under Tax & E-Invoicing or System Integration
+  { path: '/services/fbr-integration', method: 'GET', expected: 301, check: (res) => assert.strictEqual(res.headers.location, '/services/tax-e-invoicing/fbr-integration') },
+  { path: '/services/zatca-integration', method: 'GET', expected: 301, check: (res) => assert.strictEqual(res.headers.location, '/services/tax-e-invoicing/zatca-integration') },
+  { path: '/services/dubai-fta-integration', method: 'GET', expected: 301, check: (res) => assert.strictEqual(res.headers.location, '/services/tax-e-invoicing/dubai-fta-integration') },
+  { path: '/services/bank-integration', method: 'GET', expected: 301, check: (res) => assert.strictEqual(res.headers.location, '/services/system-integration/bank-integration') },
+  { path: '/services/courier-integration', method: 'GET', expected: 301, check: (res) => assert.strictEqual(res.headers.location, '/services/system-integration/courier-integration') },
   { path: '/services/oracle-apex', method: 'GET', expected: 200 },
   { path: '/services/data-analytics', method: 'GET', expected: 200 },
   { path: '/services/system-upgrade-migration', method: 'GET', expected: 200 },
@@ -92,9 +131,9 @@ const testCases = [
   // Dedicated Single Case Study Pages (children of Customers)
   { path: '/customers/case-studies/treet-corporation', method: 'GET', expected: 200 },
   { path: '/customers/case-studies/primmeshiper', method: 'GET', expected: 200 },
-  { path: '/customers/case-studies/gulf-logistics-zatca', method: 'GET', expected: 200 },
+  { path: '/customers/case-studies/gulf-logistics-zatca', method: 'GET', expected: 301, check: (res) => assert.strictEqual(res.headers.location, '/customers/case-studies') },
   { path: '/customers/case-studies/investmenter-dubai', method: 'GET', expected: 200 },
-  { path: '/customers/case-studies/zatca-integration', method: 'GET', expected: 301 },
+  { path: '/customers/case-studies/zatca-integration', method: 'GET', expected: 301, check: (res) => assert.strictEqual(res.headers.location, '/customers/case-studies') },
 
   // Old URLs redirect permanently to their new home under /customers
   { path: '/clients', method: 'GET', expected: 301 },
@@ -116,14 +155,19 @@ const testCases = [
   { path: '/favicon.ico', method: 'GET', expected: 200 },
   { path: '/public/favicon.svg', method: 'GET', expected: 200 },
   { path: '/public/express.css', method: 'GET', expected: 200 },
-  { path: '/public/images/office-hq.jpg', method: 'GET', expected: 200 },
-  { path: '/public/images/team-consultants.jpg', method: 'GET', expected: 200 },
-  { path: '/public/images/internship-collaboration.jpg', method: 'GET', expected: 200 },
+  { path: '/public/images/about-team-office.jpg', method: 'GET', expected: 200 },
+  { path: '/public/images/team-at-work.jpg', method: 'GET', expected: 200 },
+  { path: '/public/images/office-workspace.jpg', method: 'GET', expected: 200 },
+  { path: '/public/images/internship-team.jpg', method: 'GET', expected: 200 },
+  { path: '/public/images/life-independence-day.jpg', method: 'GET', expected: 200 },
   { path: '/public/images/treet-logo.png', method: 'GET', expected: 200 },
   { path: '/public/images/primmeshiper-logo.png', method: 'GET', expected: 200 },
   { path: '/public/images/agilecentral-logo.svg', method: 'GET', expected: 200 },
   { path: '/public/images/investmenter-logo.svg', method: 'GET', expected: 200 },
   { path: '/public/images/team/placeholder-portrait.svg', method: 'GET', expected: 200 },
+  { path: '/public/images/team/muhammad-faisal.jpg', method: 'GET', expected: 200 },
+  { path: '/public/images/team/muhammad-qaiser.jpg', method: 'GET', expected: 200 },
+  { path: '/public/images/life-team-dinner.jpg', method: 'GET', expected: 200 },
   { path: '/public/images/share/oradigitals.png', method: 'GET', expected: 200 },
   { path: '/public/images/share/case-study-treet-corporation.png', method: 'GET', expected: 200 },
   { path: '/public/site.webmanifest', method: 'GET', expected: 200 },
@@ -339,6 +383,34 @@ async function runTests() {
     });
   });
 
+  // Every inner page listed in the sitemap opens with a page hero and has exactly one H1
+  await new Promise((resolve) => {
+    http.get(`http://localhost:${port}/sitemap.xml`, (res) => {
+      let xml = '';
+      res.on('data', chunk => xml += chunk);
+      res.on('end', async () => {
+        const paths = [...xml.matchAll(/<loc>https:\/\/oradigitals\.com([^<]*)<\/loc>/g)].map((m) => m[1]).filter((p) => p && p !== '/');
+        const problems = [];
+        for (const p of paths) {
+          const body = await new Promise((done) => http.get(`http://localhost:${port}${p}`, (r) => { let b = ''; r.on('data', (c) => b += c); r.on('end', () => done(b)); }));
+          if (!body.includes('class="hero hero-dark page-hero"')) problems.push(`${p}: no page hero`);
+          if ((body.match(/<h1[\s>]/g) || []).length !== 1) problems.push(`${p}: not exactly one H1`);
+        }
+        if (problems.length || !paths.length) {
+          console.error('  [FAIL] Inner page heroes:', problems.join('; ') || 'no pages in sitemap');
+          failed++;
+        } else {
+          console.log(`  [PASS] All ${paths.length} inner pages open with a page hero and one H1`);
+        }
+        resolve();
+      });
+    }).on('error', (err) => {
+      console.error('  [FAIL] Inner page hero test error:', err.message);
+      failed++;
+      resolve();
+    });
+  });
+
   await new Promise((resolve) => {
     http.get(`http://localhost:${port}/services/oracle-erp`, (res) => {
       let body = '';
@@ -346,10 +418,11 @@ async function runTests() {
       res.on('end', () => {
         assert.ok(body.includes('Oracle ERP Implementation &amp; Cloud Consulting'), 'Missing English Oracle ERP title');
         assert.ok(body.includes('Oracle Financials Cloud'), 'Missing English Oracle ERP content');
-        assert.ok(!body.includes('class="hero '), 'Inner pages should not render a hero');
+        assert.ok(body.includes('class="hero hero-dark page-hero"'), 'Service page should open with its page hero');
+        assert.ok(body.includes('<body class="has-hero">'), 'Header should sit over the page hero');
         assert.ok(!body.includes('aria-label="Breadcrumb"'), 'Inner pages should not show a breadcrumb trail');
         assert.strictEqual((body.match(/<h1[\s>]/g) || []).length, 1, 'Service page should have exactly one H1');
-        assert.ok(/<h1 class="customer-heading">\s*<span class="customer-heading-main">Oracle ERP Implementation Modules</.test(body), 'First section heading should be the page H1');
+        assert.ok(/<h1 class="page-hero-title">\s*<span class="page-hero-title-main">Oracle ERP</.test(body), 'Page hero heading should be the page H1');
         assert.ok(body.includes('class="nav-link active">Services'), 'Services menu item should be highlighted on a service page');
         assert.ok(body.includes('Read the Treet Corporation case study'), 'Oracle ERP page should link to the related Treet case study');
         const jsonLd = body.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
@@ -378,6 +451,8 @@ async function runTests() {
         assert.ok(body.includes('Treet Corporation'), 'Missing Treet Corporation client name');
         assert.ok(!body.includes('aria-label="Breadcrumb"'), 'Case study page should not show a breadcrumb trail');
         assert.strictEqual((body.match(/<h1[\s>]/g) || []).length, 1, 'Case study page should have exactly one H1');
+        assert.ok(/<h1 class="page-hero-title">\s*<span class="page-hero-title-main">Treet Corporation</.test(body), 'Case study hero should carry the H1');
+        assert.ok(!body.includes('class="cs-single-title"'), 'Case study article should not repeat the title under the hero');
         assert.ok(/class="nav-link active">\s*Customers/.test(body), 'Customers menu item should be highlighted on a case study');
         assert.ok(!body.includes('class="lang-selector"'), 'Found lang-selector on single case study page');
         const title = body.match(/<title>([^<]*)<\/title>/)[1];

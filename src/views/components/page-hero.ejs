@@ -1,0 +1,109 @@
+<%# Inner page hero: dark navy band like the landing hero, left-aligned, with a page-specific picture on the right
+    (visual.type: 'panels' = stacked info cards, 'photos' = photo collage, 'logos' = client logo tiles,
+    'photo-panels' = one photo with info cards over its lower edge) and a wave into the first section. %>
+<% const visual = props.visual || {} %>
+<%# Links to other sites (map, SECP portal) open in a new tab %>
+<% const external = (href) => /^https?:/.test(href || '') ? ' target="_blank" rel="noopener noreferrer"' : '' %>
+<section class="hero hero-dark page-hero">
+  <div class="page-hero-grid">
+    <div class="page-hero-content">
+      <% if (props.pill) { %>
+        <% const pillTag = props.pill.href ? 'a' : 'span' %>
+        <<%= pillTag %> class="page-hero-pill"<% if (props.pill.href) { %> href="<%= props.pill.href %>"<%- external(props.pill.href) %><% } %>>
+          <% if (props.pill.tag) { %><span class="page-hero-pill-tag"><%= props.pill.tag %></span><% } %>
+          <span><%= props.pill.text %></span>
+          <% if (props.pill.href) { %><%- include('../partials/svg-icon', { iconName: 'arrow-right', iconClass: 'link-arrow' }) %><% } %>
+        </<%= pillTag %>>
+      <% } %>
+
+      <h1 class="page-hero-title">
+        <span class="page-hero-title-main"><%= props.titleMain %></span>
+        <% if (props.titleSub) { %><span class="page-hero-title-sub"><%= props.titleSub %></span><% } %>
+      </h1>
+
+      <% if (props.lead) { %>
+        <p class="page-hero-lead"><%= props.lead %><% if (props.leadAccent) { %> <span><%= props.leadAccent %></span><% } %></p>
+      <% } %>
+      <% if (props.text) { %>
+        <p class="page-hero-text"><%= props.text %></p>
+      <% } %>
+
+      <% if (props.actions && props.actions.length) { %>
+        <div class="actions hero-actions">
+          <% props.actions.forEach((action) => { %>
+            <% if (action.style === 'outline') { %>
+              <a class="btn btn-outline" href="<%= action.href %>"<%- external(action.href) %>>
+                <span><%= action.label %></span>
+                <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" aria-hidden="true">
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </a>
+            <% } else { %>
+              <a class="btn btn-primary" href="<%= action.href %>"<%- external(action.href) %>><%= action.label %></a>
+            <% } %>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <% if (props.facts && props.facts.length) { %>
+        <ul class="page-hero-facts">
+          <% props.facts.forEach((fact) => { %>
+            <li><strong><%= fact.value %></strong><span><%= fact.label %></span></li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </div>
+
+    <% if (visual.type) { %>
+      <div class="page-hero-visual page-hero-visual-<%= visual.type %>">
+        <% if (visual.type === 'photos') { %>
+          <% (visual.items || []).forEach((photo) => { %>
+            <figure class="page-hero-photo">
+              <img src="<%= photo.src %>" alt="<%= photo.alt %>" loading="eager" />
+              <% if (photo.caption) { %><figcaption><%= photo.caption %></figcaption><% } %>
+            </figure>
+          <% }) %>
+        <% } else if (visual.type === 'logos') { %>
+          <ul class="page-hero-logos">
+            <% (visual.items || []).forEach((logo) => { %>
+              <li><img src="<%= logo.src %>" alt="<%= logo.alt %>" loading="eager" /></li>
+            <% }) %>
+          </ul>
+          <% if (visual.caption) { %><p class="page-hero-logos-caption"><%= visual.caption %></p><% } %>
+        <% } else { %>
+          <% if (visual.type === 'photo-panels' && visual.image) { %>
+            <figure class="page-hero-photo page-hero-photo-wide">
+              <img src="<%= visual.image %>" alt="<%= visual.imageAlt %>" loading="eager" />
+            </figure>
+          <% } %>
+          <ul class="page-hero-panels">
+            <% (visual.items || []).forEach((panel) => { %>
+              <li>
+                <% const panelTag = panel.href ? 'a' : 'div' %>
+                <<%= panelTag %> class="page-hero-panel"<% if (panel.href) { %> href="<%= panel.href %>"<%- external(panel.href) %><% } %>>
+                  <% if (panel.logo) { %>
+                    <span class="page-hero-panel-logo"><img src="<%= panel.logo %>" alt="" /></span>
+                  <% } else { %>
+                    <span class="page-hero-panel-icon"><%- include('../partials/svg-icon', { iconName: panel.icon || 'layers', iconClass: 'svg-icon' }) %></span>
+                  <% } %>
+                  <span class="page-hero-panel-body">
+                    <% if (panel.eyebrow) { %><span class="page-hero-panel-eyebrow"><%= panel.eyebrow %></span><% } %>
+                    <strong><%= panel.title %></strong>
+                    <% if (panel.text) { %><span class="page-hero-panel-text"><%= panel.text %></span><% } %>
+                  </span>
+                  <% if (panel.href) { %><span class="page-hero-panel-arrow"><%- include('../partials/svg-icon', { iconName: 'arrow-right', iconClass: 'link-arrow' }) %></span><% } %>
+                </<%= panelTag %>>
+              </li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+
+  <%# Wave into the section below (same curve as the landing hero); white unless the page starts on grey %>
+  <svg class="hero-wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 78C180 112 360 122 540 102C700 84 820 24 1000 12C1140 3 1240 58 1340 62C1390 64 1420 54 1440 46V120H0Z" fill="<%= props.waveFill || '#ffffff' %>" />
+  </svg>
+</section>

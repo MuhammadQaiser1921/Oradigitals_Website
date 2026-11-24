@@ -1,17 +1,14 @@
-<%# Landing-page section heading: eyebrow label, two-tone title, description.
-    Older badge / title / subtitle props map onto the same slots.
+<%# Section heading: two-tone title and description. The heading carries the section on its own, so no small
+    label is printed above it (eyebrow / badge props are ignored).
+    Older title / subtitle props map onto the same slots.
     headingTag: 'h1' is set by page.ejs on the first section of pages without a hero. %>
 <%
-  const eyebrow = props.eyebrow || props.badge
   const titleMain = props.titleMain || props.title
   const description = props.description || props.subtitle
   const headingTag = props.headingTag === 'h1' ? 'h1' : 'h2'
 %>
-<% if (eyebrow || titleMain || description) { %>
+<% if (titleMain || description) { %>
   <div class="customer-header region-header">
-    <% if (eyebrow) { %>
-      <div class="customer-eyebrow"><%= eyebrow %></div>
-    <% } %>
     <% if (titleMain) { %>
       <<%= headingTag %> class="customer-heading">
         <span class="customer-heading-main"><%= titleMain %></span>

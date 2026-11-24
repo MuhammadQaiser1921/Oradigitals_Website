@@ -4,9 +4,6 @@
       <img src="<%= props.image %>" alt="<%= props.name %>, <%= props.role %>" class="leader-photo" />
     </div>
     <div class="leader-content">
-      <% if (props.eyebrow) { %>
-        <div class="customer-eyebrow"><%= props.eyebrow %></div>
-      <% } %>
       <% const headingTag = props.headingTag === 'h1' ? 'h1' : 'h2' %>
       <<%= headingTag %> class="customer-heading">
         <span class="customer-heading-main"><%= props.name %></span>

@@ -1,9 +1,5 @@
 <section class="customers-section <%= props.light ? 'light' : '' %>" id="customers">
   <div class="container customers-container">
-    <% if (props.eyebrow) { %>
-      <div class="customer-eyebrow"><%= props.eyebrow %></div>
-    <% } %>
-
     <% const headingTag = props.headingTag === 'h1' ? 'h1' : 'h2' %>
     <<%= headingTag %> class="customer-heading">
       <span class="customer-heading-main"><%= props.titleMain || 'Trusted by most popular brands in town' %></span>

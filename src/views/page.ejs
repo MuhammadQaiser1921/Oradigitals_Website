@@ -88,7 +88,8 @@
   <meta name="theme-color" content="#284763" />
   <link rel="stylesheet" href="/public/express.css?v=<%= cssVersion %>" />
 </head>
-<body>
+<%# Pages that open with the hero get a see-through header over it until the visitor scrolls %>
+<body class="<%= page.sections.some((section) => ['hero', 'page-hero'].includes(section.component)) ? 'has-hero' : '' %>">
   <header class="site-header">
     <div class="container nav-row">
       <a class="brand" href="/" aria-label="OraDigitals">
@@ -124,7 +125,11 @@
                 <div class="mega-grid">
                   <% item.groups.forEach((grp) => { %>
                     <div class="mega-col">
-                      <h5><%= grp.heading %></h5>
+                      <% if (grp.href) { %>
+                        <h5><a href="<%= grp.href %>" class="mega-heading-link"><%= grp.heading %> <%- include('partials/svg-icon', { iconName: 'arrow-right', iconClass: 'link-arrow' }) %></a></h5>
+                      <% } else { %>
+                        <h5><%= grp.heading %></h5>
+                      <% } %>
                       <% grp.items.forEach((sub) => { %>
                         <a href="<%= sub.href %>" class="mega-item">
                           <span class="mega-item-title"><%= sub.label %></span>
@@ -189,14 +194,15 @@
       // Sections alternate white / grey like the landing page, starting with white; the case-study article is
       // always grey, so the section after it is white.
       let nextLight = true
-      // The landing hero and the case-study article carry their own H1; on every other page the first
-      // section's heading is promoted to the page's H1.
-      let hasH1 = page.sections.some((section) => ['hero', 'case-study-single'].includes(section.component))
+      // Heroes carry the page's H1 (the case-study article does too when it has no hero above it); on any other
+      // page the first section's heading is promoted to the page's H1.
+      const ownH1 = ['hero', 'page-hero', 'case-study-single']
+      let hasH1 = page.sections.some((section) => ownH1.includes(section.component))
     %>
     <% page.sections.forEach((section) => { %>
       <%
         let props = section.props
-        if (section.component === 'hero' || section.component === 'case-study-single') {
+        if (ownH1.includes(section.component)) {
           nextLight = true
         } else {
           props = { ...section.props, light: nextLight }
@@ -274,11 +280,10 @@
 
         <div>
           <h4>Services</h4>
-          <%# Same names and order as the Services menu %>
-          <% site.nav.find((item) => item.href === '/services').groups.flatMap((group) => group.items).forEach((service) => { %>
+          <% site.footerServices.forEach((service) => { %>
             <p><a href="<%= service.href %>"><%= service.label %></a></p>
           <% }) %>
-          <p><a href="/services" style="color: var(--brand-orange); font-weight: 700;">View All Services →</a></p>
+          <p><a href="/services" class="footer-more-link">View All Services <%- include('partials/svg-icon', { iconName: 'arrow-right', iconClass: 'link-arrow' }) %></a></p>
         </div>
 
         <div>
@@ -300,7 +305,7 @@
           <p><a href="tel:<%= site.phoneRaw %>"><%= site.phone %></a></p>
           <p><a href="tel:<%= site.phone2Raw %>"><%= site.phone2 %></a></p>
           <p><a href="mailto:<%= site.email %>"><%= site.email %></a></p>
-          <p><a href="<%= site.mapLink %>" target="_blank" rel="noopener noreferrer" style="color: var(--brand-orange);">Open in Google Maps →</a></p>
+          <p><a href="<%= site.mapLink %>" target="_blank" rel="noopener noreferrer" class="footer-more-link">Open in Google Maps <%- include('partials/svg-icon', { iconName: 'arrow-right', iconClass: 'link-arrow' }) %></a></p>
         </div>
       </div>
 
@@ -324,6 +329,16 @@
   <!-- Scripts: Mobile Navigation & Menu Interactions -->
   <script>
     (function() {
+      // 0. Header over the hero: see-through at the top of the page, solid once the visitor scrolls
+      if (document.body.classList.contains('has-hero')) {
+        var header = document.querySelector('.site-header');
+        var updateHeader = function() {
+          header.classList.toggle('is-scrolled', window.scrollY > 10);
+        };
+        updateHeader();
+        window.addEventListener('scroll', updateHeader, { passive: true });
+      }
+
       // 1. Mobile Menu Toggle (the stylesheet swaps the ☰ and × icons from aria-expanded)
       var toggle = document.getElementById('mobileNavToggle');
       var navLinks = document.getElementById('navLinks');
@@ -490,6 +505,46 @@
               status.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
             });
         });
+      });
+
+      // 6. Case study showcase: moves to the next case study every few seconds while it is on screen. It pauses
+      //    while the visitor hovers, focuses or touches it, and stays still for visitors who prefer reduced motion.
+      //    Moving the cards never scrolls the page; visitors can swipe the cards or use the arrows at any time.
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelectorAll('[data-showcase]').forEach(function(showcase) {
+        var track = showcase.querySelector('[data-showcase-track]');
+        var cards = track.children;
+        var current = showcase.querySelector('[data-showcase-current]');
+        var bar = showcase.querySelector('[data-showcase-bar]');
+        if (!cards.length) return;
+        var index = 0, hovering = false, touchedAt = 0, onScreen = false;
+        var pad = function(n) { return (n < 10 ? '0' : '') + n; };
+        var go = function(i) {
+          index = (i + cards.length) % cards.length;
+          track.scrollTo({ left: cards[index].offsetLeft, behavior: reduceMotion ? 'auto' : 'smooth' });
+        };
+        track.addEventListener('scroll', function() {
+          var nearest = 0;
+          for (var i = 1; i < cards.length; i++) {
+            if (Math.abs(cards[i].offsetLeft - track.scrollLeft) < Math.abs(cards[nearest].offsetLeft - track.scrollLeft)) nearest = i;
+          }
+          index = nearest;
+          current.textContent = pad(index + 1);
+          bar.style.width = ((index + 1) / cards.length * 100) + '%';
+        }, { passive: true });
+        showcase.querySelector('[data-showcase-prev]').addEventListener('click', function() { go(index - 1); });
+        showcase.querySelector('[data-showcase-next]').addEventListener('click', function() { go(index + 1); });
+        showcase.addEventListener('mouseenter', function() { hovering = true; });
+        showcase.addEventListener('mouseleave', function() { hovering = false; });
+        showcase.addEventListener('touchstart', function() { touchedAt = Date.now(); }, { passive: true });
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function(entries) { onScreen = entries[0].isIntersecting; }, { threshold: 0.4 }).observe(track);
+        }
+        if (reduceMotion) return;
+        setInterval(function() {
+          var focused = showcase.contains(document.activeElement);
+          if (onScreen && !hovering && !focused && Date.now() - touchedAt > 8000) go(index + 1);
+        }, 5500);
       });
     })();
   </script>

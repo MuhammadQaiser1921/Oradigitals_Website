@@ -86,22 +86,12 @@
 
             <div class="cs-narrative">
               <div class="cs-point cs-challenge">
-                <span class="cs-point-label">
-                  <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor">
-                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                  </svg>
-                  Challenge:
-                </span>
+                <span class="cs-point-label">Challenge</span>
                 <p><%= item.challenge %></p>
               </div>
 
               <div class="cs-point cs-solution">
-                <span class="cs-point-label">
-                  <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                  </svg>
-                  Solution:
-                </span>
+                <span class="cs-point-label">Solution</span>
                 <p><%= item.solution %></p>
               </div>
             </div>
@@ -242,8 +232,8 @@
       });
       if (!item) return;
 
-      var challengeLabel = 'Challenge:';
-      var solutionLabel = 'Solution:';
+      var challengeLabel = 'Challenge';
+      var solutionLabel = 'Solution';
       var fullPageLabel = 'Open in Dedicated Full Page';
       var contactLabel = 'Schedule Solution Audit';
 
@@ -280,15 +270,13 @@
         '<div class="cs-narrative">',
           '<div class="cs-point cs-challenge">',
             '<span class="cs-point-label">',
-              '<svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>',
-              ' ' + challengeLabel,
+              challengeLabel,
             '</span>',
             '<p>' + (item.challenge || '') + '</p>',
           '</div>',
           '<div class="cs-point cs-solution">',
             '<span class="cs-point-label">',
-              '<svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>',
-              ' ' + solutionLabel,
+              solutionLabel,
             '</span>',
             '<p>' + (item.solution || '') + '</p>',
           '</div>',

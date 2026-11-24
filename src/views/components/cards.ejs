@@ -1,22 +1,26 @@
 <section class="section <%= props.light ? 'light' : '' %>" id="<%= props.id || '' %>">
   <div class="container">
     <%- include('../partials/section-header', { props }) %>
-    <div class="cards-grid cols-<%= props.columns || 3 %>">
+    <%# compact: small cards (icon, title, short text, "Explore" link); a featured card spans two columns and rows %>
+    <div class="cards-grid cols-<%= props.columns || 3 %> <%= props.compact ? 'cards-compact' : '' %>">
       <% props.cards.forEach((card) => { %>
-        <article class="card <%= card.highlight ? 'card-highlight' : '' %>"<% if (card.id) { %> id="<%= card.id %>"<% } %>>
+        <% const featured = props.compact && card.featured %>
+        <article class="card <%= card.highlight ? 'card-highlight' : '' %> <%= featured ? 'card-featured' : '' %>"<% if (card.id) { %> id="<%= card.id %>"<% } %>>
           <% if (card.icon) { %>
             <div class="card-icon-wrap">
               <%- include('../partials/svg-icon', { iconName: card.icon, iconClass: 'card-svg' }) %>
             </div>
           <% } %>
-          <% if (card.badge) { %>
-            <div class="card-eyebrow"><%= card.badge %></div>
-          <% } %>
           <h3><%= card.title %></h3>
-          <% if (card.subtitle) { %>
+          <% if (card.subtitle && (!props.compact || featured)) { %>
             <p class="card-subtitle"><%= card.subtitle %></p>
           <% } %>
-          <p class="card-text"><%= card.text %></p>
+          <p class="card-text"><%= props.compact && !featured && card.short ? card.short : card.text %></p>
+          <% if (featured && card.tags) { %>
+            <ul class="card-tags">
+              <% card.tags.forEach((tag) => { %><li><%= tag %></li><% }) %>
+            </ul>
+          <% } %>
           <% if (Array.isArray(card.list) && card.list.length) { %>
             <% const hasLinkItems = card.list.some(item => typeof item === 'object' || (typeof item === 'string' && (item.includes(': /') || item.startsWith('/')))); %>
             <ul class="card-list <%= hasLinkItems ? 'has-links' : '' %>">
@@ -58,11 +62,12 @@
             <% const finalCardHref = card.link.href; %>
             <div class="card-action-wrap">
               <a
-                class="card-btn"
+                class="card-btn <%= props.compact ? 'card-explore' : '' %>"
                 href="<%= finalCardHref %>"
                 <%= card.link.href.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : '' %>
+                <% if (props.compact) { %>aria-label="Explore <%= card.title %>"<% } %>
               >
-                <span><%= card.link.label %></span>
+                <span><%= props.compact ? 'Explore' : card.link.label %></span>
                 <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>

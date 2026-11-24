@@ -11,16 +11,14 @@ For content questions, write the answer under the item (*"Keep"*, *"Remove"*, *"
 
 ### Website functions
 - [ ] **[You] Form emails — ready to switch on.** Contact, job and internship submissions are saved on the server and the email sending is built, but it stays off until it has a mail account to send from. Send: (1) which address(es) should receive submissions (e.g. info@oradigitals.com), and (2) the mail account to send from — SMTP server, port, username and password (from your email provider or hosting). These go in the server settings, not in the code (see `DEPLOYMENT.md`).
-- [ ] **[You] Back up to GitHub.** All work is committed (branch `website-update-oct-2026`), but the last 3 commits, including the whole Express conversion, exist only on this computer. Approve pushing them to GitHub.
+- [ ] **[You] Commit and back up to GitHub.** The work from 4–5 Nov (photos, page heroes, service restructure, App Development, reviews and case-study sections) is not committed yet, and the footer wordmark commit is not pushed. Approve committing and pushing to branch `website-update-oct-2026`.
 - [ ] **[You] Social media links** in the footer go to linkedin.com/company/oradigitals, facebook.com/oradigitals, instagram.com/oradigitals, youtube.com/@oradigitals and github.com/oradigitals. Do all five accounts exist? Remove any that don't. (Confirmed ones will also be added to the company details Google reads.)
 
 ### Content that could cause trouble if not true
 - [ ] **[You] Testimonials** — built from the Primmeshiper and InvestMenter case-study quotes (Home, Customers, Case Studies). Have both clients approved their quotes? Send a Treet quote to add Treet.
 - [ ] **[You] "Certified" claims** — Oracle-certified architects / implementation (7 places, including the call-to-action on every case study page), "certified" FBR and ZATCA connectors, "certified Shopify Plus developers", PCI-DSS, SOC 2, GDPR. Which certifications or official listings does the company or its staff hold?
-- [ ] **[You] Gulf Logistics & Supply (KSA) case study** — no logo; its figures (99.99% clearance, 50,000+ invoices/day, < 450 ms) are reused on other pages, including the Home ZATCA card and the ZATCA and Oracle ERP service pages (as a related case study). Real client that agreed to be named?
 - [ ] **[You] Client figures** — InvestMenter "AED 120M+ quarterly volume", "100% FTA compliance / zero audit inquiries"; Primmeshiper "35,000+ orders/day", "99.98% sync". Approved by the clients?
 - [ ] **[You] Absolute guarantees** — "100% compliant", "zero downtime", "Ensure 100% UAE Tax Compliance", "24/7 support" (the site also lists Mon–Fri 9–6). Guaranteed in contracts?
-- [ ] **[You] Photos** — the About, Team ("Collaborative Delivery"), Life and Internship photos are AI-generated but captioned as the real office and team. Send real photos, or approve removing the captions' "our office" wording.
 
 ---
 
@@ -32,14 +30,18 @@ For content questions, write the answer under the item (*"Keep"*, *"Remove"*, *"
 - [ ] **[You] Working hours / time zone** — "Mon–Fri 9:00–6:00 (PKT / GST)". Which time zone?
 - [ ] **[You] History (About page timeline)** — founded 2021? SECP incorporation 2023? FBR & ZATCA connectors 2024? UAE work started 2025 or 2026?
 - [ ] **[You] Team size / experience** — "decades of combined experience" — what is accurate?
+- [ ] **[You] Inner page heroes** (new, 5 Nov) — every inner page now opens with its own hero: a tag line, heading, short lead, two buttons, three facts and a picture (info cards, photos or client logos). All the text is in `src/data/page-heroes.js`, one block per page; case study heroes are built from the case study record. Please read them through, especially the facts: **7** customers (Customers page), **PSEB registered exporter** (Compliance), **Okara, hybrid roles** (Career), and "clients in Pakistan, Saudi Arabia and the UAE" (About).
+- [ ] **[You] Home hero figures** (new, 4 Nov) — the Home hero now shows a row of figures: **10+** team members (the Team page lists 11 people), **9** enterprise services (confirmed 5 Nov), **3** countries served (Pakistan, UAE, Saudi Arabia), **5+** years in business (founded 2021 per the About page). Confirm or send the real numbers (e.g. projects delivered, clients served); they are in `src/data/site-content.js` under the home hero's `stats`.
+- [ ] **[You] Home "Who We Are" section** (new, 4 Nov) — under the hero, in the same style as the other sections: "We turn complex business operations / into simple, connected systems", then "From Oracle ERP and tax e-invoicing to bank, courier and e-commerce integrations, one team in Okara builds, connects and supports the systems your business runs on.", with the team photo and a "More About OraDigitals" button. Change the wording if you like (`src/data/site-content.js`, the home page section with `id: 'who-we-are'`).
+- [ ] **[You] Home figures shown twice** — besides the new hero figures (10+ / 13 / 3 / 5+), the Home page still has an older figures strip between the case studies and the reviews: **50+ enterprise customers**, **100+ ERP & ASP integrations**, **12+ enterprise services** (there are 13), **5+ years**. Remove it, or confirm the figures?
 - [ ] **[You] Departments** — "product engineering division", "legal team" — do these exist?
 - [ ] **[You] Reach** — "tailored for multinational corporations", "automate enterprise systems globally" — accurate?
 - [ ] **[You] Memorandum of Association** — the pasted SECP text repeated clause (c) under (a); the Compliance page shows it once. Check against the original.
 
 ### Team page
-- [ ] **[You] CEO & Founder photo** — Muhammad Faisal currently has a grey sample portrait. Send a photo (it goes in `public/images/team/`) and review the two-paragraph intro. The same photo is used on his director card on the Compliance page.
-- [ ] **[You] Director photo for Muhammad Qaiser** — the Compliance page director card shows the grey sample portrait.
-- [ ] **[You] Team photos** — the 10 team members show initials. Send photos (and optional one-line bios) to replace them.
+- [x] **CEO & Founder photo** — Muhammad Faisal's photo (cropped to the portrait frame) is at `public/images/team/muhammad-faisal.jpg`; used on the Team page and his director card on the Compliance page. Review the two-paragraph intro.
+- [x] **Director photo for Muhammad Qaiser** — `public/images/team/muhammad-qaiser.jpg`, on his Compliance director card and his Team page card.
+- [ ] **[You] Team photos** — 9 of the 10 people in the Team page carousel still show initials (Muhammad Qaiser has his photo). Muhammad Zeeshan Shafi's LinkedIn photo can't be downloaded without signing in: save it and send the file. Send one head-and-shoulders photo per person (named after the person), plus optional one-line bios.
 
 ### Customers
 - [ ] **[You] AgileCentral** — in the Customers menu under *Featured Clients* but has no case study; it links to `/customers` as a placeholder. Remove it, or supply a case study? (Its logo file is kept until you decide.)
@@ -48,21 +50,20 @@ For content questions, write the answer under the item (*"Keep"*, *"Remove"*, *"
 ### Careers
 - [ ] **[You] Open roles** — Senior Oracle ERP Consultant, Backend Node.js & API Engineer, Oracle APEX Developer — are these open now?
 - [ ] **[You] Internship** — paid? exactly 3 months? weekly 1-on-1 mentorship and a hiring pathway for every intern?
-- [ ] **[You] Life page perks** — sit-stand desks, certification allowances, catered lunches, Tech Innovation Hub, annual retreats, Friday Tech Talks — which exist?
+- [ ] **[You] Life page perks** — sit-stand desks, certification allowances, catered lunches, Tech Innovation Hub, annual retreats, Friday Tech Talks — which exist? The three culture cards on the Life page now show real photos, so their text should describe what the photos show (e.g. "Tech Innovation Hub … high-resolution dashboards and digital whiteboards", "Annual Retreats").
 
 ### Services
-- [ ] **[You] Official name for each of the 13 services** — currently 2–4 variants each (e.g. "Courier Logistics Integration" / "Courier & Logistics APIs" / "Courier Integrations"). The menu names are now also used in the footer, HTML sitemap and case-study links, so changing a menu name updates those too.
+- [ ] **[You] Service structure and names** (5 Nov) — Services are now 9 main services, three of them with sub-services: **Tax & E-Invoicing Integration** (FBR, ZATCA, Dubai FTA), **System Integration** (Bank API, Courier & Logistics), **E-Commerce Solutions** (Shopify Plus, WordPress & WooCommerce, E-Commerce Integration), plus the new **App Development**. Old addresses redirect. The menu names are used in the footer, HTML sitemap, contact form and case-study links, so changing a menu name updates those too. Some pages still use older variants in their body text (e.g. "Courier & Logistics APIs").
+- [ ] **[You] New service pages to review** (5 Nov) — *Tax & E-Invoicing Integration* overview, *WordPress & WooCommerce*, *E-Commerce Integration* and *App Development*: all new text. App Development now names the confirmed stack (Flutter, Oracle APEX, JavaFX, Java Spring Boot) and says JavaFX desktop apps run on "Windows, macOS & Linux"; E-Commerce Integration mentions WhatsApp / SMS / email order updates.
 - [ ] **[You] Oracle ERP** — delivered HCM / payroll or EBS-to-Fusion migration projects?
 - [ ] **[You] FBR** — "QR codes in under 150 ms", ready connectors for Oracle EBS / Fusion / SAP / Odoo, "compliance in days, not months"?
-- [ ] **[You] ZATCA** — "tested against thousands of transactions" vs "50,000+ daily" in the case study — which is true?
 - [ ] **[You] Dubai FTA** — staff based in Dubai?
 - [ ] **[You] System integration** — delivered Kafka, Salesforce, HubSpot, Dynamics, AS400 or FoxPro integrations?
-- [ ] **[You] E-commerce** — Magento delivered? 100,000+ SKU catalogue? Which payment gateways were actually integrated (Stripe doesn't onboard Pakistani merchants)?
+- [ ] **[You] E-commerce** — Magento delivered? (Magento was taken off the E-Commerce pages on 5 Nov, as only Shopify and WordPress were named; say if it should come back.) 100,000+ SKU catalogue? Which payment gateways were actually integrated (Stripe doesn't onboard Pakistani merchants)?
 - [ ] **[You] Bank integration** — live integrations with Emirates NBD, FAB, Al Rajhi?
 - [ ] **[You] Courier** — FedEx and Aramex built? (other pages list only TCS, DHL, Leopard, Trax)
 - [ ] **[You] Oracle APEX** — "20x faster" — compared to what?
 - [ ] **[You] System Upgrade & Migration (new, 29 Oct)** — review the new page (`/services/system-upgrade-migration`): is the scope right (Oracle EBS upgrades to 12.2, database upgrades e.g. 11g/12c → 19c, patching, EBS → Fusion Cloud, legacy data migration, server / cloud moves)? Is the 5-step approach and the FAQ answers (rehearsal on a copy, rollback plan, cut-over window) how you actually work? Can Pimidrome be mentioned as your migration tool? Named "Upgrade" rather than "Updation" for Gulf clients — say if you prefer another name.
-- [ ] **[You] Contact form** — the service dropdown leaves out System Integration & Middleware. Intentional?
 - [ ] **[You] Services page has an office map** ("Visit Us — Consult Our Engineering Team") in the middle of the service catalogue. Remove it? The map is already on About, Contact and Compliance.
 
 ### Products
@@ -79,15 +80,31 @@ For content questions, write the answer under the item (*"Keep"*, *"Remove"*, *"
 
 Phones, tablets and desktops (320–1920 px) all work without sideways scrolling; forms, menus and footer were improved on 29 Oct (see *Done*).
 
-- [ ] **[You → Dev] Orange text is hard to read.** Contrast is 2.2 : 1 where 4.5 : 1 is the accessibility minimum:
-  - orange text on white — card subtitles, team roles, phone / email links (65 places on 9 pages);
-  - white text on orange buttons — "Contact Us" in the header (every page) and the landing hero button;
+- [ ] **[You] Orange buttons are hard to read.** Orange *text* on white and grey (card subtitles, team roles, phone / email links, timeline years, FAQ icons) now uses a darker orange, `--accent-text` #a8530a (4.7–5.4 : 1; done 5 Nov). Still below the 4.5 : 1 minimum:
+  - white text on orange buttons (2.2 : 1) — "Contact Us" in the header (every page) and the orange buttons in the heroes;
   - orange on navy — the highlighted menu item (4.4 : 1, just short).
 
-  Fix: a slightly darker orange for text and button backgrounds (keeps the brand look). This also changes the landing page, so it needs your OK.
+  Fix: a slightly darker orange for button backgrounds. This changes the brand look of every page, so it needs your OK.
 - [ ] **[Dev] Two-line section headings on inner pages** — the landing page's headings have a small label, a bold title and a grey second line; the other 25 pages mostly have only a title. Add these while each page's content is confirmed in section 2.
 - [ ] **[You] Treet case study** — its headings skip a level (h2 → h4), which screen readers announce oddly. Small fix, but the page is marked complete, so check before changing.
-- [ ] **[You] Gulf Logistics case-study card** has no logo, so it looks unfinished next to the others (depends on the content decision in section 1).
+- [ ] **[You → Dev] Wording that reads as AI-generated** (checked 11 Nov) — 95 sentences on 30 of 35 pages use stock marketing language; the Home page is the worst (27). The newest pages (App Development, System Upgrade & Migration, Contact, Pimidrome) are clean. The full list is in the scan output; the main groups:
+  1. **Home page** (marked final, so it needs your OK): the customers section — "Trusted by most popular brands in town / and they are having their best time", "Enter the esteemed echelons of organizations that entrust their intricate financial operations to our meticulous care. Engage with us to experience firsthand, the profound and transformative impact our innovative solutions bring to your business"; the hero — "Put your enterprise operations on intelligent autopilot", "Custom Mission-Critical Platforms", "eliminate operational bottlenecks … global fiscal regulations"; the services intro — "engineered for mission-critical enterprise operations … built for zero downtime and total audit certainty".
+  2. **Buzzword headings and phrases:** "Enterprise Integration Vectors", "Banking Integration Vectors", "Robust bridges for real-time synchronization and mission-critical workflows", "Accelerating enterprise software delivery without compromising robustness", "slick modern web portals", "Proven modules configured to match your specific corporate operational charter", "Bespoke Architecture", "World-Class Working Environment", "Consulting Excellence", "top national talent", "seamlessly bridge".
+  3. **Stock call-to-action titles:** "Ready for Oracle ERP Excellence?", "Elevate Your Shopify Storefront Today", "Unlock Your Enterprise Data Potential", "Connect Your Systems Seamlessly", "Streamline Your Logistics Today", "Launch a High-Performance E-Commerce Store", "Partner with a Proven Enterprise Team", "Ready to Achieve Similar Architecture Outcomes like …?".
+  4. **Claims that need proof first** (see section 1 and the service questions above): "certified" (9 places), "zero downtime", "Ensure 100% UAE Tax Compliance", "100% compliant", "Zero tolerance for system downtime", "zero-compromise data privacy", "decades of combined experience", "unlimited scalability", "sub-second" (25 places, mostly Primmeshiper), "500+ concurrent order webhooks per second".
+
+  Fix: rewrite groups 1–3 in plain, specific language (same meaning, no new claims); group 4 after the facts are confirmed. Normal technical and legal wording (Oracle module names, the SECP Memorandum) stays.
+- [ ] **[Dev] Design patterns that look AI-generated** (checked 11 Nov). No emojis are used (only → link arrows and the ★ rating stars). Things that give the template look:
+  1. **Red / green colour-coding** in the case-study cards (Customers, Case Studies, every service page's Related Case Study): a red-bordered "Challenge" box with a warning icon and a green "Solution" box with a tick icon, both on tinted backgrounds. Red and green are not brand colours; use the navy / orange palette and plain labels.
+  2. **Off-brand colours:** 51 distinct colours in `express.css`. A bright "corporate" blue `#0052cc` (17 uses: case-study tags, figures, links, "Explore" buttons) and a light-blue box `#eff6ff` next to the brand navy `#284763`; seven oranges (`#f09b4a`, `#e08a38`, `#db8837`, `#d97706`, `#ea580c`, `#f59e0b`, `#f5a623`) where one brand orange plus the darker text orange are enough; two grey families (the brand greys `#f3f6f5` / `#e2e8e7` and a second set of slate greys from a UI kit). Reduce to the brand palette as named colours in `:root`.
+  3. **Unused multicolour graphics still in the CSS:** the spinning "orbit" hero graphic (red, green, blue, indigo, amber, teal icons and a `rotateOrbit` animation), the marker-pen swoosh under hero words and the animated diagonal lines. None appears on any page; remove them.
+  4. **Code-style tech chips:** technology names in the case-study cards are shown in a monospace "code" font in small boxes. Use the normal font.
+  5. **The same card everywhere:** almost every service page is a grid of six identical cards (icon in a tinted square, title, one sentence). Mix in other layouts (a short intro paragraph, numbered steps, a two-column "what you get" list, an FAQ) as the pages are expanded (see *Thin pages*).
+  6. **Repeated hero picture:** about 20 page heroes use the same three stacked see-through cards with orange icon tiles. Pages with real photos or logos (Team, About, Life, Customers, Career) look better; use more real images (screens of delivered systems, office, team) as they become available.
+  7. **Gradient strip** across the top of the case-study details card, and the uppercase "CHALLENGE:" / "SOLUTION:" labels with icons. Plain headings are enough.
+  8. **Too many corner and shadow styles:** about 20 different corner radii and 68 shadow declarations. Settle on 2–3 radii and 2 shadows.
+
+  **Done 24 Nov** (design pass with the *impeccable* skill): items 1, 2, 3, 4 and 7, and the corner radii in item 8. Also: the small labels above section headings ("Services", "Case Studies", "Who We Are"…) removed; the orange glow on buttons removed; text arrows (→) and the ✓ list ticks replaced with drawn icons; the decorative blur behind the hero cards removed; the made-up ★★★★★ ratings on the client quotes removed (the Google rating card stays); a brand focus ring, text selection and form colours added; three undefined colour/shadow tokens fixed. The 68 shadow declarations are still to be reduced. Items 5 and 6 wait for more page content and real photos or screenshots.
 
 ## 4. Search engines (SEO)
 
@@ -103,17 +120,17 @@ Phones, tablets and desktops (320–1920 px) all work without sideways scrolling
 | Breadcrumb markup | — (removed with the visible breadcrumb) |
 | Viewport, language, favicon, phone home-screen icon | ✓ |
 | Robots | ✓ `robots.txt`; error pages marked "noindex" |
-| `sitemap.xml` | ✓ 32 pages, with real last-changed dates |
+| `sitemap.xml` | ✓ 31 pages, with real last-changed dates |
 | Content SEO | — thin pages, near-duplicate pages, no location words, address mismatch with Google |
 
 ### Technical
 - [ ] **[You] Hosting** — make sure the live server redirects `http://` → `https://` and `www.oradigitals.com` → `oradigitals.com` (the site declares `https://oradigitals.com` as its main address). The settings the server needs are listed in `DEPLOYMENT.md`.
 
 ### Content (the biggest ranking factor)
-- [ ] **[You → Dev] Thin pages** — 22 of 31 pages had under 300 words (the 12 service pages 157–290, product pages about 130), and removing the inner-page heroes took away each page's intro paragraph. Expand each service page: a short intro, who it's for, how a project runs, what is delivered, and FAQs. Needs your real process and details. (Related case studies are now shown on the 10 service pages that have one.)
+- [ ] **[You → Dev] Thin pages** — 22 of 31 pages had under 300 words (the 12 service pages 157–290, product pages about 130). The page heroes added on 5 Nov give each page a short intro again, but the pages are still short. Expand each service page: a short intro, who it's for, how a project runs, what is delivered, and FAQs. Needs your real process and details. (Related case studies are now shown on the 10 service pages that have one.)
 - [ ] **[Dev] Near-duplicate pages** — `/customers` and `/customers/case-studies` still share most of their text (same case-study cards and testimonials), although `/customers` now opens with the customer logos; each product page overlaps 81 % with `/products`. Give `/customers` more of its own content (industries, what was delivered for each customer) as the case studies come in (section 5).
-- [ ] **[You] Headings and titles don't say what you do or where.** Each inner page's H1 is now its first section heading (e.g. "Built on Deep Technical Discipline" on About, "Open Positions" on Career, "Our Product Suite" on Products), and most don't say what the company does or where; rewording those first headings (e.g. "Oracle ERP Consultancy in Okara, Pakistan") would help search. The home page title and description never mention Pakistan or Okara, so local searches like "Oracle EBS consultant Pakistan" don't match. The home page is marked final — your call.
-- [ ] **[You] Short case studies** — Primmeshiper, InvestMenter and Gulf Logistics have about 365 words each against Treet's 1,450. Full write-ups would rank much better.
+- [ ] **[You] Location in titles.** Each inner page's H1 is now its hero heading (e.g. "About OraDigitals – Oracle ERP, compliance and integration specialists", "Careers at OraDigitals"), so headings now say what the page is about; few of them say *where* (Okara, Pakistan). The home page title and description never mention Pakistan or Okara, so local searches like "Oracle EBS consultant Pakistan" don't match. The home page is marked final — your call.
+- [ ] **[You] Short case studies** — Primmeshiper and InvestMenter have about 365 words each against Treet's 1,450. Full write-ups would rank much better.
 
 ### Local search
 - [ ] **[You] Google Business Profile** — "OraDigitals Pvt. Ltd." exists on Google Maps (5.0 ★, 10 reviews) but its address differs from the website (see *Company facts*). Make the name, address and phone match exactly everywhere, add the second phone number to the profile, and send the profile link so it can be added to the site and structured data.
@@ -128,7 +145,6 @@ Phones, tablets and desktops (320–1920 px) all work without sideways scrolling
 ### Case studies
 - [ ] **[You] Write the case studies** — Treet is the only full case study (about 1,450 words: overview, challenge, solution, results, technology). Write the same depth for:
   - Primmeshiper and InvestMenter (currently about 365 words each, mostly summary);
-  - Gulf Logistics & Supply, if it is a real client (see section 1);
   - new clients, e.g. AgileCentral (already in the menu without a case study).
 
   For each, send: client name and logo, industry, the problem, what was built, the results (only figures the client approves), technologies used, the services used, and optionally a client quote.
@@ -139,17 +155,18 @@ Phones, tablets and desktops (320–1920 px) all work without sideways scrolling
 - [ ] **[You] Write the first posts** — aim for 3–5 before launch, then a regular schedule. Posts on topics clients search for help SEO most, e.g. "FBR digital invoicing: what Pakistani businesses must do", "ZATCA Phase 2 explained", "Oracle EBS vs Fusion Cloud", "Connecting WooCommerce / Shopify to Oracle EBS". Decide who writes and who approves posts.
 - [ ] **[Dev] Build the Blog section** once the menu place is decided and the first post exists (so it never goes live empty) — a `/blog` listing page (cards with cover image, title, date, category, short summary; filter by category) and an article page template (title, author, date, reading time, cover image, body, related services and case studies, share buttons), added to the menu, footer, HTML sitemap and `sitemap.xml`, with article structured data and share pictures.
 
-## 6. Speed
-
-- [ ] **[You] Real photos** — the three large photos were compressed (2.5 MB → 560 KB in total); real photos should be sent at about 1,400 px wide and will be compressed the same way.
-
-## 7. Code and repository housekeeping
+## 6. Code and repository housekeeping
 
 - [ ] **[You] `scratch/` folder** — scripts that scraped client websites plus the downloaded HTML. It is now left out of git; delete the folder when you no longer need it.
 
 ---
 
 ## Done
+
+- [x] **Answers of 5 Nov** — Home hero shows **9** enterprise services; the "Rated 5.0 on Google" card is confirmed; App Development rewritten around the real stack: Flutter (mobile), Oracle APEX (web), JavaFX (desktop, with EastFTP as the example) and Java Spring Boot (APIs).
+
+- [x] **Contact form services** (5 Nov) — the service drop-down is built from the Services menu, so it lists all 17 services and sub-services (it used to miss System Integration and the new services).
+- [x] **Section backgrounds** (5 Nov) — every page alternates white and grey sections, and each hero's wave matches the section under it. The thin grey divider lines that some sections drew (and others didn't) are gone; the background change alone separates sections.
 
 - [x] Arabic and German versions removed.
 - [x] Navigation fixed: broken links and menu anchors, breadcrumbs follow the menu, current section highlighted, menu labels match the pages.
@@ -166,6 +183,9 @@ Phones, tablets and desktops (320–1920 px) all work without sideways scrolling
 - [x] WhatsApp button stays on +92 335 5546497 (your decision, 4 Nov); the Contact page's "Call Our Team Now" button also uses this number.
 - [x] All work committed to git (29 Oct).
 - [x] **Real customers only** (your answer, 4 Nov): the Home logo grid now shows just Treet, Primmeshiper, AgileCentral and InvestMenter, plus Neo Furniture (Dubai office furniture, logo from neofurniture.ae) and Asgard Real Estate (Dubai, JVC; asgardre.com is down for maintenance, so the logo came from the site's January 2026 copy on the Internet Archive and its white lettering was turned navy for the white grid — ask Asgard for their official dark-lettered logo), both added 4 Nov; and Flick Network (tax & e-invoicing software, logo from flick.network), added 4 Nov; the 21 unconfirmed logos (ExxonMobil, Volkswagen, Bosch, MAN and others) were removed. The Customers page now opens with the same logos, as the menu's "Client Overview" promises.
+- [x] **Real office and team photos** (your folder, 4 Nov): About, Team, Life and Internship use real photos instead of the AI images (deleted). The Life page culture section now has a team photo (Independence Day, cropped above the two children) and a photo on each of its three cards (team under the wall logo, team trip, team at work; the trip photo keeps the child, as you asked). Photos were cropped, lightly colour-corrected, resized and compressed (87–173 KB each), with metadata removed. Not used: the two dinner photos and the empty-office photo. Team member avatars changed from circles to rounded rectangles (4 Nov).
+- [x] **Gulf Logistics & Supply removed** (your answer, 4 Nov: not a client): its case study, share picture, menu link and Case Studies filter ("Fiscal & e-Invoicing", now empty) are gone, and its old addresses redirect to the Case Studies page. Figures taken from it were removed: "99.99% clearance" on the Home ZATCA card and "ZATCA" from the menu's "Zero penalty audits" line. The Customers and Case Studies page descriptions no longer mention Saudi Arabia.
+- [x] **ZATCA and Dubai FTA clients confirmed** (your answer, 4 Nov): you have ZATCA and Dubai FTA clients through Flick Network, so the ZATCA page ("tested against thousands of real B2B and B2C transactions across Saudi Arabia") and the About timeline (2024 connectors for Saudi tax authorities) stay as they are. The word "certified" there still depends on the certifications question in section 1.
 - [x] `robots.txt` added: allows all pages, keeps crawlers out of `/api/` and `/health`, and points to `sitemap.xml`.
 - [x] Hero only on the landing page; breadcrumb trail and page-name title removed: every other page goes straight from the header into its content. Each page's first section heading is its H1 (one per page). The 404 / 500 pages show a short message with buttons instead.
 - [x] White / grey section alternation like the landing page on every page (25 of 31 pages had neighbouring sections in the same colour). It is now automatic: the first section is white, then they alternate, so new pages follow the pattern by themselves.

@@ -5,6 +5,7 @@ const {
   generateCaseStudyPage,
 } = require('./case-studies-data')
 const { shareImage } = require('./share-images')
+const { pageHeroes } = require('./page-heroes')
 
 // Listing cards are built from the case study registry so they always match the full case study pages
 function caseStudyCards() {
@@ -25,8 +26,23 @@ function caseStudyCards() {
 
 // Case studies whose project used a service (each case study lists its `services`), shown on that service's page
 function relatedCaseStudies(serviceSlug) {
-  const slugs = caseStudiesData.filter((cs) => (cs.services || []).includes(serviceSlug)).map((cs) => cs.slug)
+  const slugs = caseStudiesData
+    .filter((cs) => (cs.services || []).some((slug) => slug === serviceSlug || slug.startsWith(`${serviceSlug}/`)))
+    .map((cs) => cs.slug)
   return caseStudyCards().filter((card) => slugs.includes(card.slug))
+}
+
+// Home case study showcase: one wide card per case study with tags, three figures, logo and technologies
+function caseStudyShowcase() {
+  return caseStudiesData.map((cs) => ({
+    client: cs.client,
+    href: `/customers/case-studies/${cs.slug}`,
+    tags: [cs.category, cs.industry.split(/,| & | and /)[0].trim()],
+    text: cs.subtitle,
+    figures: (cs.metrics || cs.highlights || []).slice(0, 3).map(({ value, label }) => ({ value, label })),
+    logo: cs.clientLogo,
+    tech: (cs.techStack || []).slice(0, 4),
+  }))
 }
 
 // Testimonials use the client quote stored with each case study, so every quote belongs to a real client
@@ -40,19 +56,18 @@ function clientTestimonials() {
       author: cs.client,
       role: cs.author.replace(`, ${cs.client}`, ''),
       quote: cs.quote,
-      rating: 5,
+      // No star rating: the clients gave quotes, not scores
+      logo: cs.clientLogo,
     }))
 }
 
-// Leadership & Team page. Names and roles are confirmed; the founder photo is still a sample.
+// Leadership & Team page. Names, roles and the directors' photos are confirmed.
 // Team members show their initials until an `image` path (e.g. /public/images/team/<name>.jpg) is added.
-const SAMPLE_PORTRAIT = '/public/images/team/placeholder-portrait.svg'
-
 const founder = {
   name: 'Muhammad Faisal',
   role: 'CEO & Founder',
   email: 'muhammadfaisal@oradigitals.com',
-  image: SAMPLE_PORTRAIT,
+  image: '/public/images/team/muhammad-faisal.jpg',
   intro: [
     'Muhammad Faisal founded OraDigitals to give businesses that run on Oracle ERP one partner for the systems around it: tax authority e-invoicing, bank and courier APIs, online stores, and custom applications.',
     'As CEO, Muhammad leads client delivery and the engineering team, from scoping new integrations to overseeing projects such as the custom order management system built for Treet Corporation.',
@@ -69,13 +84,13 @@ const teamMembers = [
   { name: 'Muhammad Rizwan', role: 'OIC Developer' },
   { name: 'Muhammad Talha', role: 'OIC Developer' },
   { name: 'Muhammad Zain', role: 'Oracle EBS Developer' },
-  { name: 'Muhammad Qaiser', role: 'Oracle EBS Developer' },
+  { name: 'Muhammad Qaiser', role: 'Oracle EBS Developer', image: '/public/images/team/muhammad-qaiser.jpg' },
 ]
 
 // Directors as registered with SECP (Compliance page)
 const directors = [
   { name: 'Muhammad Faisal', role: 'Director · CEO & Founder', email: 'muhammadfaisal@oradigitals.com', phone: '+92 335 5546497', image: founder.image },
-  { name: 'Muhammad Qaiser', role: 'Director', email: 'qaiser@oradigitals.com', phone: '+92 314 8634682', image: SAMPLE_PORTRAIT },
+  { name: 'Muhammad Qaiser', role: 'Director', email: 'qaiser@oradigitals.com', phone: '+92 314 8634682', image: '/public/images/team/muhammad-qaiser.jpg' },
 ]
 
 // Principal line of business, word for word from the SECP-registered Memorandum of Association (Compliance page)
@@ -190,6 +205,14 @@ const site = {
   fbrNumber: 'G905514',
   praNumber: 'G905514-6',
   secpVerificationLink: 'https://leap.secp.gov.pk/#/verify-company-info/0298255',
+  // The footer lists only these main services, then links to the Services page for the rest
+  footerServices: [
+    { label: 'Oracle ERP Implementation', href: '/services/oracle-erp' },
+    { label: 'Tax & E-Invoicing Integration', href: '/services/tax-e-invoicing' },
+    { label: 'System Integration', href: '/services/system-integration' },
+    { label: 'E-Commerce Solutions', href: '/services/ecommerce-solutions' },
+    { label: 'App Development', href: '/services/app-development' },
+  ],
   nav: [
     {
       label: 'Services',
@@ -197,36 +220,41 @@ const site = {
       isMega: true,
       groups: [
         {
-          heading: 'Enterprise ERP',
+          heading: 'ERP, Apps & Data',
           items: [
             { label: 'Oracle ERP Implementation', href: '/services/oracle-erp', desc: 'Oracle Fusion Cloud & EBS rollout' },
             { label: 'Custom ERP Solutions', href: '/services/custom-erp', desc: 'Tailored enterprise ERP workflows' },
+            { label: 'App Development', href: '/services/app-development', desc: 'Mobile, web & desktop apps' },
             { label: 'Oracle APEX Applications', href: '/services/oracle-apex', desc: 'Rapid low-code database applications' },
-          ],
-        },
-        {
-          heading: 'Tax & Compliance',
-          items: [
-            { label: 'FBR Integration (Pakistan)', href: '/services/fbr-integration', desc: 'Digital Invoicing & POS fiscalization' },
-            { label: 'ZATCA Integration (Saudi Arabia)', href: '/services/zatca-integration', desc: 'Fatoora Phase 1 & 2 e-Invoicing' },
-            { label: 'Dubai FTA Integration (UAE)', href: '/services/dubai-fta-integration', desc: 'VAT & Corporate Tax compliance' },
-          ],
-        },
-        {
-          heading: 'Integrations & Commerce',
-          items: [
-            { label: 'Bank Integration APIs', href: '/services/bank-integration', desc: 'Automated reconciliations & H2H' },
-            { label: 'Courier Logistics Integration', href: '/services/courier-integration', desc: 'TCS, DHL, Leopard automated dispatch' },
-            { label: 'Shopify Plus Solutions', href: '/services/shopify-solutions', desc: 'Custom apps & bi-directional sync' },
-            { label: 'E-Commerce Platforms', href: '/services/ecommerce-solutions', desc: 'Headless & WooCommerce architecture' },
-          ],
-        },
-        {
-          heading: 'Data & Architecture',
-          items: [
-            { label: 'System Integration Middleware', href: '/services/system-integration', desc: 'OIC, REST, SOAP & Webhooks' },
             { label: 'System Upgrade & Migration', href: '/services/system-upgrade-migration', desc: 'EBS, database & legacy system moves' },
             { label: 'Data Analytics & BI', href: '/services/data-analytics', desc: 'Dashboards, pipelines & forecasting' },
+          ],
+        },
+        {
+          // The heading links to the overview page; the items are its sub-services
+          heading: 'Tax & E-Invoicing Integration',
+          href: '/services/tax-e-invoicing',
+          items: [
+            { label: 'FBR Integration (Pakistan)', href: '/services/tax-e-invoicing/fbr-integration', desc: 'Digital Invoicing & POS fiscalization' },
+            { label: 'ZATCA Integration (Saudi Arabia)', href: '/services/tax-e-invoicing/zatca-integration', desc: 'Fatoora Phase 1 & 2 e-Invoicing' },
+            { label: 'Dubai FTA Integration (UAE)', href: '/services/tax-e-invoicing/dubai-fta-integration', desc: 'VAT & Corporate Tax compliance' },
+          ],
+        },
+        {
+          heading: 'System Integration',
+          href: '/services/system-integration',
+          items: [
+            { label: 'Bank API Integration', href: '/services/system-integration/bank-integration', desc: 'Automated reconciliations & H2H' },
+            { label: 'Courier & Logistics Integration', href: '/services/system-integration/courier-integration', desc: 'TCS, DHL, Leopard automated dispatch' },
+          ],
+        },
+        {
+          heading: 'E-Commerce Solutions',
+          href: '/services/ecommerce-solutions',
+          items: [
+            { label: 'Shopify Plus Solutions', href: '/services/ecommerce-solutions/shopify-solutions', desc: 'Custom apps & bi-directional sync' },
+            { label: 'WordPress & WooCommerce', href: '/services/ecommerce-solutions/wordpress-woocommerce', desc: 'Stores, custom plugins & scaling' },
+            { label: 'E-Commerce Integration', href: '/services/ecommerce-solutions/ecommerce-integration', desc: 'Store linked to ERP, payments & couriers' },
           ],
         },
       ],
@@ -272,13 +300,13 @@ const site = {
             { label: 'All Case Studies Hub', href: '/customers/case-studies', desc: 'Dedicated technical breakdowns & ROI reports' },
             { label: 'Custom OMS & E-Commerce', href: '/customers/case-studies/treet-corporation', desc: 'Treet Corp WooCommerce & Oracle EBS OMS' },
             { label: 'Shopify Plus & Logistics Sync', href: '/customers/case-studies/primmeshiper', desc: 'Primmeshiper sub-second ERP gateway' },
-            { label: 'Fiscal Clearance Engines', href: '/customers/case-studies/gulf-logistics-zatca', desc: 'ZATCA Phase 2 & UAE FTA engines' },
+            { label: 'Tax & Bank Automation', href: '/customers/case-studies/investmenter-dubai', desc: 'InvestMenter UAE tax returns & bank feeds' },
           ],
         },
         {
           heading: 'Proven Impact',
           items: [
-            { label: '100% Fiscal Compliance', href: '/compliance', desc: 'Zero penalty audits across ZATCA, FBR & FTA' },
+            { label: '100% Fiscal Compliance', href: '/compliance', desc: 'Zero penalty audits across FBR & FTA' },
             { label: 'Automated Order Fulfillment', href: '/customers/case-studies/treet-corporation', desc: 'Centralized OMS, bank & courier workflows' },
             { label: '< 1.2s Courier Dispatch', href: '/customers/case-studies/primmeshiper', desc: '35,000+ daily orders automated' },
           ],
@@ -297,11 +325,19 @@ const site = {
   ],
 }
 
+// Contact form service choices follow the Services menu (overview pages, then their sub-services), so the form
+// always offers the services the site describes
+function serviceOptions() {
+  return site.nav
+    .find((item) => item.href === '/services')
+    .groups.flatMap((group) => [...(group.href ? [group.heading] : []), ...group.items.map((item) => item.label)])
+}
+
 // HTML sitemap: built from the menu and the registries, so new services, products and case studies appear automatically
 function sitemapCards() {
   const serviceLinks = site.nav
     .find((item) => item.href === '/services')
-    .groups.flatMap((group) => group.items)
+    .groups.flatMap((group) => [...(group.href ? [{ label: group.heading, href: group.href }] : []), ...group.items])
     .map(({ label, href }) => ({ label, href }))
 
   return [
@@ -360,6 +396,27 @@ const pages = {
             { label: 'Schedule Consultation', href: '/contact', style: 'primary' },
             { label: 'Explore Services', href: '/services', style: 'outline' },
           ],
+          // Figures the site already supports (Team page, Services page, client countries, About timeline); the
+          // service count is confirmed, the others still need confirming before launch
+          stats: [
+            { value: '10+', label: 'Team members' },
+            { value: '9', label: 'Enterprise services' },
+            { value: '3', label: 'Countries served' },
+            { value: '5+', label: 'Years in business' },
+          ],
+        },
+      },
+      {
+        component: 'split',
+        props: {
+          id: 'who-we-are',
+          eyebrow: 'Who We Are',
+          titleMain: 'We turn complex business operations',
+          titleSub: 'into simple, connected systems',
+          text: 'From Oracle ERP and tax e-invoicing to bank, courier and e-commerce integrations, one team in Okara builds, connects and supports the systems your business runs on.',
+          image: '/public/images/about-team-office.jpg',
+          imageAlt: 'The OraDigitals team at work in the Okara office',
+          actions: [{ label: 'More About OraDigitals', href: '/about', style: 'outline' }],
         },
       },
       {
@@ -372,7 +429,8 @@ const pages = {
           titleSub: 'engineered for mission-critical enterprise operations',
           subtitle: 'End-to-end implementation, fiscal compliance, and mission-critical API integrations built for zero downtime and total audit certainty.',
           description: 'End-to-end implementation, fiscal compliance, and mission-critical API integrations built for zero downtime and total audit certainty.',
-          columns: 3,
+          columns: 4,
+          compact: true,
           footerLink: {
             label: 'Explore our services',
             href: '/services',
@@ -384,55 +442,54 @@ const pages = {
               title: 'Oracle ERP Implementation',
               subtitle: 'Oracle Fusion & EBS',
               text: 'End-to-end implementation, configuration, and support for Oracle Fusion Cloud ERP, Oracle EBS, Financials, SCM, and OIC middleware.',
+              featured: true,
+              tags: ['Fusion Cloud', 'Oracle EBS', 'Financials & SCM', 'OIC'],
               link: { href: '/services/oracle-erp', label: 'View Oracle ERP Details' },
             },
             {
               icon: 'tax',
-              badge: 'Pakistan Fiscal',
-              title: 'FBR Digital Invoicing & POS',
-              subtitle: 'Real-Time Revenue Board Sync',
-              text: 'Direct cryptographic e-invoicing and digital POS middleware compliant with FBR regulations, QR verification, and automated annexure filing.',
-              link: { href: '/services/fbr-integration', label: 'View FBR Integration' },
+              badge: 'Tax Compliance',
+              title: 'Tax & E-Invoicing Integration',
+              subtitle: 'FBR, ZATCA & UAE FTA',
+              text: 'E-invoicing and tax reporting for FBR in Pakistan, ZATCA in Saudi Arabia and the UAE Federal Tax Authority, sent straight from your ERP or POS.',
+              short: 'FBR, ZATCA and UAE FTA e-invoicing and tax reporting, straight from your ERP or POS.',
+              link: { href: '/services/tax-e-invoicing', label: 'View Tax & E-Invoicing' },
             },
             {
-              icon: 'shield',
-              badge: 'Saudi Arabia',
-              title: 'ZATCA E-Invoicing Phase 2',
-              subtitle: 'Fatoora Clearance & Reporting',
-              text: 'Complete integration with KSA ZATCA Fatoora Phase 1 & 2. Automatic XML generation, cryptographic stamps, UUIDs, and 99.99% clearance.',
-              link: { href: '/services/zatca-integration', label: 'View ZATCA Integration' },
+              icon: 'api',
+              badge: 'Integration',
+              title: 'System Integration',
+              subtitle: 'Banks, Couriers & APIs',
+              text: 'Middleware and APIs that connect your ERP to banks, couriers, CRMs and online stores, with host-to-host payments and live shipment tracking.',
+              short: 'Your ERP connected to banks, couriers, CRMs and online stores through APIs.',
+              link: { href: '/services/system-integration', label: 'View System Integration' },
             },
             {
-              icon: 'building',
-              badge: 'UAE / Dubai',
-              title: 'Dubai FTA Tax Integration',
-              subtitle: 'VAT & Corporate Tax Framework',
-              text: 'Automated compliance with UAE Federal Tax Authority. Corporate tax return computation, VAT reporting, and upcoming e-billing framework.',
-              link: { href: '/services/dubai-fta-integration', label: 'View Dubai FTA Details' },
+              icon: 'layers',
+              badge: 'Custom ERP',
+              title: 'Custom ERP Solutions',
+              subtitle: 'Built Around Your Operation',
+              text: 'Manufacturing, inventory, finance and sales modules built around your processes, with web and mobile access.',
+              short: 'ERP modules built around your processes, with web and mobile access.',
+              link: { href: '/services/custom-erp', label: 'View Custom ERP' },
             },
             {
-              icon: 'bank',
-              badge: 'FinTech',
-              title: 'Bank API Integrations',
-              subtitle: 'H2H & Automated Reconciliations',
-              text: 'Direct corporate host-to-host bank integrations, MT940 / CAMT.053 statement ingestion, Raast, 1Link, and multi-currency payment rails.',
-              link: { href: '/services/bank-integration', label: 'View Bank Integration' },
-            },
-            {
-              icon: 'truck',
-              badge: 'Logistics',
-              title: 'Courier & Logistics APIs',
-              subtitle: 'TCS, DHL, Leopard & Trax',
-              text: 'Automated shipping label generation, consignment booking, dispatch manifests, and real-time tracking webhooks directly inside your ERP.',
-              link: { href: '/services/courier-integration', label: 'View Courier Details' },
+              icon: 'refresh',
+              badge: 'Upgrades',
+              title: 'System Upgrade & Migration',
+              subtitle: 'EBS, Database & Legacy Moves',
+              text: 'Oracle EBS and database upgrades, patching, EBS to Fusion Cloud moves and legacy data migration.',
+              short: 'Oracle EBS and database upgrades, Fusion Cloud moves and data migration.',
+              link: { href: '/services/system-upgrade-migration', label: 'View Upgrade & Migration' },
             },
             {
               icon: 'shopping',
               badge: 'E-Commerce',
-              title: 'Shopify Plus Solutions',
-              subtitle: 'Enterprise Apps & Bi-Directional Sync',
-              text: 'Custom private Shopify Plus apps, real-time inventory sync with Oracle & SAP, custom checkout extensions, and B2B wholesale portals.',
-              link: { href: '/services/shopify-solutions', label: 'View Shopify Solutions' },
+              title: 'E-Commerce Solutions',
+              subtitle: 'Shopify, WordPress & Integration',
+              text: 'Shopify Plus and WordPress / WooCommerce stores, connected to your ERP, payment gateways and couriers.',
+              short: 'Shopify and WooCommerce stores, connected to your ERP, payments and couriers.',
+              link: { href: '/services/ecommerce-solutions', label: 'View E-Commerce Solutions' },
             },
             {
               icon: 'code',
@@ -440,6 +497,7 @@ const pages = {
               title: 'Oracle APEX Applications',
               subtitle: 'Fast Data-Dense Web Apps',
               text: 'Rapid enterprise database applications built natively on Oracle Database with Oracle APEX, enterprise security, and responsive dashboards.',
+              short: 'Fast, secure business web apps built on Oracle Database with Oracle APEX.',
               link: { href: '/services/oracle-apex', label: 'View Oracle APEX Details' },
             },
             {
@@ -448,7 +506,17 @@ const pages = {
               title: 'Data Analytics & BI',
               subtitle: 'Dashboards & ETL Pipelines',
               text: 'Centralized cloud data warehousing, Power BI dashboards, automated executive reporting, and predictive machine learning models.',
+              short: 'Power BI dashboards, data warehousing and automated executive reporting.',
               link: { href: '/services/data-analytics', label: 'View Data Analytics' },
+            },
+            {
+              icon: 'mobile',
+              badge: 'Apps',
+              title: 'App Development',
+              subtitle: 'Mobile, Web & Desktop',
+              text: 'Flutter mobile apps, Oracle APEX web apps and JavaFX desktop apps on Java Spring Boot APIs, connected to your ERP and business systems.',
+              short: 'Mobile, web and desktop apps connected to your ERP and business systems.',
+              link: { href: '/services/app-development', label: 'View App Development' },
             },
           ],
         },
@@ -465,42 +533,13 @@ const pages = {
         },
       },
       {
-        component: 'case-studies',
+        component: 'case-study-showcase',
         props: {
-          compact: true,
           eyebrow: 'Case Studies',
-          badge: 'Case Studies',
-          title: 'Transforming Enterprises Across the Region',
-          titleMain: 'Transforming Enterprises Across the Region',
-          titleSub: 'proven results across manufacturing and digital commerce',
-          subtitle: 'Explore brief highlights of our mission-critical client transformations. Click any case study to read the complete breakdown or visit our full case studies page.',
-          description: 'Explore brief highlights of our mission-critical client transformations. Click any case study to read the complete breakdown or visit our full case studies page.',
-          items: [
-            {
-              slug: 'treet-corporation',
-              categoryKey: 'erp',
-              category: 'System Integration & ERP',
-              client: 'Treet Corporation',
-              clientLogo: '/public/images/treet-logo.png',
-              title: 'Integrating E-Commerce and Enterprise Operations Through a Custom Order Management System',
-              summary: 'OraDigitals designed and developed a custom Order Management System (OMS) to serve as the integration layer between WooCommerce, Oracle E-Business Suite (EBS), courier partners, banking services, and other business systems.',
-              challenge: 'As Treet\'s e-commerce operations relied on multiple systems, coordinating information across the online store, ERP, payment channels, and delivery partners presented several integration challenges.',
-              solution: 'Custom OMS middleware application hosted on a VPS coordinating communication between WooCommerce, Oracle EBS, courier partners, banking APIs, WhatsApp, and FBR.',
-              link: { href: '/customers/case-studies/treet-corporation', label: 'Read Case Study' },
-            },
-            {
-              slug: 'primmeshiper',
-              categoryKey: 'commerce',
-              category: 'Commerce & Logistics',
-              client: 'Primmeshiper',
-              clientLogo: '/public/images/primmeshiper-logo.png',
-              title: 'Shopify Plus Bi-Directional ERP Sync & Multi-Courier Logistics Gateway',
-              summary: 'Built sub-second bi-directional inventory synchronization and automated multi-courier airway bill booking for high-throughput Shopify Plus fulfillment.',
-              challenge: 'Stock desynchronization during high-traffic flash sales and manual consignment booking across four courier carriers causing dispatch backlogs.',
-              solution: 'High-throughput Node/Oracle integration engine syncing inventory sub-second with Shopify Plus, automated airway bill generation, and real-time webhook status updates.',
-              link: { href: '/customers/case-studies/primmeshiper', label: 'Read Case Study' },
-            },
-          ],
+          titleMain: 'Proven Client Success',
+          titleSub: 'real projects for manufacturing, commerce and finance',
+          allLink: { href: '/customers/case-studies', label: 'All case studies' },
+          items: caseStudyShowcase(),
         },
       },
       {
@@ -515,16 +554,14 @@ const pages = {
         },
       },
       {
-        component: 'testimonials',
+        component: 'reviews',
         props: {
           eyebrow: 'Testimonials',
-          badge: 'Testimonials',
-          title: 'Trusted by Regional Industry Leaders',
-          titleMain: 'Trusted by Regional Industry Leaders',
-          titleSub: 'backed by CTOs, finance directors, and operations heads',
-          subtitle: 'Hear from the chief technology officers and financial controllers who rely on our software.',
-          description: 'Hear from the chief technology officers and financial controllers who rely on our software.',
+          titleMain: 'What our clients say',
+          titleSub: 'about working with OraDigitals',
           items: clientTestimonials(),
+          // Google Maps listing rating, confirmed 5 Nov 2026
+          google: { rating: '5.0' },
         },
       },
       {
@@ -646,7 +683,98 @@ const pages = {
     ],
   },
 
-  'services/fbr-integration': {
+  'services/app-development': {
+    title: 'App Development: Flutter, Oracle APEX, JavaFX - OraDigitals',
+    description:
+      'Flutter mobile apps, Oracle APEX web apps and JavaFX desktop apps on Java Spring Boot APIs, connected to your ERP, payments and business systems.',
+    sections: [
+      {
+        component: 'cards',
+        props: {
+          title: 'App Development Capabilities',
+          subtitle: 'Mobile, web and desktop apps, and the systems behind them.',
+          columns: 3,
+          cards: [
+            { icon: 'mobile', title: 'Mobile Apps with Flutter', subtitle: 'Android & iOS', text: 'Flutter apps for Android and iOS from one codebase, published to Google Play and the App Store.' },
+            { icon: 'code', title: 'Web Apps with Oracle APEX', subtitle: 'Portals & Dashboards', text: 'Customer portals, dashboards and internal tools on your Oracle Database that run in any browser.', link: { href: '/services/oracle-apex', label: 'More on Oracle APEX' } },
+            { icon: 'desktop', title: 'Desktop Apps with JavaFX', subtitle: 'Windows, macOS & Linux', text: 'Desktop software for work that runs on the PC, like our own EastFTP scheduled file-transfer client.', link: { href: '/products/eastftp', label: 'See EastFTP' } },
+            { icon: 'api', title: 'Backend & APIs with Spring Boot', subtitle: 'Java Spring Boot', text: 'Secure Java Spring Boot APIs with sign-in, role-based access and audit logs behind every app.' },
+            { icon: 'oracle', title: 'ERP-Connected Apps', text: 'Field sales, warehouse and approval apps that read and write directly to Oracle or your custom ERP.' },
+            { icon: 'layers', title: 'UI & UX Design', text: 'Wireframes, prototypes and screen designs agreed with your users before development starts.' },
+          ],
+        },
+      },
+      {
+        component: 'cards',
+        props: {
+          title: 'How We Build Your App',
+          subtitle: 'Short steps, with a working version to try at each one.',
+          columns: 4,
+          cards: [
+            { icon: 'search', title: '1. Discover & Design', text: 'We agree the features, users and systems involved, and design the screens with you.' },
+            { icon: 'code', title: '2. Build in Sprints', text: 'Features are built in short sprints, with a test version you can try after each one.' },
+            { icon: 'shield', title: '3. Test & Launch', text: 'Testing on real devices and data, then release to the app stores or your servers.' },
+            { icon: 'refresh', title: '4. Support & Improve', text: 'Updates, fixes and new features after launch, as your business changes.' },
+          ],
+        },
+      },
+      {
+        component: 'cta',
+        props: {
+          title: 'Have an App in Mind?',
+          text: 'Tell us who will use it and what it needs to do, and we will plan the build with you.',
+          actions: [{ label: 'Discuss Your App', href: '/contact', style: 'primary' }],
+        },
+      },
+    ],
+  },
+
+  'services/tax-e-invoicing': {
+    title: 'Tax & E-Invoicing Integration: FBR, ZATCA, FTA - OraDigitals',
+    description:
+      'E-invoicing and tax integration for Pakistan FBR, Saudi ZATCA and the UAE Federal Tax Authority, connected directly to your ERP or POS.',
+    sections: [
+      {
+        component: 'cards',
+        props: {
+          title: 'Choose Your Tax Authority',
+          subtitle: 'One integration approach for Pakistan, Saudi Arabia and the UAE.',
+          columns: 3,
+          cards: [
+            { icon: 'tax', title: 'FBR Integration (Pakistan)', subtitle: 'Digital Invoicing & POS', text: 'Real-time FBR invoice numbers and QR codes for every sale, from your ERP or POS, with offline queueing and Annexure-C reconciliation.', link: { href: '/services/tax-e-invoicing/fbr-integration', label: 'Explore FBR Integration' } },
+            { icon: 'shield', title: 'ZATCA Integration (Saudi Arabia)', subtitle: 'Fatoora Phase 1 & 2', text: 'UBL 2.1 XML invoices, cryptographic stamps and QR codes, cleared and reported to ZATCA, with portal onboarding handled for you.', link: { href: '/services/tax-e-invoicing/zatca-integration', label: 'Explore ZATCA Integration' } },
+            { icon: 'building', title: 'Dubai FTA Integration (UAE)', subtitle: 'VAT & Corporate Tax', text: 'VAT 201 returns, corporate tax computation and FTA audit files prepared from your books, ready for UAE e-invoicing.', link: { href: '/services/tax-e-invoicing/dubai-fta-integration', label: 'Explore Dubai FTA Integration' } },
+          ],
+        },
+      },
+      {
+        component: 'cards',
+        props: {
+          title: 'Included in Every Tax Integration',
+          subtitle: 'Whichever authority you report to, the integration works the same way.',
+          columns: 3,
+          cards: [
+            { icon: 'refresh', title: 'Straight From Your ERP or POS', text: 'Invoices are sent from Oracle EBS, Fusion, SAP, Odoo, custom systems or POS counters, with no re-keying.' },
+            { icon: 'search', title: 'Validation Before Submission', text: 'Tax rates, buyer details and invoice fields are checked before anything reaches the tax authority.' },
+            { icon: 'shield', title: 'Queues & Automatic Retries', text: 'If the connection drops, invoices wait in a queue and are sent as soon as it is back.' },
+            { icon: 'lock', title: 'Certificates & Onboarding', text: 'Registration, keys and certificates with the tax authority are set up and renewed for you.' },
+            { icon: 'file', title: 'Audit Logs & Reports', text: 'Every submission, response and error is logged, with reports your finance team can check.' },
+            { icon: 'speed', title: 'Rule Changes Kept Current', text: 'Rate, schema and rule changes from FBR, ZATCA and the FTA are applied as they are announced.' },
+          ],
+        },
+      },
+      {
+        component: 'cta',
+        props: {
+          title: 'Get Your Invoicing Compliant',
+          text: 'Tell us which tax authority you report to and which systems you use, and we will plan the integration.',
+          actions: [{ label: 'Talk to a Tax Integration Specialist', href: '/contact', style: 'primary' }],
+        },
+      },
+    ],
+  },
+
+  'services/tax-e-invoicing/fbr-integration': {
     title: 'FBR Digital Invoicing & POS Integration - Pakistan - OraDigitals',
     description:
       'Certified FBR digital invoicing and Point of Sale (POS) integration for Tier-1 retailers and corporate taxpayers across Pakistan.',
@@ -695,7 +823,7 @@ const pages = {
     ],
   },
 
-  'services/zatca-integration': {
+  'services/tax-e-invoicing/zatca-integration': {
     title: 'Saudi ZATCA E-Invoicing Phase 1 & 2 Integration - OraDigitals',
     description:
       'Certified ZATCA Fatoora Phase 1 & Phase 2 integration for Saudi enterprises. XML UBL 2.1, cryptographic stamps, UUIDs, and clearance.',
@@ -727,7 +855,7 @@ const pages = {
     ],
   },
 
-  'services/dubai-fta-integration': {
+  'services/tax-e-invoicing/dubai-fta-integration': {
     title: 'Dubai & UAE FTA Corporate Tax & VAT Integration - OraDigitals',
     description:
       'UAE Federal Tax Authority (FTA) integration for corporate tax, VAT return filings, and forthcoming UAE national e-invoicing framework.',
@@ -764,6 +892,18 @@ const pages = {
     description:
       'High-performance middleware, REST, SOAP, GraphQL, and event-driven architectures connecting ERPs, CRMs, and databases.',
     sections: [
+      {
+        component: 'cards',
+        props: {
+          title: 'Integration Services',
+          subtitle: 'Specialised integrations we build and support as part of System Integration.',
+          columns: 2,
+          cards: [
+            { icon: 'bank', title: 'Bank API Integration', subtitle: 'H2H & Reconciliations', text: 'Host-to-host bank channels, MT940 and CAMT.053 statement parsing, Raast and 1Link transfers, and maker-checker approvals.', link: { href: '/services/system-integration/bank-integration', label: 'Explore Bank API Integration' } },
+            { icon: 'truck', title: 'Courier & Logistics Integration', subtitle: 'TCS, Leopard, Trax, DHL & FedEx', text: 'Automatic courier booking, label and CN printing, tracking updates and COD reconciliation from your store or ERP.', link: { href: '/services/system-integration/courier-integration', label: 'Explore Courier Integration' } },
+          ],
+        },
+      },
       {
         component: 'cards',
         props: {
@@ -865,7 +1005,7 @@ const pages = {
     ],
   },
 
-  'services/shopify-solutions': {
+  'services/ecommerce-solutions/shopify-solutions': {
     title: 'Shopify Plus Solutions & Custom Apps - OraDigitals',
     description:
       'Custom private Shopify Plus apps, bi-directional ERP synchronization, custom checkouts, and high-volume B2B e-commerce architectures.',
@@ -898,23 +1038,36 @@ const pages = {
   },
 
   'services/ecommerce-solutions': {
-    title: 'Custom E-Commerce Platforms & Headless Architecture - OraDigitals',
+    title: 'E-Commerce Solutions: Shopify, WordPress & Integration - OraDigitals',
     description:
-      'End-to-end e-commerce development across WooCommerce, Magento, and custom Headless commerce platforms with omnichannel synchronization.',
+      'Shopify Plus and WordPress / WooCommerce stores, and e-commerce integration with your ERP, payment gateways, couriers and tax systems.',
     sections: [
       {
         component: 'cards',
         props: {
-          title: 'E-Commerce Capabilities',
-          subtitle: 'Comprehensive commerce development from UX design to high-throughput checkout.',
+          title: 'Our E-Commerce Services',
+          subtitle: 'Build the store on the platform that suits you, then connect it to the rest of your business.',
           columns: 3,
           cards: [
-            { icon: 'shopping', title: 'WooCommerce Scaling', text: 'Enterprise WooCommerce setups engineered for 100,000+ SKUs with database query optimization.' },
-            { icon: 'code', title: 'Headless Commerce Architecture', text: 'Decoupled frontends built on modern web frameworks connecting to backend commerce APIs.' },
-            { icon: 'bank', title: 'Payment Gateway Integration', text: 'Seamless integration with Visa, Mastercard, Stripe, Paymob, 2Checkout, and local payment gateways.' },
-            { icon: 'chart', title: 'Real-Time Inventory Management', text: 'Unified inventory visibility across online stores, physical POS counters, and warehouses.' },
+            { icon: 'shopping', title: 'Shopify Plus Solutions', subtitle: 'Apps, Checkout & B2B', text: 'Custom private Shopify apps, checkout extensions, B2B wholesale and live stock sync for high-volume Shopify Plus stores.', link: { href: '/services/ecommerce-solutions/shopify-solutions', label: 'Explore Shopify Plus' } },
+            { icon: 'code', title: 'WordPress & WooCommerce', subtitle: 'Stores & Custom Plugins', text: 'WooCommerce stores on WordPress with custom themes and plugins, built to handle large catalogues and busy checkouts.', link: { href: '/services/ecommerce-solutions/wordpress-woocommerce', label: 'Explore WordPress & WooCommerce' } },
+            { icon: 'api', title: 'E-Commerce Integration', subtitle: 'ERP, Payments & Couriers', text: 'Your store connected to your ERP, payment gateways, couriers, tax e-invoicing and customer messaging, so orders run without re-keying.', link: { href: '/services/ecommerce-solutions/ecommerce-integration', label: 'Explore E-Commerce Integration' } },
+          ],
+        },
+      },
+      {
+        component: 'cards',
+        props: {
+          title: 'Included in Every Store',
+          subtitle: 'Whichever platform you choose.',
+          columns: 3,
+          cards: [
             { icon: 'code', title: 'Mobile-First Conversion UX', text: 'Smooth, frictionless checkout journeys optimized for mobile buyers.' },
+            { icon: 'speed', title: 'Fast Storefronts', text: 'Optimised themes, images and queries for quick page loads and good Core Web Vitals.' },
             { icon: 'lock', title: 'PCI-DSS Security Compliance', text: 'Enterprise security standards protecting sensitive customer and payment transactions.' },
+            { icon: 'bank', title: 'Payment Gateways', text: 'Visa, Mastercard, Stripe, Paymob, 2Checkout and local payment gateways.' },
+            { icon: 'chart', title: 'Real-Time Inventory', text: 'One stock view across online stores, POS counters and warehouses.' },
+            { icon: 'layers', title: 'Headless When You Need It', text: 'Decoupled frontends on modern web frameworks, connected to the commerce platform through its APIs.' },
           ],
         },
       },
@@ -929,7 +1082,71 @@ const pages = {
     ],
   },
 
-  'services/bank-integration': {
+  'services/ecommerce-solutions/wordpress-woocommerce': {
+    title: 'WordPress & WooCommerce Development - OraDigitals',
+    description:
+      'WooCommerce stores on WordPress with custom themes and plugins, built for large catalogues and connected to your ERP, payments and couriers.',
+    sections: [
+      {
+        component: 'cards',
+        props: {
+          title: 'WordPress & WooCommerce Capabilities',
+          subtitle: 'From a new store to scaling and connecting the one you already run.',
+          columns: 3,
+          cards: [
+            { icon: 'shopping', title: 'WooCommerce Store Development', text: 'New WooCommerce stores on WordPress with custom themes, product catalogues and checkout set up for your business.' },
+            { icon: 'database', title: 'WooCommerce Scaling', text: 'Enterprise WooCommerce setups engineered for 100,000+ SKUs with database query optimization.' },
+            { icon: 'code', title: 'Custom Plugins', text: 'Plugins for your own pricing, checkout, shipping and approval rules, without editing WordPress or WooCommerce core.' },
+            { icon: 'bank', title: 'Payment Gateways', text: 'Local and international gateways added to checkout, with payments matched back to orders.' },
+            { icon: 'refresh', title: 'ERP, Courier & Tax Sync', text: 'Orders, stock, courier bookings and FBR invoices synced with your back office, as we did for Treet with Oracle EBS.' },
+            { icon: 'shield', title: 'Speed, Security & Updates', text: 'Caching, hardening, backups and tested WordPress and plugin updates to keep the store fast and safe.' },
+          ],
+        },
+      },
+      {
+        component: 'cta',
+        props: {
+          title: 'Build or Scale Your WooCommerce Store',
+          text: 'Tell us about your store and catalogue, and we will plan the build or the upgrade.',
+          actions: [{ label: 'Start a WooCommerce Project', href: '/contact', style: 'primary' }],
+        },
+      },
+    ],
+  },
+
+  'services/ecommerce-solutions/ecommerce-integration': {
+    title: 'E-Commerce Integration: ERP, Payments & Couriers - OraDigitals',
+    description:
+      'Connect Shopify, WooCommerce or custom online stores to your ERP, payment gateways, couriers, FBR e-invoicing and customer messaging.',
+    sections: [
+      {
+        component: 'cards',
+        props: {
+          title: 'What We Connect Your Store To',
+          subtitle: 'Shopify, WooCommerce or a custom store, linked to the systems that fulfil and account for each order.',
+          columns: 3,
+          cards: [
+            { icon: 'oracle', title: 'ERP Orders & Inventory', text: 'Orders flow into Oracle EBS, Fusion, SAP or a custom ERP, and stock flows back to the store, so nothing is keyed twice.' },
+            { icon: 'bank', title: 'Payments & Reconciliation', text: 'Gateway and bank payments matched to orders and posted to your accounts, with fees deducted automatically.' },
+            { icon: 'truck', title: 'Courier Booking & Tracking', text: 'Courier booked, label printed and tracking sent to the customer as soon as an order is packed.' },
+            { icon: 'tax', title: 'Tax E-Invoicing', text: 'An FBR digital invoice for every online order, issued from the same flow.' },
+            { icon: 'users', title: 'Customer Messaging', text: 'Order confirmations and delivery updates sent to customers by WhatsApp, SMS or email.' },
+            { icon: 'chart', title: 'One Stock View', text: 'Unified inventory visibility across online stores, physical POS counters, and warehouses.' },
+          ],
+        },
+      },
+      {
+        component: 'cta',
+        props: {
+          title: 'Connect Your Store to Your Business',
+          text: 'Tell us which store and back-office systems you use, and we will map the integration.',
+          actions: [{ label: 'Talk to an Integration Engineer', href: '/contact', style: 'primary' }],
+        },
+      },
+    ],
+  },
+
+  'services/system-integration/bank-integration': {
     title: 'Corporate Bank API & Payment Gateway Integration - OraDigitals',
     description:
       'Corporate banking Host-to-Host (H2H) integrations, automated MT940 statement parsing, Raast, 1Link, and direct ERP disbursements.',
@@ -961,7 +1178,7 @@ const pages = {
     ],
   },
 
-  'services/courier-integration': {
+  'services/system-integration/courier-integration': {
     title: 'Automated Courier & Logistics Integration - OraDigitals',
     description:
       'Seamless courier dispatch middleware for TCS, Leopard, Trax, DHL, FedEx, and Aramex with automated CN generation and live tracking.',
@@ -1071,17 +1288,45 @@ const pages = {
           columns: 3,
           cards: [
             { icon: 'oracle', title: 'Oracle ERP Implementation', subtitle: 'Fusion Cloud & EBS', text: 'Certified implementation and managed services for Oracle Cloud Financials, SCM, and OIC.', link: { href: '/services/oracle-erp', label: 'Explore Oracle ERP' } },
-            { icon: 'tax', title: 'Custom ERP Solutions', subtitle: 'Bespoke Architecture', text: 'Modular ERP systems engineered around your exact manufacturing and supply chain logic.', link: { href: '/services/custom-erp', label: 'Explore Custom ERP' } },
-            { icon: 'tax', title: 'FBR Integration (Pakistan)', subtitle: 'POS & E-Invoicing', text: 'Real-time FBR fiscalization, digital QR codes, and sales tax compliance.', link: { href: '/services/fbr-integration', label: 'Explore FBR Integration' } },
-            { icon: 'shield', title: 'ZATCA Integration (KSA)', subtitle: 'Fatoora Phase 1 & 2', text: 'Saudi e-invoicing clearance engine, UBL 2.1 XML, and cryptographic stamping.', link: { href: '/services/zatca-integration', label: 'Explore ZATCA Integration' } },
-            { icon: 'building', title: 'Dubai FTA Tax Integration', subtitle: 'VAT & Corporate Tax', text: 'UAE Federal Tax Authority compliance, VAT return filing, and corporate tax models.', link: { href: '/services/dubai-fta-integration', label: 'Explore Dubai FTA' } },
-            { icon: 'api', title: 'System Integration & Middleware', subtitle: 'APIs & Event Queues', text: 'Connect ERPs, CRMs, and third-party services with high-throughput middleware.', link: { href: '/services/system-integration', label: 'Explore System Integration' } },
-            { icon: 'refresh', title: 'System Upgrade & Migration', subtitle: 'Upgrades & Data Migration', text: 'Oracle EBS and database upgrades, patching, and moving legacy systems and data to new platforms.', link: { href: '/services/system-upgrade-migration', label: 'Explore Upgrade & Migration' } },
-            { icon: 'shopping', title: 'Shopify Plus Solutions', subtitle: 'Apps & ERP Sync', text: 'Custom private Shopify apps, bi-directional inventory sync, and custom checkout apps.', link: { href: '/services/shopify-solutions', label: 'Explore Shopify Solutions' } },
-            { icon: 'shopping', title: 'E-Commerce Platforms', subtitle: 'Headless & Omnichannel', text: 'High-converting digital storefronts built on WooCommerce and headless APIs.', link: { href: '/services/ecommerce-solutions', label: 'Explore E-Commerce' } },
-            { icon: 'bank', title: 'Bank API Integrations', subtitle: 'H2H & Reconciliations', text: 'Host-to-host banking, MT940 parsing, Raast, and automated ERP payment settlements.', link: { href: '/services/bank-integration', label: 'Explore Bank APIs' } },
-            { icon: 'truck', title: 'Courier & Logistics APIs', subtitle: 'TCS, DHL & Leopard', text: 'Automated consignment note generation, shipping label printing, and live tracking.', link: { href: '/services/courier-integration', label: 'Explore Courier APIs' } },
+            { icon: 'layers', title: 'Custom ERP Solutions', subtitle: 'Bespoke Architecture', text: 'Modular ERP systems engineered around your exact manufacturing and supply chain logic.', link: { href: '/services/custom-erp', label: 'Explore Custom ERP' } },
+            { icon: 'mobile', title: 'App Development', subtitle: 'Flutter, APEX, JavaFX & Spring Boot', text: 'Mobile, web and desktop apps on Java Spring Boot APIs, connected to your ERP and business systems.', link: { href: '/services/app-development', label: 'Explore App Development' } },
+            {
+              icon: 'tax',
+              title: 'Tax & E-Invoicing Integration',
+              subtitle: 'FBR, ZATCA & UAE FTA',
+              text: 'E-invoicing and tax reporting sent to the tax authority straight from your ERP or POS.',
+              list: [
+                { label: 'FBR Integration (Pakistan)', href: '/services/tax-e-invoicing/fbr-integration' },
+                { label: 'ZATCA Integration (Saudi Arabia)', href: '/services/tax-e-invoicing/zatca-integration' },
+                { label: 'Dubai FTA Integration (UAE)', href: '/services/tax-e-invoicing/dubai-fta-integration' },
+              ],
+              link: { href: '/services/tax-e-invoicing', label: 'Explore Tax & E-Invoicing' },
+            },
+            {
+              icon: 'api',
+              title: 'System Integration',
+              subtitle: 'Middleware, Banks & Couriers',
+              text: 'Connect ERPs, CRMs, banks, couriers and third-party services with high-throughput middleware.',
+              list: [
+                { label: 'Bank API Integration', href: '/services/system-integration/bank-integration' },
+                { label: 'Courier & Logistics Integration', href: '/services/system-integration/courier-integration' },
+              ],
+              link: { href: '/services/system-integration', label: 'Explore System Integration' },
+            },
+            {
+              icon: 'shopping',
+              title: 'E-Commerce Solutions',
+              subtitle: 'Shopify, WordPress & Integration',
+              text: 'Online stores built on Shopify Plus or WordPress and WooCommerce, connected to the systems behind them.',
+              list: [
+                { label: 'Shopify Plus Solutions', href: '/services/ecommerce-solutions/shopify-solutions' },
+                { label: 'WordPress & WooCommerce', href: '/services/ecommerce-solutions/wordpress-woocommerce' },
+                { label: 'E-Commerce Integration', href: '/services/ecommerce-solutions/ecommerce-integration' },
+              ],
+              link: { href: '/services/ecommerce-solutions', label: 'Explore E-Commerce' },
+            },
             { icon: 'code', title: 'Oracle APEX Applications', subtitle: 'Low-Code Fast Data Apps', text: 'Rapid enterprise database applications built natively on Oracle Database.', link: { href: '/services/oracle-apex', label: 'Explore Oracle APEX' } },
+            { icon: 'refresh', title: 'System Upgrade & Migration', subtitle: 'Upgrades & Data Migration', text: 'Oracle EBS and database upgrades, patching, and moving legacy systems and data to new platforms.', link: { href: '/services/system-upgrade-migration', label: 'Explore Upgrade & Migration' } },
             { icon: 'chart', title: 'Data Analytics & BI', subtitle: 'Power BI & Pipelines', text: 'Cloud data warehousing, executive KPI dashboards, and automated variance reporting.', link: { href: '/services/data-analytics', label: 'Explore Data Analytics' } },
           ],
         },
@@ -1136,8 +1381,8 @@ const pages = {
           title: 'Built on Deep Technical Discipline',
           subtitle: 'Transparent operations, strict regulatory compliance, and clean engineering.',
           text: 'We are registered with SECP (Corporate ID: 0298255), FBR (G905514), and PRA. Our team brings decades of combined experience in database internals, fiscal security, and cloud infrastructure.',
-          image: '/public/images/office-hq.jpg',
-          imageAlt: 'OraDigitals Office Headquarters',
+          image: '/public/images/about-team-office.jpg',
+          imageAlt: 'The OraDigitals team at work in the Okara office',
           list: [
             '100% compliant with SECP, FBR, and regional tax authorities',
             'Deep Oracle Database, APEX, and OIC architectural specializations',
@@ -1206,8 +1451,8 @@ const pages = {
           title: 'Collaborative, Cross-Disciplinary Delivery',
           subtitle: 'Working as an extension of your internal executive team.',
           text: 'Our senior consultants work directly with your CFOs, CIOs, and IT directors to ensure business continuity, regulatory compliance, and rapid software delivery.',
-          image: '/public/images/team-consultants.jpg',
-          imageAlt: 'OraDigitals Enterprise Team',
+          image: '/public/images/team-at-work.jpg',
+          imageAlt: 'OraDigitals consultants and engineers working together',
           list: [
             'Principal Oracle Cloud & Database Architects',
             'Tax & Fiscalization Specialists for FBR, ZATCA & FTA',
@@ -1227,7 +1472,7 @@ const pages = {
     ],
   },
 
-  // LIFE AT ORADIGITALS (with generated image)
+  // LIFE AT ORADIGITALS (office and team photos)
   life: {
     title: 'Life at OraDigitals - Culture, Workplace & Growth',
     description:
@@ -1240,8 +1485,8 @@ const pages = {
           title: 'World-Class Working Environment',
           subtitle: 'Ergonomic, distraction-free workspaces designed for deep technical focus.',
           text: 'Our offices feature high-speed fiber connectivity, dual-monitor workstations, comfortable collaborative break-out areas, and an open-door policy with leadership.',
-          image: '/public/images/office-hq.jpg',
-          imageAlt: 'OraDigitals Modern Office Environment',
+          image: '/public/images/office-workspace.jpg',
+          imageAlt: 'The OraDigitals office in Okara',
           list: [
             'Ergonomic sit-stand desks and premium developer hardware',
             'Generous annual training and certification allowances (Oracle, Cloud, DevOps)',
@@ -1255,10 +1500,15 @@ const pages = {
         props: {
           title: 'Office & Culture Highlights',
           subtitle: 'Moments from our day-to-day operations and team milestones.',
+          image: '/public/images/life-independence-day.jpg',
+          imageAlt: 'The OraDigitals team celebrating Independence Day at the office',
+          // Four cards, two per row
+          columns: 2,
           items: [
-            { category: 'Workplace', title: 'Tech Innovation Hub', text: 'Spacious collaborative rooms equipped with high-resolution dashboards and digital whiteboards.' },
-            { category: 'Team Bonding', title: 'Annual Retreats & Dinners', text: 'Regular team dinners, celebrations of project milestones, and tech hackathons.' },
-            { category: 'Knowledge Sharing', title: 'Friday Tech Talks', text: 'Weekly knowledge sharing sessions where developers showcase new tools and architectures.' },
+            { category: 'Workplace', title: 'Tech Innovation Hub', text: 'Spacious collaborative rooms equipped with high-resolution dashboards and digital whiteboards.', image: '/public/images/about-team-office.jpg', imageAlt: 'The OraDigitals team at work in the Okara office' },
+            { category: 'Knowledge Sharing', title: 'Friday Tech Talks', text: 'Weekly knowledge sharing sessions where developers showcase new tools and architectures.', image: '/public/images/life-knowledge-sharing.jpg', imageAlt: 'OraDigitals engineers discussing work around the office table' },
+            { category: 'Team Bonding', title: 'Team Dinners', text: 'Regular team dinners to celebrate project milestones together.', image: '/public/images/life-team-dinner.jpg', imageAlt: 'The OraDigitals team at a team dinner' },
+            { category: 'Team Bonding', title: 'Team Trips', text: 'Trips away from the office, with time to unwind together as a team.', image: '/public/images/life-team-trip.jpg', imageAlt: 'The OraDigitals team on a team trip' },
           ],
         },
       },
@@ -1276,7 +1526,7 @@ const pages = {
     ],
   },
 
-  // INTERNSHIP PAGE (with generated image)
+  // INTERNSHIP PAGE
   'career/internship': {
     title: 'Software Engineering Internship Program - OraDigitals',
     description:
@@ -1289,8 +1539,8 @@ const pages = {
           title: 'Work on Production Systems from Day One',
           subtitle: 'No coffee runs. Real code, real databases, and real client deployments.',
           text: 'Under the 1-on-1 mentorship of our principal engineers, interns learn best practices in system architecture, version control, automated testing, and fiscal API compliance.',
-          image: '/public/images/internship-collaboration.jpg',
-          imageAlt: 'OraDigitals Interns Collaborating',
+          image: '/public/images/internship-team.jpg',
+          imageAlt: 'OraDigitals engineers working together in the office',
           list: [
             '1-on-1 weekly mentorship sessions with senior architects',
             'Hands-on experience with Node.js, Express, Oracle SQL, and REST APIs',
@@ -1409,7 +1659,7 @@ const pages = {
   // CLIENTS PAGE
   customers: {
     title: 'Our Clients & Success Stories - OraDigitals',
-    description: 'Trusted by retail, manufacturing, logistics, and corporate enterprises across Pakistan, Saudi Arabia, and the UAE.',
+    description: 'Trusted by manufacturing, e-commerce, logistics, real estate, software and investment companies in Pakistan, the UAE and beyond.',
     sections: [
       {
         component: 'customers',
@@ -1430,7 +1680,6 @@ const pages = {
           categories: [
             { key: 'all', label: 'All Case Studies' },
             { key: 'erp', label: 'Oracle ERP & SCM' },
-            { key: 'tax', label: 'Fiscal & e-Invoicing' },
             { key: 'commerce', label: 'Commerce & Logistics' },
             { key: 'fintech', label: 'FinTech & Corporate Tax' },
           ],
@@ -1465,7 +1714,7 @@ const pages = {
   // DEDICATED FULL CASE STUDIES PAGE
   'customers/case-studies': {
     title: 'Enterprise Case Studies & Transformations - OraDigitals',
-    description: 'Full case studies of Oracle ERP, ZATCA e-invoicing, logistics middleware and UAE tax automation projects across Pakistan, Saudi Arabia and the UAE.',
+    description: 'Full case studies of Oracle ERP, e-commerce, courier logistics and UAE tax automation projects in Pakistan and the UAE.',
     sections: [
       {
         component: 'case-studies',
@@ -1477,7 +1726,6 @@ const pages = {
           categories: [
             { key: 'all', label: 'All Case Studies' },
             { key: 'erp', label: 'Oracle ERP & SCM' },
-            { key: 'tax', label: 'Fiscal & e-Invoicing' },
             { key: 'commerce', label: 'Commerce & Logistics' },
             { key: 'fintech', label: 'FinTech & Corporate Tax' },
           ],
@@ -1663,21 +1911,7 @@ const pages = {
               name: 'service',
               label: 'Service of Interest',
               type: 'select',
-              options: [
-                'Oracle ERP Implementation',
-                'Custom ERP Solutions',
-                'FBR Integration (Pakistan)',
-                'ZATCA Integration (Saudi Arabia)',
-                'Dubai FTA Tax Integration (UAE)',
-                'Bank API Integration',
-                'Courier & Logistics Integration',
-                'Shopify Plus Solutions',
-                'E-Commerce Solutions',
-                'Oracle APEX Applications',
-                'System Upgrade & Migration',
-                'Data Analytics & BI',
-                'General Consulting Inquiry',
-              ],
+              options: [...serviceOptions(), 'General Consulting Inquiry'],
             },
             { name: 'subject', label: 'Subject / Project Brief', required: true },
             { name: 'message', label: 'Describe your current systems, requirements & timeline', type: 'textarea', required: true },
@@ -1719,9 +1953,17 @@ Object.keys(pages)
     })
   })
 
+// Every inner page opens with its own hero (the landing page already has one)
+Object.entries(pageHeroes({ site, pages, products, caseStudies: caseStudiesData })).forEach(([slug, props]) => {
+  pages[slug].sections.unshift({ component: 'page-hero', props })
+})
+
 const componentCatalog = {
   hero: { description: 'Top page banner with headline, orbit graphics, and actions.' },
+  'page-hero': { description: 'Inner page hero: tag line, two-part heading, actions, facts and a page-specific picture.' },
   customers: { description: 'Customer logo grid (the confirmed customers only).' },
+  'case-study-showcase': { description: 'Home case studies: wide cards that move on their own, with counter and arrows.' },
+  reviews: { description: 'Home reviews: featured quote beside a column of review cards and the Google rating.' },
   'case-studies': { description: 'Enterprise case studies showcase with client badges, challenges, solutions, ROI metrics, and tech stacks.' },
   'case-study-single': { description: 'Dedicated single case study breakdown with metrics, challenges, solutions, and testimonial.' },
   'leader-profile': { description: 'Founder / leader spotlight with portrait, name, title, and short intro.' },
@@ -1746,7 +1988,9 @@ function navLabel(href) {
   const top = site.nav.find((item) => item.href === href)
   if (top) return top.label
   for (const item of site.nav) {
-    const children = item.groups ? item.groups.flatMap((group) => group.items) : item.submenu || []
+    const children = item.groups
+      ? item.groups.flatMap((group) => [...(group.href ? [{ label: group.heading, href: group.href }] : []), ...group.items])
+      : item.submenu || []
     const child = children.find((entry) => entry.href === href)
     if (child) return child.label
   }
