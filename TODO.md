@@ -11,7 +11,6 @@ For content questions, write the answer under the item (*"Keep"*, *"Remove"*, *"
 
 ### Website functions
 - [ ] **[You] Form emails — ready to switch on.** Contact, job and internship submissions are saved on the server and the email sending is built, but it stays off until it has a mail account to send from. Send: (1) which address(es) should receive submissions (e.g. info@oradigitals.com), and (2) the mail account to send from — SMTP server, port, username and password (from your email provider or hosting). These go in the server settings, not in the code (see `DEPLOYMENT.md`).
-- [ ] **[You] Commit and back up to GitHub.** The work from 4–5 Nov (photos, page heroes, service restructure, App Development, reviews and case-study sections) is not committed yet, and the footer wordmark commit is not pushed. Approve committing and pushing to branch `website-update-oct-2026`.
 - [ ] **[You] Social media links** in the footer go to linkedin.com/company/oradigitals, facebook.com/oradigitals, instagram.com/oradigitals, youtube.com/@oradigitals and github.com/oradigitals. Do all five accounts exist? Remove any that don't. (Confirmed ones will also be added to the company details Google reads.)
 
 ### Content that could cause trouble if not true
@@ -162,6 +161,8 @@ Phones, tablets and desktops (320–1920 px) all work without sideways scrolling
 ---
 
 ## Done
+
+- [x] **Backed up to GitHub** (24 Nov) — all work up to the design pass is committed and pushed to branch `website-update-oct-2026` (commit 5a0f861).
 
 - [x] **Answers of 5 Nov** — Home hero shows **9** enterprise services; the "Rated 5.0 on Google" card is confirmed; App Development rewritten around the real stack: Flutter (mobile), Oracle APEX (web), JavaFX (desktop, with EastFTP as the example) and Java Spring Boot (APIs).
 
