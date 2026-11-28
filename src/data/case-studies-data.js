@@ -189,6 +189,7 @@ const caseStudiesData = [
   <p>Through this implementation, OraDigitals delivered a custom Order Management System that connects Treet Corporation's WooCommerce store with Oracle E-Business Suite and its designated external service providers.</p>
   <p>The project brings e-commerce order processing, inventory synchronization, ERP sales order creation, payment verification, receipt processing, dispatch management, courier tracking, customer notifications, and compliance-related integrations into a coordinated operational ecosystem.</p>
   <p>By integrating existing platforms rather than replacing them, OraDigitals helped establish a more connected foundation for managing Treet's e-commerce operations across its digital storefront and enterprise systems.</p>
+  <p>In a second phase, the same OMS was extended to Treet's Daraz marketplace store: see the <a href="/customers/case-studies/treet-daraz-integration">Treet Daraz integration case study</a>.</p>
 </div>
 
 <div class="cs-article-section cs-article-about">
@@ -199,6 +200,135 @@ const caseStudiesData = [
   <div class="cs-cta-box">
     <h3>Have a complex integration challenge?</h3>
     <p>Contact OraDigitals to discuss how custom middleware, enterprise application integration, and workflow automation can connect your business systems and support your operational goals.</p>
+    <a href="/contact" class="btn btn-primary">Schedule Consultation</a>
+  </div>
+</div>
+`
+  },
+  // Phase 2 of the Treet project: the Daraz marketplace connected to the OMS built in phase 1 (above).
+  // DRAFT: the scope below follows how a Daraz Open Platform integration with this OMS works; confirm each
+  // part with the delivery team before launch (see TODO.md, "Treet Daraz case study").
+  {
+    slug: 'treet-daraz-integration',
+    categoryKey: 'commerce',
+    category: 'Marketplace Integration',
+    client: 'Treet Corporation',
+    clientLogo: '/public/images/treet-logo.png',
+    solution: 'Daraz marketplace connected to the existing custom OMS and Oracle E-Business Suite',
+    industry: 'Manufacturing and E-Commerce',
+    technology: 'Daraz Open Platform API, Custom OMS Middleware, Oracle E-Business Suite (EBS), Oracle Database, and WooCommerce',
+    service: 'Marketplace Integration, Order Management Automation, and ERP Integration',
+    title: 'Bringing Daraz Marketplace Orders into Treet\'s Order Management System',
+    seoTitle: 'Treet Daraz Marketplace Integration Case Study',
+    metaDescription: 'How OraDigitals connected Treet\'s Daraz store to its custom OMS and Oracle EBS, so marketplace orders, stock and dispatch run through one system.',
+    services: ['ecommerce-solutions/ecommerce-integration', 'system-integration', 'oracle-erp', 'custom-erp'],
+    subtitle: 'Extending the custom OMS built in phase one so that Daraz orders, stock and dispatch run through the same workflow as Treet\'s own online store and Oracle E-Business Suite.',
+    highlights: [
+      { value: 'Daraz', label: 'orders in the OMS' },
+      { value: 'Oracle EBS', label: 'sales orders & stock' },
+      { value: 'One OMS', label: 'store and marketplace' },
+    ],
+    summary: 'In a second phase, OraDigitals connected Treet\'s Daraz marketplace store to the custom Order Management System built for its WooCommerce store, so marketplace orders follow the same path into Oracle E-Business Suite.',
+    challenge: 'Daraz orders, stock and dispatch steps were handled in Daraz Seller Center, outside the OMS and Oracle workflow that already ran Treet\'s own online store.',
+    solutionSummary: 'OraDigitals added a Daraz Open Platform integration to the existing OMS, reusing its Oracle EBS connections, dashboard and dispatch forms for marketplace orders.',
+    techStack: ['Daraz Open Platform API', 'Custom OMS Middleware (VPS)', 'Oracle E-Business Suite (EBS)', 'Oracle Database', 'WooCommerce'],
+    contentHtml: `
+<div class="cs-article-section">
+  <h2>Overview</h2>
+  <p>In the first phase of this project, OraDigitals built a custom Order Management System (OMS) that connects Treet Corporation's WooCommerce store with Oracle E-Business Suite (EBS), courier partners, banking services, WhatsApp and the FBR system. That work is described in the <a href="/customers/case-studies/treet-corporation">Treet Corporation OMS case study</a>.</p>
+  <p>Treet also sells through Daraz, one of Pakistan's largest online marketplaces. In the second phase, OraDigitals connected Treet's Daraz store to the same OMS, so that marketplace orders, stock and dispatch are handled through the workflow already in place for the company's own online store.</p>
+  <p>Rather than building a separate system for the marketplace, the integration extends the existing OMS and its Oracle EBS connections to a second sales channel.</p>
+</div>
+
+<div class="cs-article-section">
+  <h2>The Challenge</h2>
+  <p>With the OMS in place, orders from Treet's own website already flowed into Oracle EBS. Daraz orders, however, were managed in Daraz Seller Center, separately from that workflow.</p>
+
+  <h3>Two Sales Channels, One Stock</h3>
+  <p>Products sold on the website and on Daraz draw on the same inventory. Stock levels and prices maintained in Oracle EBS needed to be reflected on Daraz as well as on WooCommerce, so that both channels offer only what is available.</p>
+
+  <h3>Marketplace Orders Outside the Order-to-Cash Flow</h3>
+  <p>For website orders, the OMS creates sales orders in Oracle Order Management and supports the related fulfilment and invoicing steps. Daraz orders needed to enter the same process instead of being re-entered by hand.</p>
+
+  <h3>Marketplace Fulfilment Steps</h3>
+  <p>Daraz orders follow the marketplace's own fulfilment process: order statuses are updated in Daraz, and shipping documents are issued through the marketplace. These steps needed to be coordinated with Treet's dispatch operations.</p>
+
+  <h3>Visibility Across Channels</h3>
+  <p>Operations teams needed to see website and marketplace orders together, with their processing and dispatch status, rather than switching between the OMS and Seller Center.</p>
+</div>
+
+<div class="cs-article-section">
+  <h2>The Solution: Extending the OMS to Daraz</h2>
+  <p>OraDigitals added a Daraz integration to the existing OMS middleware, using the Daraz Open Platform API. The OMS remains the central integration layer and the Oracle EBS database environment remains its operational backend.</p>
+
+  <h3>1. Daraz Open Platform Connection</h3>
+  <p>The OMS connects to Treet's Daraz seller account through the Daraz Open Platform API, with authorised access and scheduled synchronisation between the marketplace and the OMS.</p>
+
+  <h3>2. Product, Price and Stock Synchronisation</h3>
+  <p>Items, prices and stock levels maintained in Oracle EBS are matched to Treet's Daraz products through the OMS, so that marketplace listings follow the same master data as the website.</p>
+
+  <h3>3. Daraz Orders into the OMS and Oracle EBS</h3>
+  <p>Daraz orders are imported into the OMS alongside WooCommerce orders and marked by sales channel. From there they follow the existing workflow into Oracle Order Management, supporting sales order creation and the related fulfilment and invoicing processes.</p>
+
+  <h3>4. Marketplace Fulfilment and Dispatch</h3>
+  <p>The OMS updates order statuses on Daraz as orders are processed and retrieves the marketplace's shipping documents for dispatch. The existing dispatch workflow and Oracle EBS forms are used for Daraz orders as well.</p>
+
+  <h3>5. Cancellations and Returns</h3>
+  <p>Cancellations and returns raised on Daraz are brought back into the OMS, so that order records and stock stay consistent across the marketplace, the OMS and Oracle EBS.</p>
+
+  <h3>6. One Dashboard for Both Channels</h3>
+  <p>The OMS dashboard and reports show website and Daraz orders together, with the sales channel visible for each order, giving operations teams one place to follow processing and dispatch.</p>
+</div>
+
+<div class="cs-article-section">
+  <h2>Technology and Architecture</h2>
+  <p>The Daraz integration is an extension of the middleware built in phase one, not a separate system.</p>
+  <p><strong>Core components:</strong></p>
+  <ul class="cs-tech-list">
+    <li><strong>Marketplace:</strong> Daraz, through the Daraz Open Platform API</li>
+    <li><strong>E-Commerce:</strong> WooCommerce</li>
+    <li><strong>Integration Layer:</strong> Custom OMS middleware developed by OraDigitals</li>
+    <li><strong>Enterprise Resource Planning:</strong> Oracle E-Business Suite</li>
+    <li><strong>Operational Database:</strong> Oracle EBS database environment</li>
+    <li><strong>Hosting:</strong> Virtual Private Server (VPS)</li>
+  </ul>
+</div>
+
+<div class="cs-article-section">
+  <h2>Business Impact</h2>
+  <p>The integration brings Treet's marketplace sales into the same operational framework as its own online store.</p>
+  <div class="cs-impact-block">
+    <h4>One order workflow for two channels</h4>
+    <p>Website and Daraz orders follow the same path through the OMS into Oracle Order Management.</p>
+  </div>
+  <div class="cs-impact-block">
+    <h4>Consistent stock and prices</h4>
+    <p>Marketplace listings follow the item, price and stock information maintained in Oracle EBS.</p>
+  </div>
+  <div class="cs-impact-block">
+    <h4>Less work in Seller Center</h4>
+    <p>Order statuses, shipping documents, cancellations and returns are handled through the OMS workflow.</p>
+  </div>
+  <div class="cs-impact-block">
+    <h4>A single view of orders</h4>
+    <p>Operations teams follow website and marketplace orders in one dashboard and one set of reports.</p>
+  </div>
+</div>
+
+<div class="cs-article-section">
+  <h2>The Outcome</h2>
+  <p>With the second phase, the OMS that OraDigitals built for Treet's website now also serves its Daraz store. Marketplace orders, stock and dispatch are coordinated through the same middleware and Oracle E-Business Suite connections as the company's own e-commerce channel.</p>
+  <p>Because the integration builds on the existing system, further sales channels can be connected to the same OMS in the same way.</p>
+</div>
+
+<div class="cs-article-section cs-article-about">
+  <h2>About OraDigitals</h2>
+  <p>OraDigitals provides enterprise technology solutions spanning ERP implementation and customization, system integration, custom application development, and AI-powered business automation.</p>
+  <p>We help organizations connect business systems, streamline operational workflows, and build tailored technology solutions around their existing infrastructure.</p>
+
+  <div class="cs-cta-box">
+    <h3>Selling on a marketplace as well as your own store?</h3>
+    <p>Contact OraDigitals to discuss connecting Daraz or other marketplaces to your order management and ERP systems.</p>
     <a href="/contact" class="btn btn-primary">Schedule Consultation</a>
   </div>
 </div>

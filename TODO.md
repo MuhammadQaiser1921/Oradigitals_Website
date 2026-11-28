@@ -142,6 +142,13 @@ Phones, tablets and desktops (320–1920 px) all work without sideways scrolling
 ## 5. New content to create
 
 ### Case studies
+- [ ] **[You] Treet Daraz case study — confirm the scope** (draft added 24 Nov, `/customers/case-studies/treet-daraz-integration`). Phase two of the Treet project: Daraz connected to the OMS from phase one. No Daraz details were available, so the draft describes a standard Daraz Open Platform integration with no figures. Confirm or correct each part:
+  1. Items, prices and stock from Oracle EBS kept in step with the Daraz listings through the OMS.
+  2. Daraz orders imported into the OMS, marked by channel, and created as sales orders in Oracle Order Management.
+  3. Order statuses updated on Daraz and Daraz shipping documents printed from the OMS; the existing dispatch forms used for Daraz orders.
+  4. Daraz cancellations and returns brought back into the OMS.
+  5. One OMS dashboard and reports for website and Daraz orders.
+  Also: were Daraz **payouts** reconciled in Oracle (receipts), were Daraz orders sent to **FBR**, and is there a figure worth stating (e.g. Daraz orders per day, time saved)? When the project ran (year) would also help.
 - [ ] **[You] Write the case studies** — Treet is the only full case study (about 1,450 words: overview, challenge, solution, results, technology). Write the same depth for:
   - Primmeshiper and InvestMenter (currently about 365 words each, mostly summary);
   - new clients, e.g. AgileCentral (already in the menu without a case study).

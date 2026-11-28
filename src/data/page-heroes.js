@@ -561,7 +561,7 @@ function pageHeroes({ site, pages, products, caseStudies }) {
       text: 'From Oracle EBS and order management for Treet to UAE tax automation for InvestMenter, these are the companies we work with.',
       actions: [{ label: 'Read the case studies', href: '/customers/case-studies', style: 'primary' }, { label: 'Become a client', href: '/contact', style: 'outline' }],
       facts: [
-        { value: '8', label: 'customers' },
+        { value: '9', label: 'customers' },
         { value: `${caseStudies.length}`, label: 'case studies' },
         { value: 'PK · UAE', label: 'and beyond' },
       ],
@@ -576,6 +576,7 @@ function pageHeroes({ site, pages, products, caseStudies }) {
           { src: '/public/images/asgard-logo.png', alt: 'Asgard Real Estate' },
           { src: '/public/images/flick-logo.svg', alt: 'Flick Network' },
           { src: '/public/images/dtranslation-logo.png', alt: 'D-Translation' },
+          { src: '/public/images/houseofbangle-logo.svg', alt: 'House of Bangles' },
         ],
       },
     },

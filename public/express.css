@@ -1226,6 +1226,13 @@ a.page-hero-panel:hover {
   transform: translateY(1.25rem);
 }
 
+/* A single logo left on the last row sits across the middle two columns, at the same height as the others */
+.page-hero-logos li:last-child:nth-child(4n + 1) {
+  grid-column: 2 / span 2;
+  aspect-ratio: 8 / 3;
+  transform: translateY(1.25rem);
+}
+
 .page-hero-logos img {
   max-width: 100%;
   max-height: 46px;
@@ -2805,8 +2812,8 @@ a.page-hero-panel:hover {
   margin: 0 0 3.25rem 0;
 }
 
-/* Logo grid with subtle dividers, sized for the 8 logos: two rows of 4 on desktop and tablets, 2 per row on
-   phones (an odd last logo spans the row). Revisit the column counts when customers are added or removed. */
+/* Logo grid with subtle dividers: 4 per row on desktop and tablets (a single logo left on the last row sits
+   across the middle two columns), 2 per row on phones (an odd last logo spans the row). */
 .customers-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -2816,6 +2823,10 @@ a.page-hero-panel:hover {
   border-radius: var(--radius-2xl);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+}
+
+.customer-grid-item:last-child:nth-child(4n + 1) {
+  grid-column: 2 / span 2;
 }
 
 .customer-grid-item {

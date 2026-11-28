@@ -47,7 +47,7 @@ const testCases = [
     expected: 200,
     check: (res, body) => {
       // Only confirmed customers may appear in the logo grid
-      assert.strictEqual(body.split('class="customer-grid-item"').length - 1, 8, 'Home should show the 8 confirmed customer logos');
+      assert.strictEqual(body.split('class="customer-grid-item"').length - 1, 9, 'Home should show the 9 confirmed customer logos');
       assert.ok(!body.includes('ExxonMobil'), 'Unconfirmed customer logos should not be shown');
     },
   },
@@ -168,6 +168,7 @@ const testCases = [
   { path: '/public/images/team/muhammad-faisal.jpg', method: 'GET', expected: 200 },
   { path: '/public/images/team/muhammad-qaiser.jpg', method: 'GET', expected: 200 },
   { path: '/public/images/dtranslation-logo.png', method: 'GET', expected: 200 },
+  { path: '/public/images/houseofbangle-logo.svg', method: 'GET', expected: 200 },
   { path: '/public/images/life-team-dinner.jpg', method: 'GET', expected: 200 },
   { path: '/public/images/share/oradigitals.png', method: 'GET', expected: 200 },
   { path: '/public/images/share/case-study-treet-corporation.png', method: 'GET', expected: 200 },

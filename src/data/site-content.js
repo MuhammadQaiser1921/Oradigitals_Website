@@ -59,6 +59,40 @@ const clientReviews = [
     rating: 5,
     logo: '/public/images/dtranslation-logo.png',
   },
+  // Two separate projects; capitalisation added and an emoji left out, wording otherwise as written
+  {
+    author: 'Primmeshiper',
+    role: 'Ertan, Sweden',
+    quote: 'Very accommodating and professional, understands me despite my poor English and helps. He is very good at English and programming.',
+    rating: 5,
+    logo: '/public/images/primmeshiper-logo.png',
+  },
+  {
+    author: 'Primmeshiper',
+    role: 'Ertan, Sweden',
+    quote: 'Very understanding and very patient, very grateful for your support and professional work, thank you once again.',
+    rating: 5,
+    logo: '/public/images/primmeshiper-logo.png',
+  },
+  // Individual clients, no company given
+  {
+    author: 'Hakan',
+    role: 'Netherlands',
+    quote: 'Great guy and team he works with. Good quality service.',
+    rating: 5,
+  },
+  {
+    author: 'Ann',
+    role: 'United States',
+    quote: 'Faisal and his team went above and beyond to provide what I wanted. The communication was great, and they did accommodate a lot of revisions. I will work with Faisal again and again and again. Thank you!',
+    rating: 5,
+  },
+  {
+    author: 'Martin Barbenik',
+    role: 'Slovakia',
+    quote: 'Perfect service, they do all the things like I wanted.',
+    rating: 5,
+  },
 ]
 
 function clientTestimonials() {
@@ -1680,7 +1714,7 @@ const pages = {
           eyebrow: 'Customers',
           titleMain: 'Our Customers',
           titleSub: 'the companies whose systems we build and integrate',
-          description: 'Manufacturing, e-commerce fulfilment, office furniture, real estate, software, translation and investment firms. Several of these projects are written up as case studies below.',
+          description: 'Manufacturing, e-commerce fulfilment, office furniture, jewellery retail, real estate, software, translation and investment firms. Several of these projects are written up as case studies below.',
           ctaLabel: false,
         },
       },
@@ -1708,8 +1742,8 @@ const pages = {
       {
         component: 'testimonials',
         props: {
-          title: 'Executive Client Feedback',
-          subtitle: 'Read direct reviews from organizational leaders.',
+          title: 'Client Reviews',
+          subtitle: 'What the companies and people we have worked with say about us.',
           items: clientTestimonials(),
         },
       },
@@ -1754,8 +1788,8 @@ const pages = {
       {
         component: 'testimonials',
         props: {
-          title: 'Executive Client Feedback',
-          subtitle: 'Read direct reviews from organizational leaders who partnered with OraDigitals.',
+          title: 'Client Reviews',
+          subtitle: 'What the companies and people we have worked with say about us.',
           items: clientTestimonials(),
         },
       },
