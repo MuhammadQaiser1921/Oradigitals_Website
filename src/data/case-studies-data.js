@@ -149,37 +149,37 @@ const caseStudiesData = [
   <p>The solution provides the following business capabilities:</p>
 
   <div class="cs-impact-block">
-    <h4>Connected enterprise and e-commerce operations</h4>
+    <h3>Connected enterprise and e-commerce operations</h3>
     <p>Product, pricing, inventory, and order information can be synchronized across WooCommerce and Oracle EBS through the OMS integration workflows.</p>
   </div>
 
   <div class="cs-impact-block">
-    <h4>More automated order processing</h4>
+    <h3>More automated order processing</h3>
     <p>Online transactions can flow into Oracle Order Management, supporting the downstream fulfillment and invoicing processes.</p>
   </div>
 
   <div class="cs-impact-block">
-    <h4>Improved payment workflow coordination</h4>
+    <h3>Improved payment workflow coordination</h3>
     <p>Bank API integration and Oracle Accounts Receivable receipt processing connect payment verification with financial transaction handling.</p>
   </div>
 
   <div class="cs-impact-block">
-    <h4>Centralized order and dispatch visibility</h4>
+    <h3>Centralized order and dispatch visibility</h3>
     <p>Operational forms and reports provide a consolidated way to view e-commerce orders and manage dispatch-related activities.</p>
   </div>
 
   <div class="cs-impact-block">
-    <h4>Integrated logistics workflows</h4>
+    <h3>Integrated logistics workflows</h3>
     <p>Courier integrations support shipment booking, tracking, and delivery-status updates within the broader order management process.</p>
   </div>
 
   <div class="cs-impact-block">
-    <h4>Automated customer communications</h4>
+    <h3>Automated customer communications</h3>
     <p>WhatsApp and email integrations support order-related notifications, delivery updates, and feedback collection.</p>
   </div>
 
   <div class="cs-impact-block">
-    <h4>Connected compliance workflows</h4>
+    <h3>Connected compliance workflows</h3>
     <p>FBR integration connects relevant e-commerce transactions with applicable e-invoicing and reporting processes.</p>
   </div>
 </div>
@@ -298,19 +298,19 @@ const caseStudiesData = [
   <h2>Business Impact</h2>
   <p>The integration brings Treet's marketplace sales into the same operational framework as its own online store.</p>
   <div class="cs-impact-block">
-    <h4>One order workflow for two channels</h4>
+    <h3>One order workflow for two channels</h3>
     <p>Website and Daraz orders follow the same path through the OMS into Oracle Order Management.</p>
   </div>
   <div class="cs-impact-block">
-    <h4>Consistent stock and prices</h4>
+    <h3>Consistent stock and prices</h3>
     <p>Marketplace listings follow the item, price and stock information maintained in Oracle EBS.</p>
   </div>
   <div class="cs-impact-block">
-    <h4>Less work in Seller Center</h4>
+    <h3>Less work in Seller Center</h3>
     <p>Order statuses, shipping documents, cancellations and returns are handled through the OMS workflow.</p>
   </div>
   <div class="cs-impact-block">
-    <h4>A single view of orders</h4>
+    <h3>A single view of orders</h3>
     <p>Operations teams follow website and marketplace orders in one dashboard and one set of reports.</p>
   </div>
 </div>

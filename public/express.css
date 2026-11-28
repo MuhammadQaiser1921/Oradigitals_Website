@@ -23,9 +23,11 @@
   --border-blue: rgba(40, 71, 99, 0.2);
   --border-accent: rgba(240, 155, 74, 0.35);
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(40, 71, 99, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 12px 24px -8px rgba(40, 71, 99, 0.14), 0 4px 8px -4px rgba(40, 71, 99, 0.06);
+  --shadow-md: 0 10px 25px -5px rgba(40, 71, 99, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 16px 32px -4px rgba(40, 71, 99, 0.12), 0 6px 12px -2px rgba(0, 0, 0, 0.04);
   --shadow-xl: 0 20px 25px -5px rgba(40, 71, 99, 0.1), 0 8px 10px -6px rgba(40, 71, 99, 0.04);
+  /* Cards, photos and logo tiles sitting on the navy heroes */
+  --shadow-dark: 0 18px 40px rgba(0, 0, 0, 0.3);
   --radius-sm: 4px;
   --radius: 8px;
   --radius-lg: 12px;
@@ -126,7 +128,7 @@ body {
   z-index: 100;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   background: var(--primary);
-  box-shadow: 0 4px 20px rgba(28, 52, 74, 0.35);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Home page: the header sits see-through over the hero, then turns solid on scroll (or when the ☰ menu is open).
@@ -142,7 +144,7 @@ body {
 .has-hero .site-header:has(.nav-links.open) {
   background: var(--primary);
   border-bottom-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 4px 20px rgba(28, 52, 74, 0.35);
+  box-shadow: var(--shadow-lg);
 }
 
 .has-hero .hero.hero-dark {
@@ -184,7 +186,7 @@ body {
 .brand-logo-svg {
   flex-shrink: 0;
   border-radius: var(--radius);
-  box-shadow: 0 2px 6px rgba(40, 71, 99, 0.22);
+  box-shadow: var(--shadow-sm);
   transition: transform 0.2s ease;
 }
 
@@ -278,7 +280,7 @@ body {
   border-radius: var(--radius-2xl);
   flex-direction: column;
   min-width: 290px;
-  box-shadow: 0 16px 36px -8px rgba(15, 28, 40, 0.16), 0 0 1px 1px rgba(15, 28, 40, 0.05);
+  box-shadow: var(--shadow-xl);
   z-index: 110;
   padding: 0.65rem;
 }
@@ -458,14 +460,14 @@ body {
   text-decoration: none;
   transition: all 0.2s ease;
   white-space: nowrap;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .header-outline-btn:hover {
   background: var(--surface-soft);
   color: var(--primary-hover);
   border-color: var(--surface-soft);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
 
@@ -1016,7 +1018,7 @@ a.page-hero-pill:hover {
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: var(--radius-2xl);
   background: rgba(255, 255, 255, 0.07);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-dark);
   color: #ffffff;
   text-decoration: none;
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
@@ -1127,7 +1129,7 @@ a.page-hero-panel:hover {
   border: 5px solid rgba(255, 255, 255, 0.92);
   border-radius: var(--radius-2xl);
   background: var(--bg-section);
-  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-dark);
 }
 
 .page-hero-photo img {
@@ -1219,7 +1221,7 @@ a.page-hero-panel:hover {
   padding: 0.85rem 0.9rem;
   border-radius: var(--radius-lg);
   background: #ffffff;
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-dark);
 }
 
 .page-hero-logos li:nth-child(2n) {
@@ -1547,7 +1549,7 @@ a.page-hero-panel:hover {
   padding: 1.5rem 2rem;
   border-radius: var(--radius-lg);
   background: #ffffff;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-dark);
 }
 
 .cs-showcase-logo img {
@@ -1848,12 +1850,12 @@ a.page-hero-panel:hover {
 .section .card {
   background: #ffffff;
   border: 1px solid var(--border);
-  box-shadow: 0 10px 25px -5px rgba(40, 71, 99, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-md);
 }
 
 .section .card:hover {
   border-color: var(--border-strong);
-  box-shadow: 0 16px 32px -4px rgba(40, 71, 99, 0.12), 0 6px 12px -2px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-lg);
 }
 
 /* h1 = the first section's heading on inner pages (page.ejs promotes it); styled the same as section h2s */
@@ -1897,7 +1899,7 @@ a.page-hero-panel:hover {
   border: 1px solid var(--border);
   border-radius: var(--radius-2xl);
   padding: 2rem;
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--shadow-md);
   transition: all 0.25s ease;
   display: flex;
   flex-direction: column;
@@ -2004,7 +2006,7 @@ a.page-hero-panel:hover {
   /* var(--accent) */
   color: var(--accent);
   transform: translateX(3px);
-  box-shadow: 0 2px 8px rgba(40, 71, 99, 0.08);
+  box-shadow: var(--shadow-sm);
 }
 
 .sitemap-link-arrow {
@@ -2046,7 +2048,7 @@ a.page-hero-panel:hover {
   border-color: var(--primary);
   color: #ffffff;
   background: var(--primary);
-  box-shadow: 0 2px 8px var(--primary-glow);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Compact cards (Home services): small cards like a services menu, plus one featured card */
@@ -2743,7 +2745,7 @@ a.page-hero-panel:hover {
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+  box-shadow: none;
   text-decoration: none;
   flex-shrink: 0;
 }
@@ -3057,7 +3059,7 @@ a.page-hero-panel:hover {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 2.25rem;
-  box-shadow: 0 10px 25px -5px rgba(40, 71, 99, 0.06), 0 4px 10px -2px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--shadow-md);
   transition: all 0.25s ease;
   position: relative;
 }
@@ -3065,7 +3067,7 @@ a.page-hero-panel:hover {
 .case-study-card:hover {
   transform: translateY(-3px);
   border-color: var(--border-strong);
-  box-shadow: 0 18px 36px -6px rgba(40, 71, 99, 0.12), 0 8px 16px -3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-lg);
 }
 
 .cs-card-header {
@@ -3524,7 +3526,7 @@ a.page-hero-panel:hover {
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   outline: none;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-sm);
   font-family: inherit;
 }
 
@@ -3536,7 +3538,7 @@ a.page-hero-panel:hover {
   background: rgba(40, 71, 99, 0.08);
   color: var(--primary);
   border-color: var(--primary);
-  box-shadow: 0 3px 8px rgba(40, 71, 99, 0.12);
+  box-shadow: var(--shadow-sm);
   transform: translateY(-1px);
 }
 
@@ -3544,7 +3546,7 @@ a.page-hero-panel:hover {
   background: var(--primary) !important;
   color: #ffffff !important;
   border-color: var(--primary) !important;
-  box-shadow: 0 4px 14px rgba(40, 71, 99, 0.28);
+  box-shadow: var(--shadow-md);
 }
 
 .cs-filter-btn:focus-visible {
@@ -3556,7 +3558,7 @@ a.page-hero-panel:hover {
   background: var(--primary-hover) !important;
   color: #ffffff !important;
   border-color: var(--primary-hover) !important;
-  box-shadow: 0 6px 16px rgba(40, 71, 99, 0.35);
+  box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
 
@@ -3574,13 +3576,13 @@ a.page-hero-panel:hover {
   display: flex;
   flex-direction: column;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-md);
 }
 
 .case-study-card:hover {
   transform: translateY(-4px);
   border-color: rgba(40, 71, 99, 0.3);
-  box-shadow: 0 16px 36px -6px rgba(40, 71, 99, 0.12);
+  box-shadow: var(--shadow-lg);
 }
 
 .cs-card-header {
@@ -3733,7 +3735,7 @@ a.page-hero-panel:hover {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  box-shadow: 0 4px 16px -2px rgba(40, 71, 99, 0.06);
+  box-shadow: var(--shadow-sm);
 }
 
 .cs-cta-text h4 {
@@ -3870,13 +3872,13 @@ a.page-hero-panel:hover {
   padding: 0.55rem 1.15rem;
   border-radius: var(--radius);
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(40, 71, 99, 0.18);
+  box-shadow: var(--shadow-sm);
   transition: all 0.2s ease;
 }
 
 .cs-btn-read-modal:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(40, 71, 99, 0.28);
+  box-shadow: var(--shadow-md);
 }
 
 .cs-link-secondary {
@@ -3904,7 +3906,7 @@ a.page-hero-panel:hover {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--shadow-sm);
 }
 
 .cs-explore-text h4 {
@@ -3940,7 +3942,7 @@ a.page-hero-panel:hover {
 .cs-explore-btn:hover {
   background: var(--primary);
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(40, 71, 99, 0.2);
+  box-shadow: var(--shadow-md);
 }
 
 /* Modal Overlay & Dialog */
@@ -3974,7 +3976,7 @@ a.page-hero-panel:hover {
   max-height: 88vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-xl);
   transform: scale(0.96) translateY(12px);
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -4053,7 +4055,7 @@ a.page-hero-panel:hover {
   }
 
   100% {
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-md);
   }
 }
 
@@ -4178,7 +4180,7 @@ a.page-hero-panel:hover {
   border: 1px solid var(--border);
   border-radius: var(--radius-2xl);
   padding: 3rem 3rem 2.5rem;
-  box-shadow: 0 10px 30px -5px rgba(40, 71, 99, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-md);
   margin-bottom: 2.5rem;
   position: relative;
   overflow: hidden;
@@ -4288,7 +4290,7 @@ a.page-hero-panel:hover {
   border: 1px solid var(--border);
   border-radius: var(--radius-2xl);
   padding: 3rem 3rem 2.5rem;
-  box-shadow: 0 10px 30px -5px rgba(40, 71, 99, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-md);
   margin-bottom: 3rem;
   width: 100%;
 }
@@ -4382,7 +4384,8 @@ a.page-hero-panel:hover {
   margin-bottom: 1rem;
 }
 
-.cs-impact-block h4 {
+/* Impact headings are h3 under the section h2 (no skipped level), styled smaller than section h3s */
+.cs-article-section .cs-impact-block h3 {
   margin: 0 0 0.35rem 0;
   font-size: 1rem;
   color: var(--primary);
@@ -4589,7 +4592,7 @@ a.page-hero-panel:hover {
 
 .cs-other-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px -4px rgba(40, 71, 99, 0.12);
+  box-shadow: var(--shadow-lg);
   border-color: rgba(40, 71, 99, 0.3);
 }
 
